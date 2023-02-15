@@ -1,0 +1,3 @@
+contents of file1
+contents of file2
+contents of file3
