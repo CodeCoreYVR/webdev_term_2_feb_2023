@@ -1,0 +1,19 @@
+{
+  "name": "tam-codecore",
+  "version": "1.0.0",
+  "description": "This is a test package",
+  "main": "index.js",
+  "scripts": {
+    "blur-image": "node blurImage.js qrCode2.png 2",
+    "generate-qr": "node enQRCode.js 'This is a test text'",
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "chalk": "^4.1.2",
+    "jimp": "^0.22.5",
+    "qrcode": "^1.5.1"
+  }
+}
