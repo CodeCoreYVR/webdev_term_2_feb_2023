@@ -1,0 +1,21 @@
+Commands to used to create lab:
+*********************************************************************************
+**** if running this without node_modules directory i.e. after cloning repo *****
+*** only run $ npm install or $ yarn install (if you use yarn instead of npm) ***
+*********************************************************************************
+
+$ mkdir chalkScript
+$ cd chalkScript
+$ npm init
+$ npm install chalk
+$ npm install color-convert
+$ code package.js
+  - added: ,
+           "type": "module"
+$ app.js
+  - added: lab instructions and my lab scripts
+$ node app.js
+  > Enter a string: $ change what this sencence looks like
+  > Enter a color: $ red
+  > Enter a background color: $ yellow
+  > Enter text augmentations separated by spaces (italic, bold, strikethrough, underline): $ italic bold strikethrough underline

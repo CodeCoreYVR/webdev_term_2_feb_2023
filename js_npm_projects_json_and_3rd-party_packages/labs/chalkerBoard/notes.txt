@@ -1,0 +1,20 @@
+Commands to used to create lab:
+*********************************************************************************
+**** if running this without node_modules directory i.e. after cloning repo *****
+*** only run $ npm install or $ yarn install (if you use yarn instead of npm) ***
+*********************************************************************************
+
+$ mkdir chalkerBoard
+$ cd chalkerBoard
+$ npm init
+$ npm install chalk
+$ npm install color-name
+$ code package.js
+  - added: ,
+           "type": "module"
+$ app.js
+  - added: lab instructions and my lab scripts
+$ node app.js red 5 10
+$ node app.js red 5
+$ node app.js red
+$ node app.js
