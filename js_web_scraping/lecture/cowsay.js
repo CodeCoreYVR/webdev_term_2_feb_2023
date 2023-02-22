@@ -5,7 +5,7 @@ const cowsay = require("cowsay");
 let opts = {
     text: "Hello from TypeScript!",
     e: '..',
-    // r: true,
+    r: true,
     y: true,
 };
 
