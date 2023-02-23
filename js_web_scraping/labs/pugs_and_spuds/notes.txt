@@ -1,0 +1,31 @@
+Commands to used to create lab:
+*********************************************************************************
+**** if running this without node_modules directory i.e. after cloning repo *****
+*** only run $ npm install or $ yarn install (if you use yarn instead of npm) ***
+*********************************************************************************
+
+$ mkdir pugs_and_spuds
+$ cd pugs_and_spuds
+$ npm init
+$ npm install axios
+$ npm install cheerio
+$ code package.js
+  - added: ,
+           "type": "module"
+$ code app.js
+  - added: lab instructions and my lab scripts
+$ node app.js
+
+
+
+[Lab] Pugs and Spuds
+
+Go to the Wikipedia page on Pugs https://en.wikipedia.org/wiki/Pug and extract the HTML code from the article.
+
+Write to a markdown file using web scraping. You can view markdown syntax here https://www.markdownguide.org/basic-syntax
+
+  1.  Change the title of the article to your team name.
+  2.  For every level 2 heading in the article, add a level 2 heading in the markdown.
+  3.  For every level 3 heading in the article, add a level 3 heading in the markdown.
+  4.  Replace the word "pug" in every  p tag with "spud". Add the text content of the paragraphs under the appropriate sections.
+
