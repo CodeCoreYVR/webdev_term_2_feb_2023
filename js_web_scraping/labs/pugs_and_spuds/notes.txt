@@ -9,7 +9,7 @@ $ cd pugs_and_spuds
 $ npm init
 $ npm install axios
 $ npm install cheerio
-$ code package.js
+$ code package.json
   - added: ,
            "type": "module"
 $ code app.js

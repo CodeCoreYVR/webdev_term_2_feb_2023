@@ -2,7 +2,7 @@
 # Edit at https://www.toptal.com/developers/gitignore?templates=linux,macos,windows,node
 
 # node_modules will not be added to git repo, however if cloning repo or pulling update run "$ npm install" in specific app
-# pugs_and_spuds/.gitignore
+# all sub apps i.e. ./pugs_and_spuds/.gitignore
 node_modules/
 
 
