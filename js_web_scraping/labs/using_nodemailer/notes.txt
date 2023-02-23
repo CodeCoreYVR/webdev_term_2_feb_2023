@@ -1,0 +1,20 @@
+*********************************************************************************
+**** if running this without node_modules directory i.e. after cloning repo *****
+*** only run $ npm install or $ yarn install (if you use yarn instead of npm) ***
+*********************************************************************************
+* I used mailtrap.io and developermail.com as temporary emails to send and receive emails
+* In app.js > on lines 15 to 27. use your own emails and password provided from the site(s) you use. 
+
+Commands used to create lab:
+$ mkdir using_nodemailer
+$ cd using_nodemailer
+$ npm init
+$ npm i cheerio
+$ npm i nodemailer
+$ npm i axios
+$ code package.json
+  - added: ,
+           "type": "module"
+$ code app.js
+  - added: lab instructions and my lab scripts
+$ node app.js
