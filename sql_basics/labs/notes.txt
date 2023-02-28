@@ -1,0 +1,32 @@
+Connecting psql
+
+$ grep '^sudo' /etc/group | cut -d: -f4-
+  - this finds the sudo users name.
+  
+$ groups
+  - this finds all user names under this group 
+
+$ sudo passwd
+  - if there's a sudo password it will ask for it, then you can enter a new password for sudo. if sudo does not have a password then it skips to entering a new password.
+  
+$ sudo -u postgres createdb nimbus-user
+  - create a new database named nimbus-user
+  
+$ psql sql_lab < sql_lab.sql
+  - inject data into sql_lab database
+
+$ psql
+  - enter database
+  
+$ \dt 
+  - shows tables if sql_lab.sql has been executed.
+
+$ SELECT * FROM students;
+  - add whatever queries you need for lab answers or just want to try. 
+  - always end queries with ;
+
+$ \i file_containing_your_queries.sql
+  - add whatever queries you want to a file (make sure they end with ;), and execute them all through running the file
+
+
+  
