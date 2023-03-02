@@ -96,5 +96,10 @@ $ knex seed:run
   - reseed your countries table with only unique names.
 
 
+$ mkdir queries
+$ code ./queries/queryingTheCountries.js
+  - add queries to file
+
+$ node ./queries/queryingTheCountries.js
 
 
