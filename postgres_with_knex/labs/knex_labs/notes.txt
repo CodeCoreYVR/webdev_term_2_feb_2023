@@ -73,7 +73,7 @@ $ knex seed:latest
   - seeds your database with desired data from countriesData.js
 
 $ psql knex_labs_db
-  # SELECT * FROM countries:
+  # SELECT * FROM countries;
   or
   # SELECT id, name, code FROM countries;
   - Is your database seeded with desired data?
@@ -102,4 +102,29 @@ $ code ./queries/queryingTheCountries.js
 
 $ node ./queries/queryingTheCountries.js
 
+
+$ knex seed:make populatePopulations
+  - This makes a seed file within knex_labs/db/seeds/populatePopulations.js
+  - open file and add material.
+
+$ knex migrate:rollback
+
+- alter create_populations_tabel.js migration file.
+    change: 
+      table.integer('quantity');
+    to:
+      table.bigInteger('quantity');
+  - some of the population quantities are to big of numbers for integer to handle. If you don't
+    change this to bigInteger then running the seed file will cause an error.
+
+$ knex migrate:latest
+
+$ knex seed:run
+  - seeds your database with data from all your seed files.
+
+$ psql knex_labs_db
+  # SELECT * FROM populations;
+  or
+  # SELECT id, year, quantity, country_id FROM populations;
+  - Is your database seeded with desired data?
 
