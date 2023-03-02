@@ -11,6 +11,13 @@ module.exports = {
       database: 'knex_labs_db',
       user:     'nimbus-user',
       password: 'password',
+    },
+    migrations:{
+      tableName:'migrations',
+      directory: './db/migrations'
+    },
+    seeds: {
+      directory: './db/seeds'
     }
   },
 

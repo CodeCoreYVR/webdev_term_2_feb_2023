@@ -34,4 +34,49 @@ $ psql knex_labs_db
  # \d populations
   - These commands should show the schema of the countries and populations tables, respectively.
 
+**********************************************************************************
+********** this section is to correct bad file and directory arrangment **********
+$ knex migrate:rollback --all
+
+knexfile.js add: 
+  development: {
+    client: 'postgresql',
+    connection: {
+      database: 'whatever_your_database_is_called',
+      // next two lines are only for linux
+      user:     'whetever_your_postgres_user_is_called',
+      password: 'whatever_your_password_is'
+    },
+    // add these two migrations and seeds sections
+    migrations:{
+      tableName:'migrations',
+      directory: './db/migrations'
+    },
+    seeds: {
+      directory: './db/seeds'
+    }
+    // end of added material
+  },
+
+$ knex migrate:latest
+******************** end of section to reorganize directories ********************
+**********************************************************************************
+
+$ code countriesData.js
+  - add data from lab link and save
+
+$ knex seed:make populateCountries
+  - This makes a seed file within knex_labs/db/seeds/populateCountries.js
+  - open file and add material.
+
+$ knex seed:latest
+  - seeds your database with desired data from countriesData.js
+
+$ psql knex_labs_db
+  # SELECT * FROM countries:
+  or
+  # SELECT id, name, code FROM countries;
+  - Is your database seeded with desired data?
+
+
 
