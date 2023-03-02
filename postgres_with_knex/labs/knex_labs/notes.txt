@@ -79,4 +79,22 @@ $ psql knex_labs_db
   - Is your database seeded with desired data?
 
 
+$ knex migrate:make add_unique_to_countries
+  - This will generate a migration file.
+  - add content to alterTable unlike previous migration files where you createTable and dropTable
+
+./db/seeds/populateCountries.js >
+  - change your function to only return countries with unique names.
+  if you don't do this then you will keep getting errors when $ knex migrate:latest
+
+$ knex migrate:rollback
+  - this will rollback the migrations which will also delete all the seeded data.
+
+$ knex migrate:latest
+
+$ knex seed:run
+  - reseed your countries table with only unique names.
+
+
+
 
