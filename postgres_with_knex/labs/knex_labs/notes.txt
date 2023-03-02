@@ -1,0 +1,37 @@
+$ mkdir knex_labs
+$ cd knex_labs
+
+$ npm init -y
+ - Initializes a new Node.js project and creates a package.json file in your project directory.
+
+$ npm i knex pg 
+ - Installs the knex and pg packages in your project. pg is the PostgreSQL client for Node.js and knex is a SQL query builder for Node.js that supports PostgreSQL.
+
+$ npx knex init 
+ - npx is needed when you only installed knex locally.
+ - Initializes a new knexfile.js configuration file in your project directory. This file contains the configuration settings for connecting to the database and other options.
+	
+$ createdb knex_labs_db
+ - This will create a new database named knex_labs_db.	
+ 
+$ npm install sqlite3 --save
+
+ - If you're using linux, add your username and password to each section in knexfile.js which asks for it.
+	
+$ knex migrate:make create_countries_table
+ - This will generate a new migration file named 20230301000000_create_countries_table.js (the timestamp will vary based on the current date and time) in the migrations directory of your project.
+ - Edit the 20230301000000_create_countries_table.js file to define the countries table with the required columns
+ 
+$ knex migrate:make create_populations_table
+ - This will generate a new migration file named 20230301000001_create_populations_table.js (the timestamp will vary based on the current date and time) in the migrations directory of your project.
+ - Edit the 20230301000001_create_populations_table.js file to define the populations table with the required columns	
+
+$ knex migrate:latest
+ - This will run all pending migrations in your migrations directory and create the countries and populations tables in your database.
+ 
+$ psql knex_labs_db
+ # \d countries
+ # \d populations
+  - These commands should show the schema of the countries and populations tables, respectively.
+
+
