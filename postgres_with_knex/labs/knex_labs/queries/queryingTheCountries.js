@@ -1,7 +1,13 @@
-const knex = require('knex');
-const config = require('../knexfile').development;
+// const knex = require('knex');
+// const config = require('../knexfile').development;
 
-const db = knex(config);
+// const db = knex(config);
+// The above code isn't neccessary due to the client.js file
+
+// const knex = require('../db/client');
+// const db = knex; 
+// Lines 7 & 8 are same as line 10:
+const db = require('../db/client');
 
 Promise.all([
   // Find all countries whose names begin with "b" ignoring case.
