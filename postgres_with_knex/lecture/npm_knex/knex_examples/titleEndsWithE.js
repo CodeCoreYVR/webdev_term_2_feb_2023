@@ -5,7 +5,7 @@ const main = async () => {
     const posts = await knex
       .select("*")
       .from("posts")
-      .where("title", "ilike", "%e.");
+      .where("title", "ilike", "%e");
 
     console.log(posts);
   } catch (error) {

@@ -14,9 +14,8 @@ const main = async () => {
     const post = await knex
       .insert({
         title: "My second post",
-        text: "This is sample text of my post",
-        author: "Ondrej Belza",
-        viewCount: 0,
+        content: "This is sample text of my post",
+        viewCount: "0",
       })
       // name of our table
       .into("posts")

@@ -2,7 +2,7 @@ const knex = require("../db/client");
 
 const main = async () => {
   try {
-    const rows = await knex("posts").where({ id: 1 }).update({
+    const rows = await knex("posts").where({ id: 16 }).update({
       title: "So many views at this post!",
       viewCount: 50000,
     });
