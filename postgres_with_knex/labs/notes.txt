@@ -1,0 +1,130 @@
+$ mkdir knex_labs
+$ cd knex_labs
+
+$ npm init -y
+  -- Initializes a new Node.js project and creates a package.json file in your project directory.
+
+$ npm i knex pg 
+  -- Installs the knex and pg packages in your project. pg is the PostgreSQL client for Node.js and knex is a SQL query builder for Node.js that supports PostgreSQL.
+
+$ npx knex init 
+  -- npx is needed when you only installed knex locally.
+  -- Initializes a new knexfile.js configuration file in your project directory. This file contains the configuration settings for connecting to the database and other options.
+	
+$ createdb knex_labs_db
+  -- This will create a new database named knex_labs_db.	
+
+- If you're using linux, add your username and password to each section in knexfile.js which asks for it.
+	
+$ knex migrate:make create_countries_table
+  -- This will generate a new migration file named 20230301000000_create_countries_table.js (the timestamp will vary based on the current date and time) in the migrations directory of your project.
+  -- Edit the 20230301000000_create_countries_table.js file to define the countries table with the required columns
+ 
+$ knex migrate:make create_populations_table
+  -- This will generate a new migration file named 20230301000001_create_populations_table.js (the timestamp will vary based on the current date and time) in the migrations directory of your project.
+  -- Edit the 20230301000001_create_populations_table.js file to define the populations table with the required columns	
+
+$ knex migrate:latest
+  -- This will run all pending migrations in your migrations directory and create the countries and populations tables in your database.
+ 
+$ psql knex_labs_db
+  # \d countries
+  # \d populations
+    -- These commands should show the schema of the countries and populations tables, respectively.
+
+**********************************************************************************
+********** this section is to correct bad file and directory arrangment **********
+
+$ knex migrate:rollback --all
+
+knexfile.js add: 
+  development: {
+    client: 'postgresql',
+    connection: {
+      database: 'whatever_your_database_is_called',
+      // next two lines are only for linux
+      user:     'whetever_your_postgres_user_is_called',
+      password: 'whatever_your_password_is'
+    },
+    // add these two migrations and seeds sections
+    migrations:{
+      tableName:'migrations',
+      directory: './db/migrations'
+    },
+    seeds: {
+      directory: './db/seeds'
+    }
+    // end of added material
+  },
+
+$ knex migrate:latest
+
+******************** end of section to reorganize directories ********************
+**********************************************************************************
+
+$ code countriesData.js
+  -- add data from lab link and save
+
+$ knex seed:make populateCountries
+  -- This makes a seed file within knex_labs/db/seeds/populateCountries.js
+  -- open file and add material.
+
+$ knex seed:latest
+  -- seeds your database with desired data from countriesData.js
+
+$ psql knex_labs_db
+  # SELECT * FROM countries;
+  or
+  # SELECT id, name, code FROM countries;
+    -- Is your database seeded with desired data?
+
+
+$ knex migrate:make add_unique_to_countries
+  -- This will generate a migration file.
+  -- add content to alterTable unlike previous migration files where you createTable and dropTable
+
+./db/seeds/populateCountries.js >
+  -- change your function to only return countries with unique names.
+  if you don't do this then you will keep getting errors when $ knex migrate:latest
+
+$ knex migrate:rollback
+  -- this will rollback the migrations which will also delete all the seeded data.
+
+$ knex migrate:latest
+
+$ knex seed:run
+  -- reseed your countries table with only unique names.
+
+
+$ mkdir queries
+$ code ./queries/queryingTheCountries.js
+  -- add queries to file
+
+$ node ./queries/queryingTheCountries.js
+
+
+$ knex seed:make populatePopulations
+  -- This makes a seed file within knex_labs/db/seeds/populatePopulations.js
+  -- open file and add material.
+
+$ knex migrate:rollback
+
+- alter create_populations_tabel.js migration file.
+    change: 
+      table.integer('quantity');
+    to:
+      table.bigInteger('quantity');
+  -- some of the population quantities are to big of numbers for integer to handle. If you don't
+    change this to bigInteger then running the seed file will cause an error.
+
+$ knex migrate:latest
+
+$ knex seed:run
+  -- seeds your database with data from all your seed files.
+
+$ psql knex_labs_db
+  # SELECT * FROM populations;
+  or
+  # SELECT id, year, quantity, country_id FROM populations;
+    -- Is your database seeded with desired data?
+
