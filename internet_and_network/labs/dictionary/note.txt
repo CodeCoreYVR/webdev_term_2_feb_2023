@@ -1,0 +1,28 @@
+[Lab] Dictionary
+
+Given this dictionary file: https://s3.amazonaws.com/codecore-website-data/certifiedin_images/Oxford+English+Dictionary.txt
+
+Use Node.js HTTP server to build a simple dictionary web app. The website should work as follows:
+1. If you go to the home page such as http://localhost:5000 it will display "Welcome to Dictionary".
+2. If you go to a URL like http://localhost:5000/?word=Abandon where the word is defined in the dictionary it will display the definition of the word `Abandon`.
+3. If you go to a URL like http://localhost:5000/?word=fdsdfddf where the word is not defined in the dictionary it will display `Sorry your word was not found`.
+
+
+------------------ Steps -------------------
+$ mkdir dictionary
+$ cd dictionary
+$ npm init -y
+$ npm i http fs --save
+$ code app.js
+- add lab code to app.js
+$ code dictionary.txt
+- add lab code to ./dictionary.txt
+------------------- To Run -------------------
+$ node app.js
+- if you're using nimbus, look at the top of your terminal and click on where is says PORTS:
+  - click "Add Port" and type the port number you're using for the server you created.
+- open new browser tab and try these urls one at at time:
+  - https://localhost:5000
+  - https://localhost:5000/?word=Abandon
+  - https://localhost:5000/?word=fdsdfddf
+  
