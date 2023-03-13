@@ -1,0 +1,19 @@
+{
+  "name": "node_http",
+  "version": "1.0.0",
+  "description": "",
+  "main": "simple_http_server.js",
+  "scripts": {
+    "start": "nodemon",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "http",
+    "server"
+  ],
+  "author": "Debasish",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^2.0.21"
+  }
+}
