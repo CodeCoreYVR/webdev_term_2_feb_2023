@@ -1,0 +1,31 @@
+[Lab] Guessing Game
+
+Write a TCP client and a TCP server in Node.js that does the following:
+  1. The client connects to the server
+  2. The server generates a random number 
+  3. The client sends guesses to the server
+  4. The server responds to the client after each guess with: "You guessed right in X attempt(s)", "Guess higher" or "Guess lower"
+
+
+What issues would you have if there are multiple clients connecting to the same server? How would you solve that?
+
+  1.  Having multiple clients connecting to the same server can cause various issues, such as:
+    a.  Race conditions: When multiple clients are trying to access the same resource or perform the same action at the same time, it can cause race conditions that can lead to unexpected behavior or errors.
+    b.  Overloading the server: When there are too many concurrent connections, the server may become overwhelmed and unable to respond to all the requests, leading to slow response times or even crashes.
+    c.  Security issues: If the server is not properly secured, multiple clients connecting to the server can increase the risk of security vulnerabilities, such as unauthorized access or data breaches.
+
+  2.  To solve these issues, you can implement various strategies, such as:
+    a.  Synchronization mechanisms: Use synchronization mechanisms such as locks, semaphores, or message queues to prevent race conditions and ensure that only one client can access a resource at a time.
+    b.  Load balancing: Use load balancing techniques such as round-robin, weighted round-robin, or least connections to distribute the incoming connections among multiple servers, reducing the load on each server and improving scalability.
+    c.  Security measures: Implement security measures such as authentication, encryption, and access control to ensure that only authorized clients can access the server and its resources.
+    d.  Limiting concurrent connections: Set limits on the maximum number of concurrent connections that the server can handle, and gracefully handle incoming connections beyond that limit by returning an error message or queuing the requests.
+    e.  Proper resource management: Use proper resource management techniques such as connection pooling, caching, or efficient memory allocation to optimize the use of server resources and prevent resource exhaustion.
+
+
+------------------- To Run -------------------
+- Open terminal window
+$ node server.js
+- Open second terminal window
+$ node client.js
+- Open third terminal window
+$ node client.js

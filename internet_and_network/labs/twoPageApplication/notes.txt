@@ -1,0 +1,28 @@
+[Lab] Two-Page Applicaton
+
+Build a two-page application with Node.js HTTP module that supports the following URLs:
+1. http://localhost:8080/ will be the home page display: "Welcome to my application"
+2. http://localhost:8080/greeting?name=tam  will be a second page that displays in an &lt;h1&gt; tag "Hello Tam" (tam is fetched from the `name` parameter)
+
+[Stretch]: Figure out how to serve static assets (such as images and CSS files) with your application.
+
+
+------------------- Steps -------------------
+$ mkdir twoPageApplication
+$ cd twoPageApplication
+$ npm init -y
+$ npm i http --save
+$ code app.js
+- add lab code to app.js
+$ mkdir static
+$ mkdir static/images
+- add an image to images diretory
+------------------- To Run -------------------
+$ node app.js
+- if you're using nimbus, look at the top of your terminal and click on where is says PORTS:
+  - click "Add Port" and type the port number you're using for the server you created.
+- open new browser tab and try these urls one at at time:
+  - https://localhost:8080/
+  - https://localhost:8080/greeting?name=you
+  - https://localhost:8080/images/name_of_your_image.png
+  

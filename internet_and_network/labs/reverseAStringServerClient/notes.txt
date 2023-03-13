@@ -1,0 +1,12 @@
+[Lab] Reverse a string server / client
+
+Write a TCP client and a server application in Node.js:
+- The client should take a string input from the user (e.g. "hello", "what is this?") and send it to the server.
+- The server should respond to the client with the reversed word. (e.g. "hello" becomes "olleh", "what is this?" becomes "?siht si tahw")
+- The client should print the server response in the console.
+
+------------------- To Run -------------------
+- Open terminal window
+$ node server.js
+- Open second terminal window
+$ node client.js
