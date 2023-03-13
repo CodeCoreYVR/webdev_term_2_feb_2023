@@ -1,70 +1,71 @@
+const urlMod = require('url');
 const http = require('http');
-const urlParse = require('url');
+const fs = require('fs/promises');
 
-const server = http.createServer((req, res) => {
+const server = http.createServer((req, res) => { 
 
-    const url = req.url.split("?")[0]; //thank_you?name=Value1&quesiton=Value2
+    const url = req.url.split('?')[0];
+    const params = urlMod.parse(req.url, true).query;
 
-    res.writeHead(200, { 'content-type': 'text/html' }); // not text/html
+    if (url.includes(".")) {
+        const fn = url.split("/")[1];
+        console.log(fn);
+        fs.readFile(fn, { encoding: 'utf-8' })
+            .then(data => {
+                console.log(data);
+                res.writeHead(200, { 'content-type': 'text/html' });
+                res.write(data);
+                res.end();
+            })
+            .catch(console.error)
+    }
 
-    if (req.url === "/contact_us") {
+    if (url === '/') { 
+        res.writeHead(200, { 'content-type': 'text/html' });
+        
         res.write(`
-        <!DOCTYPE html>
-        <html>
             <head>
-                <title>Http Sever</title>
+                <link rel="stylesheet" type="text/css" href="/style.css">
             </head>
-            <body>
-                <form action="/thank_you">
-                <label>Name</label>
-                <input 
-                    type="text"
-                    name="name"
-                />
-                <br/>
-                <label>Question</label>
-                <input 
-                    type="text"
-                    name="question"
-                />
-                <input type="submit" value="Subit form"/>
+                <main> <h1>Welcome to Our App!</h1>
+            </main>
+        `)
+        return res.end();
+    }
+    if (url === '/contact_us') {
+        res.writeHead(200, { 'content-type': 'text/html' });
+        res.write(
+            `
+            <main>
+            <h1>Contact us</h1>
+                <form action='thank_you' >
+                    Name:
+                    <input type='text' name='firstname'/>
+                    Question:
+                    <input type='text' name='question'/>
+                    <input type='submit' value='submit'/>
                 </form>
-            </body>
-        </html>
-        `);
-        return res.end();
-    }
-    else if (url === "/thank_you") {
-        const params = urlParse.parse(req.url, true).query;
-        res.write(`
-        <!DOCTYPE html>
-        <html>
-            <head>
-                <title>Http Sever</title>
-            </head>
-            <body>
-                <h1>
-                Hello ${params.name}
-                </h1>
-                <p>
-                Your question was ${params.question}
-                </p>
-            </body>
-        </html>
-        `);
-        return res.end();
-    }
-    else {
-        res.write("<h1>Welcome to my site!</h1>");
+            </main>
+            `
+        )
         return res.end();
     }
 
+    if (url === "/thank_you") {
+        res.writeHead(200, { 'content-type': 'text/html' });
+        res.write(`
+        <main>
+            <h1>Thank you ${params.firstname}</h1>
+            <h3>For your Questions:</h3>
+            <p>${params.question}</p>
+        </main>
+        `)
+        return res.end();
+    }
 });
 
-const port = 3000;
-const domain = 'localhost';
-
-server.listen(port, domain, () => {
-    console.log("Server Listening at " + domain + ":" + port);
+const PORT = 3000;
+const DOMAIN = 'localhost'
+server.listen(PORT, DOMAIN, () => {
+    console.log('server listening')
 })
-
