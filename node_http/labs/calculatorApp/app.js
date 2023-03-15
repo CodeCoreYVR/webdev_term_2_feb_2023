@@ -111,6 +111,56 @@ const server = http.createServer((req, res) => {
     return res.end();
   }
 
+  // Add a route for viewing images
+  if (url === '/view_image') {
+  
+    // Send HTML content as a response
+    res.write(`
+      <head> 
+        <link rel="stylesheet" type="text/css" href="stylesheet/style.css"> 
+      </head> 
+      <main> 
+        <h1>View an Image</h1> 
+        <div class="container"> 
+          <form action='/image' method='post'> 
+            <label for='image-url'>Enter the URL of the image:</label> 
+            <input type='url' id='image-url' name='image-url' required><br><br> 
+            <input type='submit' value='View Image'> 
+          </form> 
+        </div> 
+      </main> 
+    `)
+  
+    res.end();
+  }
+  
+  // Add a route for displaying images
+  if (url === '/image' && req.method === 'POST') {
+    let body = '';
+    req.on('data', chunk => {
+      body += chunk.toString();
+    });
+    req.on('end', () => {
+      const imageUrl = new URLSearchParams(body).get('image-url');
+      res.writeHead(200, { 'content-type': 'text/html' }); // sets the response header with a 200 status code and content type of text/html
+  
+      // Send HTML content as a response
+      res.write(`
+        <head>
+          <link rel="stylesheet" type="text/css" href="stylesheet/style.css">
+        </head>
+        <main>         
+          <h1>Image Viewer</h1>
+          <div class="container">
+            <img src="${imageUrl}">
+          </div>
+        </main>
+      `)
+  
+      res.end();
+    });
+  }
+
   // Handle errors that occur while processing the request
   req.on('error', err => {
     console.error(err);
