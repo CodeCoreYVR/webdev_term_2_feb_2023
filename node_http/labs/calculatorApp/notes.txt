@@ -1,0 +1,40 @@
+---------------- To Create ----------------
+$ mkdir calculatorApp
+$ cd calculatorApp
+$ npm init -y
+$ npm install --save-dev nodemon
+$ npm i
+  same as: $ npm install
+$ app.js
+  - add code for lab.
+$ mkdir stylesheet
+$ code stylesheet/style.css
+  - add code for labe
+------------------ To Run -----------------
+$ npm i
+$ nodemon app.js
+  - or if nodemon only installed locally:
+    $ npx nodemon app.js
+open a browser on url:
+  localhost:3000/
+    - or whatever port you have your server set to.
+- after entering two numbers and choosing an operator you should see the answer under the form
+- localhost:3000/view_image
+  - enter an image url like:
+    https://static.boredpanda.com/blog/wp-content/uploads/2017/06/16lzkl0dcavy-5943886eeac76__605.jpg
+------------------- End -------------------
+
+[Lab] Calculator App
+
+Create a HTTP Server that will serve a webpage with a form that has 3 inputs:
+The first input will be a number
+The second input will be a operator
+The third input will be a number
+
+When a user submits the form it should respond with the answer underneath the form.
+
+You must support at least the following operators: -, +, /, *
+The operator input must be a dropdown
+Install nodemon as a development dependency and setup a script to run nodemon
+
+BONUS - Figure out how to style your calculator app with a external stylesheet
