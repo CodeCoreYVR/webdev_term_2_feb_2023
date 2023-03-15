@@ -27,13 +27,17 @@ const server = http.createServer((req, res) => {
         console.log(req.body)
         req.body = queryString.parse(req.body)
 
-        if (url.includes(".")) {
+        // To be more specific, we can write if(url.includes(".css") || url.includes(".js")) 
+        // or json or html according to our need.
+        if (url.includes(".")) { 
             const fn = url.split("/")[1];
             console.log(fn);
             fs.readFile(fn, { encoding: 'utf-8' })
                 .then(data => {
                     console.log(data);
-                    res.writeHead(200, { 'content-type': 'text/html' });
+
+                    // or, it can be text/plain if it is .txt, or it can be text/cs for .css and so on...
+                    res.writeHead(200, { 'content-type': 'text/html' }); 
                     res.write(data);
                     res.end();
                 })

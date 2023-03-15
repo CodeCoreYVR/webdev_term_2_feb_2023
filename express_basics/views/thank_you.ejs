@@ -1,0 +1,26 @@
+<%- include("./partials/header.ejs")  %>
+    <h1>Thank you for the information.</h1>
+    <div>
+        Your name is <%= name %><br/>
+        
+        <% if(hobby) { %>
+            <div>Your hobby is: <%= hobby %></div>
+        <% } %>
+
+        <% if(pet) { %>
+            <div>Your favorite pet is <%= pet %></div>
+        <% } %>
+
+        <div>Programming languages that you like:
+            <% if(javascript) { %>
+                <%- '<b>Javascript</b>' %> 
+            <% } %>
+            <% if(c) { %>
+                <%- '<b>C</b>' %> 
+            <% } %>
+            <% if(ruby) { %>
+                <%- '<b>Ruby</b>' %> 
+            <% } %>
+        </div>
+    </div>
+<%- include("./partials/footer.ejs")  %>
