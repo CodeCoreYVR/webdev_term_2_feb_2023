@@ -1,11 +1,11 @@
 <div>
+  <h1>Car Status</h1>
   <% if (yearOfCar && carStatus) { %>
-    <h1>Car Status</h1>
     <p>Year Of Your Car: <%= yearOfCar %></p>
     <p>Your Car Is <%= carStatus %>!</p>
   <% } %>
 
-  <form action="/car_status" method="POST">
+  <form action="/car_status" method="GET">
     <div>
       <label for="yearOfCar">What is the year of your car?</label>
       <input type="text" id="yearOfCar" name="yearOfCar" placeholder="<%= yearOfCar ? yearOfCar : 'Enter the year of your car' %>"/>

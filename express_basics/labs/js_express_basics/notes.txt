@@ -3,6 +3,7 @@ $ mkdir js_express_basics
 $ cd js_express_basics
 $ npm init -y
 $ npm i morgan ejs
+  - installs morgan and ejs
 $ npm i --save-dev nodemon
 $ npm i
   same as: $ npm install
@@ -12,14 +13,40 @@ add to package.json >
     "start": "nodemon app.js" // add this line
   }, 
 $ app.js
-  - add code for lab.
+  - add code for basic express app
+  - add routes and logic for car_status
+  - add routes and logic for fizz_buzz
 $ mkdir views
 $ code views/car_status.ejs
   - add code for labe
+$ code views/fizz_buss.ejs
+  - add code for labs
 ------------------ To Run -----------------
 $ npm i
 $ npm start
   or
   $ nodemon app.js
 open a browser on url:
-  localhost:3000/car_status.ejs
+  localhost:3000/car_status
+  localhost:3000/fizz_buzz
+-------------------- End ------------------
+
+[Lab] Car Status
+
+Build a web application with Express.js.
+1. Install morgan middleware to log HTTP requests and install ejs view templates.
+2. Install nodemon saving it as a dev dependency using --save-dev. Then in the package.json update your start script to use nodemon instead of node.
+3. Create a page for /car_status that has a form for users to enter the year of their car.
+4. After submitting the form, show on top of the page "future", "new", "old" or "very old" based on the year entered from the user.
+Stretch
+1. Use a drop down list that is auto-populated with years from 2025 down to 1950.
+
+
+[Lab] FizzBuzz... Again?
+
+1. Create a new page at the path /fizz_buzz in your Express application.
+2. Display a form that will take two inputs: number1 and number2.
+3. Then, it will show the numbers from 1 to 100 replacing the numbers that are below the form: - Divisible by number1 with "Fizz" - And, the numbers that are divisible by number2 with "Buzz" - And, the numbers that are divisible by number1 and number2 with "FizzBuzz".
+4. number1 and number2 should be given as a query string.
+
+
