@@ -16,11 +16,14 @@ $ app.js
   - add code for basic express app
   - add routes and logic for car_status
   - add routes and logic for fizz_buzz
+  - add routes and logic for directory_lister
 $ mkdir views
 $ code views/car_status.ejs
-  - add code for labe
+  - add code for lab
 $ code views/fizz_buss.ejs
-  - add code for labs
+  - add code for lab
+$ code views/directory_lister.ejs
+  - add code for lab
 ------------------ To Run -----------------
 $ npm i
 $ npm start
@@ -29,6 +32,7 @@ $ npm start
 open a browser on url:
   localhost:3000/car_status
   localhost:3000/fizz_buzz
+  localhost:3000/directory_lister
 -------------------- End ------------------
 
 [Lab] Car Status
@@ -48,5 +52,24 @@ Stretch
 2. Display a form that will take two inputs: number1 and number2.
 3. Then, it will show the numbers from 1 to 100 replacing the numbers that are below the form: - Divisible by number1 with "Fizz" - And, the numbers that are divisible by number2 with "Buzz" - And, the numbers that are divisible by number1 and number2 with "FizzBuzz".
 4. number1 and number2 should be given as a query string.
+
+
+[Lab] Directory Lister
+
+1. Create a new page at the path /directory_lister in your Express application.
+2. Using fs.readdir, __dirname, path.join read and display all files and directories from the root of your project (the directory containing your package.json).
+3. For example, with a root dir containing the following files and directories, you would create a <ul> where each file or directory is in a <li>.
+.
+├── 2018_notes.md
+├── awesome-answers-react/
+├── best_things.csv
+├── blog_on_rails/
+├── doggo-arena/
+├── dom_manipulation/
+├── mergesorted.js
+├── scriptwithargs.js
+├── stuff.js
+├── syntaxsugar.js
+└── things.js
 
 
