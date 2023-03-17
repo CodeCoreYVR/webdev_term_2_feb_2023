@@ -1,0 +1,25 @@
+---------------- To Create ----------------
+$ mkdir js_express_basics
+$ cd js_express_basics
+$ npm init -y
+$ npm i morgan ejs
+$ npm i --save-dev nodemon
+$ npm i
+  same as: $ npm install
+add to package.json >
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon app.js" // add this line
+  }, 
+$ app.js
+  - add code for lab.
+$ mkdir views
+$ code views/car_status.ejs
+  - add code for labe
+------------------ To Run -----------------
+$ npm i
+$ npm start
+  or
+  $ nodemon app.js
+open a browser on url:
+  localhost:3000/car_status.ejs
