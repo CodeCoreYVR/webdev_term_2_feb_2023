@@ -110,29 +110,44 @@ app.post('/fizz_buzz', (request, response) => {
   });
 });
 
-app.get('/directory_lister', (request, response) => {
-  const rootDir = process.cwd(); // get the current working directory
-  const filesAndDirs = fs.readdirSync(rootDir); // read all files and directories in the root directory
-  const listItems = filesAndDirs.map(item => {
-    const itemPath = path.join(rootDir, item); // create a path to the item
-    const isDir = fs.lstatSync(itemPath).isDirectory(); // check if the item is a directory
-    const link = isDir ? path.join('/directory_lister', item) : path.join('/', item); // create a link to the item
-    
-    return `<li><a href="${link}">${item}${isDir ? '/' : ''}</a></li>`; // create a list item with a link
-  }).join('');
-
-  const html = `<ul>${listItems}</ul>`; // create an unordered list with all the items
-  response.send(html); // send the HTML as a response
-});
-
 // define a route handler for the /directory_lister path
-app.get('/directory_lister', (req, res) => {
+app.get('/directory_lister', (request, response) => {
   // use fs.readdir to read all files and directories from the root of your project
   const rootDir = path.dirname(require.main.filename);
   const filesAndDirs = fs.readdirSync(rootDir);
 
   // render the directory_lister view and pass in the filesAndDirs array as a variable
-  res.render('directory_lister', { filesAndDirs });
+  response.render('directory_lister', { filesAndDirs });
+});
+
+// Define a GET route at '/random_person'
+app.get('/random_person', (request, response) => {
+  // Render the 'random_person' view, and pass in an empty array for 'people' and a null value for 'person'
+  response.render('random_person', { people: [], person: null });
+});
+
+// Define a POST route at '/random_person'
+app.post('/random_person', (request, response) => {
+  // Retrieve the value of the 'people' input field from the request body
+  let people = request.body.people;
+
+  // Split the 'people' string into an array of individual names using the comma as a delimiter
+  const arrayOfPeople = people.split(',');
+
+  // Generate a random index between 0 and the length of the 'arrayOfPeople' array, and use it to select a random name
+  const winner = arrayOfPeople[Math.floor(Math.random() * arrayOfPeople.length)];
+
+  // Capitalize first letter of winner and remove any potential white space
+  const capitalizedPerson = winner.trim().charAt(0).toUpperCase() + winner.trim().slice(1);
+
+  // Convert capitalized person to a string with stars on each side
+  const person = `⭐${capitalizedPerson}⭐!`;
+
+  // Render the 'random_person' view, and pass in the 'people' array and the randomly selected 'person' value
+  response.render('random_person', { 
+    people: arrayOfPeople, 
+    person 
+  });
 });
 
 // define the port and domain that the server will listen on

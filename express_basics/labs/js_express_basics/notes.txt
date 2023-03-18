@@ -16,13 +16,16 @@ $ app.js
   - add code for basic express app
   - add routes and logic for car_status
   - add routes and logic for fizz_buzz
-  - add routes and logic for directory_lister
+  - add route and logic for directory_lister
+  - add routes and logic for random_person
 $ mkdir views
 $ code views/car_status.ejs
   - add code for lab
 $ code views/fizz_buss.ejs
   - add code for lab
 $ code views/directory_lister.ejs
+  - add code for lab
+  $ code views/random_person.ejs
   - add code for lab
 ------------------ To Run -----------------
 $ npm i
@@ -33,6 +36,7 @@ open a browser on url:
   localhost:3000/car_status
   localhost:3000/fizz_buzz
   localhost:3000/directory_lister
+  localhost:3000/random_person
 -------------------- End ------------------
 
 [Lab] Car Status
@@ -71,5 +75,13 @@ Stretch
 ├── stuff.js
 ├── syntaxsugar.js
 └── things.js
+
+
+[Lab] Random Person
+
+1. Create a new page at the path /random_person in your Express application.
+2. Create a form that takes a list of names separated by commas.
+3. After submitting the form, display a single name picked randomly from the list above the form.
+
 
 
