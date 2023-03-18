@@ -1,13 +1,17 @@
-<div>
-  <h1>Random Person</h1>
-  <% if (person) { %>
-    <h2>The winner is <%= person %></h2>    
-  <% } %>
-    <form action="random_person" method="POST">
-      <div>
-        <label for="people">People: </label><br>
-        <textarea name="people" rows="8" cols="100"><%= people ? people : '' %></textarea>
-      </div>
-      <input type="submit" value="send">
-    </form>
-</div>
+<%- include('partials/header') %>
+
+  <div class="container">
+    <h1>Random Person</h1>
+    <% if (person) { %>
+      <h2>The winner is <%= person %></h2>    
+    <% } %>
+      <form action="random_person" method="POST">
+        <div>
+          <label for="people">People: </label><br>
+          <textarea name="people" rows="8" cols="50"><%= people ? people : '' %></textarea>
+        </div>
+        <input type="submit" value="send">
+      </form>
+  </div>
+
+<%- include('partials/footer') %>

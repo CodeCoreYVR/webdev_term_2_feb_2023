@@ -1,8 +1,12 @@
-<div>
-  <h1>Directory Lister</h1>
-  <ul>
-    <% for (let i = 0; i < filesAndDirs.length; i++) { %>
-      <li><%= filesAndDirs[i] %></li>
-    <% } %>
-  </ul>
-</div>
+<%- include('partials/header') %>
+
+  <div class="container">
+    <h1>Directory Lister</h1>
+    <ul>
+      <% for (let i = 0; i < filesAndDirs.length; i++) { %>
+        <li><%= filesAndDirs[i] %></li>
+      <% } %>
+    </ul>
+  </div>
+
+<%- include('partials/footer') %>

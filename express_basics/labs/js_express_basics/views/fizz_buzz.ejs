@@ -1,33 +1,37 @@
-<div>
-  <h1>Fizz Buzz</h1>
-  <form action="/fizz_buzz" method="POST">
-    <div>
-      <label for="number1">Fizz: </label>
-      <input type="text" id="number1" name="number1" placeholder="<%= number1 ? number1 : 'Enter a 2 digit number' %>"/>
-    </div>
-    <div>
-      <label for="number2">Buzz: </label>
-      <input type="text" id="number2" name="number2" placeholder="<%= number2 ? number2 : 'Enter a 2 digit number' %>"/>
-    </div>
+<%- include('partials/header') %>
 
-    <input type="submit" value="send">
-  </form>
+  <div class="container">
+    <h1>Fizz Buzz</h1>
+    <form action="/fizz_buzz" method="POST">
+      <div>
+        <label for="number1">Fizz: </label>
+        <input type="text" id="number1" name="number1" placeholder="<%= number1 ? number1 : 'Enter a 2 digit number' %>"/>
+      </div>
+      <div>
+        <label for="number2">Buzz: </label>
+        <input type="text" id="number2" name="number2" placeholder="<%= number2 ? number2 : 'Enter a 2 digit number' %>"/>
+      </div>
 
-  <% if (numbers) { %>
-    <% for (let i = 0; i < numbers.length; i += 10) { %>
-      <div>
-        <% for (let j = i; j < i + 10; j++) { %>
-          <%= j === numbers.length - 1 ? numbers[j] : `${numbers[j]}, ` %>
-        <% } %>
-      </div>
+      <input type="submit" value="send">
+    </form>
+
+    <% if (numbers) { %>
+      <% for (let i = 0; i < numbers.length; i += 10) { %>
+        <div>
+          <% for (let j = i; j < i + 10; j++) { %>
+            <%= j === numbers.length - 1 ? numbers[j] : `${numbers[j]}, ` %>
+          <% } %>
+        </div>
+      <% } %>
+    <% } else { %>
+      <% for (let i = 0; i < 100; i += 10) { %>
+        <div>
+          <% for (let j = i; j < i + 10; j++) { %>
+            <%= j === 99 ? j : `${j}, ` %>
+          <% } %>
+        </div>
+      <% } %>
     <% } %>
-  <% } else { %>
-    <% for (let i = 0; i < 100; i += 10) { %>
-      <div>
-        <% for (let j = i; j < i + 10; j++) { %>
-          <%= j === 99 ? j : `${j}, ` %>
-        <% } %>
-      </div>
-    <% } %>
-  <% } %>
-</div>
+  </div>
+
+<%- include('partials/footer') %>

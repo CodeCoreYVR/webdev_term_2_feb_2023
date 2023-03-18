@@ -2,8 +2,8 @@
 $ mkdir js_express_basics
 $ cd js_express_basics
 $ npm init -y
-$ npm i morgan ejs
-  - installs morgan and ejs
+$ npm i morgan ejs express
+  - installs morgan, ejs, and express
 $ npm i --save-dev nodemon
 $ npm i
   same as: $ npm install
@@ -18,15 +18,31 @@ $ app.js
   - add routes and logic for fizz_buzz
   - add route and logic for directory_lister
   - add routes and logic for random_person
+  - add app.use(express.static('public'));
 $ mkdir views
 $ code views/car_status.ejs
   - add code for lab
+  - include partials
 $ code views/fizz_buss.ejs
   - add code for lab
+  - include partials
 $ code views/directory_lister.ejs
   - add code for lab
-  $ code views/random_person.ejs
+  - include partials
+$ code views/random_person.ejs
   - add code for lab
+  - include partials
+$ mkdir views/partials
+$ code views/partials/header.ejs
+  - add top of html template
+  - link stylesheet if using one 
+  - add nav bar
+$ code views/partials/footer.ejs
+  - add bottom of html template
+$ mkdir public
+$ mkdir public/css
+$ code public/css/style.css
+  - add whatever css you want
 ------------------ To Run -----------------
 $ npm i
 $ npm start
@@ -84,4 +100,9 @@ Stretch
 3. After submitting the form, display a single name picked randomly from the list above the form.
 
 
+[Lab] Partials and Navbar
+
+1. Separate the top and bottom parts of the pages that you've built in the previous 3 labs into partial templates named header.ejs and footer.ejs in a /views/partials directory.
+2. Then, replace the top and bottom parts in all previous pages with include of header.ejs or include of footer.ejs.
+3. Create a navigation bar to navigate between all of the pages you've built so far in header.ejs that way it'll appear for every page.
 

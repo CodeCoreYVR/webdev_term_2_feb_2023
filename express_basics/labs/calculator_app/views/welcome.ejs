@@ -1,0 +1,26 @@
+<%- include('partials/header') %>
+
+<div class="calculator" style="color:black;">
+  <h1>Calculator</h1>
+    <form action='/' method='POST'>
+      <label for='num1'>Enter the first number:</label>
+      <input type='number' id='num1' name='num1' placeholder="<%= num1 ? num1 : '' %>" required><br><br>
+      <label for='operator'>Choose an operator:</label>
+      <select id='operator' name='operator' required>
+        <option value=''>--Please choose an operator--</option>
+        <option value='+'>+</option>
+        <option value='-'>-</option>
+        <option value='*'>*</option>
+        <option value='/'>/</option>
+      </select><br><br>
+      <label for='num2'>Enter the second number:</label>
+      <input type='number' id='num2' name='num2' placeholder="<%= num2 ? num2 : '' %>" required><br><br>
+      <% if (result) { %>
+        <!-- <label>=</label> -->
+        <div>= <%= result %></div><br>
+      <% } %>
+      <input type='submit' value='Calculate'>
+    </form>
+</div>
+
+<%- include('partials/footer') %>
