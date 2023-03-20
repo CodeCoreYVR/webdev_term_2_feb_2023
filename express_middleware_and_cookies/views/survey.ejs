@@ -1,0 +1,31 @@
+<%- include("./partials/header.ejs")  %>
+
+    <h1>Help us with some information</h1>
+    <form action="/thank_you" method="GET">
+        <div>
+            <label for="name">Your name</label>
+            <input type="text" name="name" id="name" required/>
+        </div>
+        <div>
+            <br/>
+            <label for="hobby">Your hobby</label>
+            <textarea name="hobby" id="" cols="30" rows="10"></textarea>
+        </div>
+        <div>
+            <br/>
+            <div>What programming languages do you like?</div>
+            <label for="c"><input id="c" type="checkbox" name="c"/> C </label><br/>
+            <label for="javascript"><input id="javascript" type="checkbox" name="javascript"/> Javascript</label><br/>
+            <label for="ruby"><input id="ruby" type="checkbox" name="ruby"/> Ruby</label>
+        </div>
+        <br/>
+        <div>
+            <label>Favorite Pet:</label>
+            <br/>
+            <label for="dog"><input id="dog" type="radio" name="pet" value="dog"> Dog</label>
+            <label for="cat"><input id="cat" type="radio" name="pet" value="cat"> Cat</label>
+        </div>
+        <br/>
+        <input type="submit" value="Send">
+    </form>
+    <%- include("./partials/footer.ejs")  %>
