@@ -1,0 +1,94 @@
+/* Reset styles */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* Global styles */
+body {
+  background-color: #1f253d;
+  color: #fff;
+  font-family: sans-serif;
+  font-size: 18px;
+  width: 100%;
+}
+
+nav {
+  display: flex;
+  align-items: center;
+  background-color: #333;
+  color: #fff;
+  height: 50px;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+}
+
+nav ul {
+  display: flex;
+  justify-content: space-around;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  width: 100%;
+}
+
+nav li {
+  margin: 0 10px;
+}
+
+nav a {
+  color: #fff;
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+h1 {
+  margin-top: 50px;
+  text-align: center;
+}
+
+/* Center container */
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  height: 100vh;
+  border-style: solid 2px white;
+}
+
+/* Form styles */
+form {
+  margin: 50px 0px 50px 0px;
+  max-width: 600px;
+}
+
+label {
+  display: block;
+  margin-bottom: 8px;
+}
+
+input[type="number"],
+select {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 4px;
+  margin: 8px 0;
+  box-shadow: 0 0 0 1px #ccc;
+  background-color: #e8eff4;
+}
+
+input[type="submit"] {
+  background-color: #4CAF50;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out; /* add a transition effect */
+}
+

@@ -1,0 +1,137 @@
+/* Reset styles */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* Global styles */
+body {
+  background-color: #ccc;
+  color: #fff;
+  font-family: sans-serif;
+  font-size: 18px;
+  width: 100%;
+}
+
+/* Nav bar styles */
+nav {
+  display: flex;
+  align-items: center;
+  background-color: #333;
+  color: #fff;
+  height: 50px;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+}
+
+nav ul {
+  display: flex;
+  /* justify-content: space-around; */
+  margin: 0px;
+  padding: 0;
+  list-style: none;
+  width: 100%;
+}
+
+nav li {
+  margin: 0 25px;
+}
+
+nav a {
+  color: #fff;
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+h1 {
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 2rem;
+  color: black;
+}
+
+.calculator {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 1rem;
+  width: 300px;
+  margin: 30px auto 0px auto;
+  background-color: #f0f0f0;
+  position: sticky;
+  top: 50%;
+  left: 50%;
+  box-shadow: 1px 4px 10px rgba(0, 0, 0, 3.15);
+}
+
+.display {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: end;
+  overflow-x: auto;
+  border: 3px solid #ccc;
+  background-color: white;
+  padding: 0.5rem;
+  margin-bottom: 1rem;
+  height: 7vh;
+  white-space: nowrap;
+
+}
+
+.buttons {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(5, 1fr);
+  grid-gap: 0.5rem;
+}
+
+button {
+  font-size: 1.5rem;
+  padding: 0.5rem;
+  border: 1px thin black;
+  border-radius: 5px;
+  background-color: #ddd;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #bbb;
+}
+
+.number {
+  grid-column: span 1;
+  background-color: #fff;
+}
+
+.operator {
+  grid-column: span 1;
+  background-color: #ccc;
+}
+
+#clear {
+  grid-column: span 1;
+  background-color: #ff9999;
+}
+
+#plus {
+  grid-row: span 2;
+  background-color: #ccc;
+}
+
+#equals {
+  grid-row: span 2;
+  background-color: #ffcc66;
+}
+
+#zero {
+  grid-column: span 2;
+  background-color: #fff;
+}
+
+#result {
+  font-size: 1.3rem;
+  font-weight: bold;
+  color: #333;
+}

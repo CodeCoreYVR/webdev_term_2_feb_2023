@@ -1,0 +1,82 @@
+<%- include('partials/header') %>
+
+
+<div class="calculator">
+  <h1>Calculator</h1>
+  <div class="display">
+    <span id="result"></span>
+  </div>
+
+  <div class="buttons">
+    <button id="clear">CL</button>
+    <button class="operator" value="/">/</button>
+    <button class="operator" value="*">*</button>
+    <button class="operator" value="-">-</button>
+    <!-- <br> -->
+    <button class="number" value="7">7</button>
+    <button class="number" value="8">8</button>
+    <button class="number" value="9">9</button>
+    <button class="operator" id="plus" value="+">+</button>
+    <!-- <br> -->
+    <button class="number" value="4">4</button>
+    <button class="number" value="5">5</button>
+    <button class="number" value="6">6</button>
+    <!-- <br> -->
+    <button class="number" value="1">1</button>
+    <button class="number" value="2">2</button>
+    <button class="number" value="3">3</button>
+    <button id="equals">=</button>
+    <!-- <br> -->
+    <button class="number" id="zero" value="0">0</button>
+    <button class="number" value=".">.</button>
+  </div>
+</div>
+
+
+<script>
+  const result = document.getElementById('result');
+  let equation = '';
+
+  // Add event listeners to number buttons
+  const numbers = document.querySelectorAll('.number');
+  numbers.forEach(number => {
+    number.addEventListener('click', () => {
+      equation += number.value;
+      result.textContent = equation;
+    });
+  });
+
+  // Add event listeners to operator buttons
+  const operators = document.querySelectorAll('.operator');
+  operators.forEach(operator => {
+    operator.addEventListener('click', () => {
+      equation += ` ${operator.value} `;
+      result.textContent = equation.replace(/ /g, '\u00a0');
+    });
+  });
+
+  // Add event listener to clear button
+  const clear = document.getElementById('clear');
+  clear.addEventListener('click', () => {
+    equation = '';
+    result.textContent = '';
+  });
+
+  // Add event listener to equals button
+  const equals = document.getElementById('equals');
+  equals.addEventListener('click', () => {
+    event.preventDefault();
+    try {
+      // Evaluate the equation using JavaScript's built-in eval() function
+      equation = eval(equation);
+      equation = equation.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+      result.textContent = equation;
+    } catch (error) {
+      // Handle any errors that occur during evaluation
+      console.error(error.message);
+      result.textContent = 'Error';
+    }
+  });
+</script>
+
+<%- include('partials/footer') %>
