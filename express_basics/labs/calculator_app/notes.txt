@@ -1,0 +1,50 @@
+---------------- To Create ----------------
+$ mkdir js_express_basics
+$ cd js_express_basics
+$ npm init -y
+$ npm i morgan ejs express
+  - installs morgan, ejs, and express
+$ npm i --save-dev nodemon
+$ npm i
+  same as: $ npm install
+add to package.json >
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon app.js" // add this line
+  }, 
+$ app.js
+  - add content for lab
+$ mkdir views
+$ code views/welcome.ejs
+  - add code for lab
+$ mkdir public
+$ mkdir public/css
+$ code public/css/style.css
+  - add whatever css you want
+- add to: app.js
+  - app.use(express.static('public'));
+$ code views/partials/header.ejs
+  - add top of html template
+  - link stylesheet if using one 
+  - add nav bar
+  $ code views/partials/footer.ejs
+  - add bottom of html template
+- add to: views/welcome.ejs
+    - include partials
+------------------ To Run -----------------
+$ npm i
+$ npm start
+  or
+  $ nodemon app.js
+open a browser on url:
+  localhost:3000/
+-------------------- End ------------------
+
+[Lab] Calculator
+
+1. Build a new Express app.
+2. Create a calculator page at the path / that behaves like the one on this page.
+[Stretch]
+1. Build a second version of the calculator that behaves like this one.
+
+
