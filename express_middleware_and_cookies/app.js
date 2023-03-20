@@ -1,4 +1,5 @@
 
+const cookieParser = require('cookie-parser');
 const express = require('express');
 const log = require('morgan');
 const path = require("path");
@@ -15,31 +16,45 @@ app.use(log(':method :url :status :res[content-length] - :response-time ms'));
 // web server framework looks in this directory (images, css, js and so on).
 app.use(express.static(path.join(__dirname, "public"))) 
 
+// Middleware to parse our cookie
+app.use(cookieParser()) 
+
+// Middleware for x-www-urlencoded body
+app.use(express.urlencoded({extended: true}))
+
+// Write a middleware of our one that would save the username from cookie and add it to the response body.
+// We will be able to use that username from response body from other pages.
+app.use((request, response, next) => {
+    console.log(request.cookies);
+    const { username } = request.cookies;
+    response.locals.username = username;
+    next();
+})
+
 //more information: http://expressjs.com/en/5x/api.html#app.settings.table
 app.set("view engine", "ejs");
 
 // app.set("views","pages")
 
 
-app.get("/", (req, res) => {
+app.get("/", (request, response) => {
     // response.send("<h2>Welcome to the express app!</h2>")
-    res.render("welcome");
+    response.render("welcome");
 })
 
-app.get("/hello_world", (req, res) => {
-    res.send("<h2>Hello world!</h2>")
+app.get("/hello_world", (request, response) => {
+    response.send("<h2>Hello world!</h2>")
 })
 
-app.get("/survey", (req, res) => {
-    res.render("survey");
+app.get("/survey", (request, response) => {
+    response.render("survey");
 })
 
-app.get("/thank_you", (req, res)=> {
-    console.log(req.query);
+app.get("/thank_you", (request, response)=> {
 
-    let { name, hobby, pet, javascript, c, ruby } = req.query;
+    let { name, hobby, pet, javascript, c, ruby } = request.query;
 
-    res.render("thank_you", {
+    response.render("thank_you", {
         name, //name: name
         hobby,
         javascript: javascript || "",
@@ -47,6 +62,18 @@ app.get("/thank_you", (req, res)=> {
         ruby: ruby || "",
         pet
     });
+})
+
+const maxAge = 30*24*60*60*1000; // 30 days expiry time.
+app.post("/sign_in", (request, response) => {
+    const { username } = request.body; // uses middleware express.urlencoded => const username = request.body.username;
+    response.cookie("username", username, {maxAge: maxAge}); // uses middleware cookieparser cookie("nameOfCookie", "valueOfCookie"); 
+    response.redirect("/");
+})
+
+app.post("/sign_out", (request, response) => {
+    response.clearCookie("username");
+    response.redirect("/");
 })
 
 const PORT = process.env.PORT || 3000;

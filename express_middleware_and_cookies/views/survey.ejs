@@ -1,15 +1,16 @@
 <%- include("./partials/header.ejs")  %>
 
-    <h1>Help us with some information</h1>
+    <h1>Help us with some information, <%= username %></h1>
     <form action="/thank_you" method="GET">
-        <div>
-            <label for="name">Your name</label>
-            <input type="text" name="name" id="name" required/>
+        <div class="mb-3">
+            <label for="name" class="form-label">Your name</label>
+            <input type="text" class="form-control" name="name" id="name" required aria-describedby="Your Name">
         </div>
         <div>
             <br/>
-            <label for="hobby">Your hobby</label>
-            <textarea name="hobby" id="" cols="30" rows="10"></textarea>
+            <label for="hobby" class="form-label">Your hobby</label>
+            <!-- <textarea name="hobby" id="" cols="30" rows="10"></textarea> -->
+            <textarea class="form-control" name="hobby" id="" placeholder="Write something about your hobby" id="hobby"></textarea>
         </div>
         <div>
             <br/>
