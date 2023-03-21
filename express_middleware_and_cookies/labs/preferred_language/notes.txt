@@ -1,0 +1,71 @@
+---------------- To Create ----------------
+$ mkdir preferred_language
+$ cd preferred_language
+$ npm init -y
+$ npm i morgan ejs express
+  - installs morgan, ejs, and express
+$ npm i --save-dev nodemon
+$ npm i express cookie-parser
+$ npm i
+  same as: $ npm install
+add to package.json >
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon app.js" // add this line
+  }, 
+$ code app.js
+  - add content for lab
+  - add: app.use(cookieParser());
+  - add: app.use(express.static('public'));
+$ mkdir public
+$ mkdir public/css
+$ code public/css/style.css
+  - add whatever css you want
+$ mkdir views
+$ mkdir views/partials
+$ code views/partials/header.ejs
+  - add top of html template
+  - link stylesheet if using one 
+  - add nav bar
+$ code views/partials/footer.ejs
+  - add bottom of html template
+$ mkdir views
+$ app.js
+  - add GET route for /
+$ code views/home.ejs
+  - add code for lab
+  - include partials
+$ app.js
+  - add GET route for /language_selection
+$ code views/language_selection.ejs
+  - add content for lab
+$ app.js
+  - add POST route for /language_selection
+  - add logic to GET route for / and extract the cookies if they exist
+    or
+    - add todoList to locals through a custom middleware
+$ views/home.ejs
+  - display greeting if exists 
+------------------ To Run -----------------
+$ npm i
+$ npm start
+  or
+  $ nodemon app.js
+open a browser on url:
+  localhost:3000/
+-------------------- End ------------------
+
+[Lab] Prefered language 
+
+
+1. Build an Express.js application that has two pages:
+  a.  Home page
+  b.  Language Selection Page
+2. In the language selection page, the user can enter their name and preferred language from a dropdown (options are: English, French and Spanish). The information is stored in the cookies so the user doesn't have to enter them again.
+3. If the user selects a language and a name then the home page should have an <h1> that greets the user with the selected language. So if the user's name is Tam, here is what the greeting will look like:
+  - English: Hello Tam
+  - French: Bonjour Tam
+  - Spanish: Hola Tam
+4. If the user didn't select a name and a language, the home page should say: Welcome to My Awesome Website
+
+
