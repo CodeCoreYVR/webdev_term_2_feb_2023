@@ -45,33 +45,38 @@ nav a {
   font-weight: bold;
 }
 
-h1 {
+/* .card-custom {
+  max-width: 400px;
+  margin: auto; 
+} */
+
+/* h1 {
   margin-top: 50px;
   text-align: center;
-}
+} */
 
 /* Center container */
-.container {
+/* .container {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
   height: 100vh;
   border-style: solid 2px white;
-}
+} */
 
 /* Form styles */
-form {
+/* form {
   margin: 50px 0px 50px 0px;
   max-width: 600px;
-}
+} */
 
-label {
+/* label {
   display: block;
   margin-bottom: 8px;
-}
+} */
 
-input[type="number"],
+/* input[type="number"],
 select {
   width: 100%;
   padding: 12px;
@@ -80,9 +85,9 @@ select {
   margin: 8px 0;
   box-shadow: 0 0 0 1px #ccc;
   background-color: #e8eff4;
-}
+} */
 
-button {
+/* button {
   background-color: #959795;
   box-shadow: 2px 2px 2px #606160;
   color: white;
@@ -90,6 +95,6 @@ button {
   border: none;
   border-radius: 4px;
   cursor: pointer;
-  transition: background-color 0.3s ease-in-out; /* add a transition effect */
-}
+  transition: background-color 0.3s ease-in-out;
+} */
 

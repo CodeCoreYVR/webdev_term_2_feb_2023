@@ -1,20 +1,26 @@
 <%- include('../partials/header') %>
 
-  <div class="container">
-    <h1>Notes List</h1>
-    <h2>________________________</h2>
+  <div class="container mt-5 card-custom" style="margin:auto;max-width: 400px;">
+    <h1 class="text-center">Notes List</h1>
+    <hr>
     <a href="/todo/new">Add New Reminder</a>
-    <ul>
+    <div class="row mt-4">
       <% if (todoList.length) { %>
         <% todoList.forEach((reminder, index) => { %>
-          <li>
-            <h3><a href="/todo/<%= index %>/show"><%= reminder.title %></a></h3>
-          </li>
+          <div class="col-12 mb-4">
+            <div class="card">
+              <div class="card-body">
+                <p class="card-title"><a href="/todo/<%= index %>/show"><%= reminder.title %></a></p>
+              </div>
+            </div>
+          </div>
         <% }) %>
       <% } else { %>
-        <li>No reminders found...</li>
+        <div class="col-sm-12">
+          <p>No reminders found...</p>
+        </div>
       <% } %>
-    </ul>
+    </div>
   </div>
 
 <%- include('../partials/footer') %>

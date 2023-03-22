@@ -58,6 +58,15 @@ $ code views/todo/show.ejs
   - include partials
 - views/todo/index.ejs
   - turn each title into a link with href="/todo/:${i}/show"
+$ npm i bootstrap@5.3.0-alpha1
+- views/partials/header.ejs
+  - add to bottom of <head>:
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+- views/partials/footer.ejs
+  - add to very top of page above </body>:
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+-views/todo{new.ejs, index.ejs, show.ejs}
+  - switch whichever css class, id, tags you want for bootstrap formats.
 ------------------ To Run -----------------
 $ npm i
 $ npm start
@@ -74,5 +83,12 @@ Build an Express.js application that help users save reminder notes with cookies
 2.  When submitting, the reminder note will be saved in a cookie.
 3.  There must be a another page to view the list of notes.
 
+
+[Lab] Fancy Schmancy Todo List
+
+1. Using the static assets middleware install Bootstrap with bells & whistles (support for its JavaScript features). You can not use the CDN to install it. Your app must serve Bootstrap's CSS and JavaScript files itself.
+2. Use Bootstrap to enhance your app as follows:
+  a. Use the card component to display each reminder note.
+  b. Use the form components to improve the note creating form.
 
 
