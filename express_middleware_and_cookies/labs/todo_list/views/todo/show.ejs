@@ -1,0 +1,22 @@
+<%- include('../partials/header') %>
+
+  <div class="d-flex justify-content-center align-items-center mt-5">
+    <div class="column">
+      <!-- <div class="card-header"> -->
+        <h1 class="text-center">Reminder #<%= reminderIndex %></h1>
+      <!-- </div> -->
+      <hr>
+      <!-- <div class="row mt-4"> -->
+        <h3 class="mt-4">Title: </h3>
+        <div class="card">
+          <h2 class="card-title"><%= todoList[reminderIndex].title %></h2>
+        </div>
+        <h3 class="mt-4">Body: </h3>
+        <div class="card">
+          <p class="card-text"><%= todoList[reminderIndex].body %></p>
+        </div>
+      <!-- </div> -->
+    </div>
+  </div>
+
+<%- include('../partials/footer') %>
