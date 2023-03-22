@@ -23,7 +23,25 @@ router.get('/new', (req, res) => {
     res.render('posts/new')
 })
 
+router.post('/', (request, response) => {
+    console.log(request.body, request.cookies.username);
 
+    let { title, content, image_url } = request.body;
+
+    knex('posts')
+        .insert({
+            title: title,
+            content: content,
+            image_url: image_url
+        })
+        .then(data => {
+            response.redirect("/posts");
+        })
+        .catch(ex => {
+            console.error(ex);
+            response.send("<h1>Something went wrong</h1>")
+        });
+})
 
 // request.query ====> url?name=value&name2=value2
 // request.body (urlencoding middleware required) ==> post method body information
@@ -42,31 +60,65 @@ router.get('/:id', (request, response) => {
             console.log(post)
             response.render('posts/details', ...post);
         })
+        .catch(ex => {
+            console.error(ex);
+            response.send("<h1>Something went wrong</h1>")
+        });
 
 })
 
-// Rest Apis
-router.post('/', (request, response) => {
-    console.log(request.body, request.cookies.username);
 
-    let { title, content, image_url } = request.body;
 
-    knex('posts')
-        .insert({
-            title: title,
-            content: content,
-            image_url: image_url
-        })
-        .then(data => {
-            console.log(request.body);
-            response.redirect("/posts");
+router.get('/:id/edit', (request, response) => {
+    const { id } = request.params; // const id = request.params.id;
+
+    knex("posts")
+        .where("id", id)
+        .then(post => {
+            console.log(post)
+            response.render('posts/edit', ...post);
         })
         .catch(ex => {
             console.error(ex);
             response.send("<h1>Something went wrong</h1>")
         });
 
-
 })
+
+router.patch('/:id', (request, response) => {
+    //delete post
+    let { title, content, image_url } = request.body;
+
+    knex('posts')
+        .update({
+            title: title,
+            content: content,
+            image_url: image_url
+        })
+        .where("id", request.params.id)
+        .then(data => {
+            response.redirect("/posts/" + request.params.id);
+        })
+        .catch(ex => {
+            console.error(ex);
+            response.send("<h1>Something went wrong</h1>")
+        });
+})
+
+
+router.delete('/:id', (request, response) => {
+    //delete post
+    knex("posts")
+        .del()
+        .where("id", request.params.id)
+        .then(data => {
+            response.redirect("/posts");
+        })
+        .catch(ex => {
+            console.error(ex);
+            response.send("<h1>Something went wrong</h1>")
+        });
+})
+
 
 module.exports = router

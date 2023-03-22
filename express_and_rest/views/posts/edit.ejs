@@ -1,0 +1,21 @@
+<%- include("../partials/header.ejs") %>
+
+  <h1>Edit Post</h1>
+
+  <form action="/posts/<%= id %>" method="POST">
+    <input type="hidden" name="_method" value="PATCH">
+    <div class="form-group mb-3 mt-3">
+      <input type="text" class="form-control" name="title" value="<%= title %>" placeholder="What is your post about?" />
+    </div>
+    <div class="form-group mb-3">
+      <input type="url" class="form-control" name="image_url"  value="<%= image_url %>" placeholder="e.g. http://image.com/myPic.png" />
+    </div>
+    <div></div>
+    <div class="form-group mb-3">
+      <textarea class="form-control" name="content" placeholder="What are your thoughts?" cols="30" rows="10"><%= content %></textarea>
+    </div>
+    <div></div>
+    <input type="submit" value="Edit post" class="btn btn-success">
+  </form>
+
+  <%- include("../partials/footer.ejs") %>
