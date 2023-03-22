@@ -1,0 +1,12 @@
+<%- include('../partials/header') %>
+
+  <div class="container">
+    <h1>Reminder #<%= reminderIndex %></h1>
+    <h2>________________________</h2>
+    <div>
+      <h2><%= todoList[reminderIndex].title %></h2>
+      <p><%= todoList[reminderIndex].body %></p>
+    </div>
+  </div>
+
+<%- include('../partials/footer') %>

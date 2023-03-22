@@ -1,0 +1,78 @@
+---------------- To Create ----------------
+$ mkdir todo_list
+$ cd todo_list
+$ npm init -y
+$ npm i morgan ejs express cookie-parser
+  - installs morgan, ejs, express, and cookie-parser
+$ npm i --save-dev nodemon
+$ npm i
+  same as: $ npm install
+add to package.json >
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon app.js" // add this line
+  }, 
+$ code app.js
+  - add content for lab
+  - add: app.use(cookieParser());
+  - add: app.use(express.static('public'));
+$ mkdir public
+$ mkdir public/css
+$ code public/css/style.css
+  - add whatever css you want
+$ mkdir views
+$ mkdir views/partials
+$ code views/partials/header.ejs
+  - add top of html template
+  - link stylesheet if using one 
+  - add nav bar
+$ code views/partials/footer.ejs
+  - add bottom of html template
+$ mkdir views
+- app.js
+  - add GET route for /
+$ code views/welcome.ejs
+  - add basic welcome title
+  - include partials
+$ mkdir views/todo
+$ code views/todo/index.ejs
+  - add code for lab
+  - include partials
+- app.js
+  - add GET route for /todo/index
+$ code views/todo/index.ejs
+  - add content for lab
+  - include partials
+- app.js
+  - add GET route for /todo/new
+$ code views/todo/new.ejs
+  - add content for lab
+  - include partials
+- app.js
+  - add POST route for /todo/new
+  - add logic to GET route for /todo/:index/show and extract the cookies if they exist
+    or
+    - add todoList to locals through a custom middleware
+$ code views/todo/show.ejs
+  - add content
+  - include partials
+- views/todo/index.ejs
+  - turn each title into a link with href="/todo/:${i}/show"
+------------------ To Run -----------------
+$ npm i
+$ npm start
+  or
+  $ nodemon app.js
+open a browser on url:
+  localhost:3000/
+-------------------- End ------------------
+
+[Lab] Todo List With cookies
+
+Build an Express.js application that help users save reminder notes with cookies. Here are the required features:
+1.  There must be a page with a form to enter a reminder with a title and a body.
+2.  When submitting, the reminder note will be saved in a cookie.
+3.  There must be a another page to view the list of notes.
+
+
+

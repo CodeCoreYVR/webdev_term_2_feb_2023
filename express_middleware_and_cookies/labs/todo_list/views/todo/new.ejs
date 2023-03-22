@@ -1,0 +1,19 @@
+<%- include('../partials/header') %>
+
+  <div class="container">
+    <h1>New Reminder</h1>
+    <h2>________________________</h2>
+    <form action="/todo/new" method="POST">
+      <div>
+        <label for="title">Title: </label>
+        <input type="text" id="title" name="title" require>
+      </div>
+      <div>
+        <label for="body">Body: </label>
+        <input id="body" name="body" require>
+      </div>
+      <button type="submit">Save</button>
+    </form>
+  </div>
+
+<%- include('../partials/footer') %>

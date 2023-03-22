@@ -2,10 +2,9 @@
 $ mkdir preferred_language
 $ cd preferred_language
 $ npm init -y
-$ npm i morgan ejs express
+$ npm i morgan ejs express cookie-parser
   - installs morgan, ejs, and express
 $ npm i --save-dev nodemon
-$ npm i express cookie-parser
 $ npm i
   same as: $ npm install
 add to package.json >
@@ -42,8 +41,6 @@ $ code views/language_selection.ejs
 $ app.js
   - add POST route for /language_selection
   - add logic to GET route for / and extract the cookies if they exist
-    or
-    - add todoList to locals through a custom middleware
 $ views/home.ejs
   - display greeting if exists 
 ------------------ To Run -----------------
@@ -55,8 +52,8 @@ open a browser on url:
   localhost:3000/
 -------------------- End ------------------
 
-[Lab] Prefered language 
 
+[Lab] Prefered language 
 
 1. Build an Express.js application that has two pages:
   a.  Home page
