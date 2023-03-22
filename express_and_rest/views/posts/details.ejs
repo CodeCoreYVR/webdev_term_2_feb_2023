@@ -1,0 +1,21 @@
+<%- include("../partials/header.ejs") %>
+
+    <div class="card mt-4">
+        <div class="card-header">
+            <%= title %>
+                <div class="pull-right">
+                    <%= created_at %>
+                </div>
+        </div>
+        <div class="card-body">
+            <p class="card-text">
+                <%= content %>
+            </p>
+            <div>
+                <img src="<%= image_url %>" class="img-thumbnail img-fluid" alt="Image of Post" />
+            </div>
+
+        </div>
+    </div>
+
+    <%- include("../partials/footer.ejs") %>

@@ -8,8 +8,8 @@ module.exports = {
   development: {
     client: 'pg',
     connection: {
-      user: 'nimbus-user',
-      password: 'nimbus-user',
+      // user: 'nimbus-user',
+      // password: 'nimbus-user',
       database: 'express_rest_basic'
     },
     migrations: {
