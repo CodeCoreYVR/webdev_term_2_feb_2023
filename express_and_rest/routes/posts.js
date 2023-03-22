@@ -32,7 +32,8 @@ router.post('/', (request, response) => {
         .insert({
             title: title,
             content: content,
-            image_url: image_url
+            image_url: image_url,
+            posted_by: request.cookies.username || "Anonymous"
         })
         .then(data => {
             response.redirect("/posts");
