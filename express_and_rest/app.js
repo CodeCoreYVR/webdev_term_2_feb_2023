@@ -32,6 +32,7 @@ app.use((request, response, next) => {
     next();
 })
 
+
 app.use(methodOverride((request, response) => {
     if (request.body._method) {
         const method = request.body._method;
@@ -42,48 +43,11 @@ app.use(methodOverride((request, response) => {
 
 //more information: http://expressjs.com/en/5x/api.html#app.settings.table
 app.set("view engine", "ejs");
-
 // app.set("views","pages")
 
-
-app.get("/", (request, response) => {
-    // response.send("<h2>Welcome to the express app!</h2>")
-    response.render("welcome");
-})
-
-app.get("/hello_world", (request, response) => {
-    response.send("<h2>Hello world!</h2>")
-})
-
-app.get("/survey", (request, response) => {
-    response.render("survey");
-})
-
-app.get("/thank_you", (request, response) => {
-
-    let { name, hobby, pet, javascript, c, ruby } = request.query;
-
-    response.render("thank_you", {
-        name, //name: name
-        hobby,
-        javascript: javascript || "",
-        c: c || "",
-        ruby: ruby || "",
-        pet
-    });
-})
-
-const maxAge = 30 * 24 * 60 * 60 * 1000; // 30 days expiry time.
-app.post("/sign_in", (request, response) => {
-    const { username } = request.body; // uses middleware express.urlencoded => const username = request.body.username;
-    response.cookie("username", username, { maxAge: maxAge }); // uses middleware cookieparser cookie("nameOfCookie", "valueOfCookie"); 
-    response.redirect("/");
-})
-
-app.post("/sign_out", (request, response) => {
-    response.clearCookie("username");
-    response.redirect("/");
-})
+// -----------Rout Routes---------
+const rootRouter = require('./routes/root')
+app.use('/', rootRouter);
 
 // ---------------POST ROUTER ACCESSING POST ROUTES--------------------------
 const postRouter = require('./routes/posts')
