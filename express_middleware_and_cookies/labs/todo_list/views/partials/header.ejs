@@ -18,4 +18,12 @@
         |
         <li><a href="/todo/new">New</a></li>
       </ul>
+      <ul class="nav-end-ul">
+        <% if(username) { %>
+          <li><div>Welcome, <%= username %>!</div></li>
+          <li><button class="btn btn-secondary" onclick="location.href='/user/logout'">Logout</li>
+        <% } else { %>
+          <li><button class="btn btn-secondary" onclick="location.href='/user/login'">Login</button></li>
+        <% } %>
+      </ul>
     </nav>
