@@ -1,0 +1,25 @@
+<%- include('partials/header') %>
+
+  <div class="container">
+    <h1>Tasks:</h1>
+    <div>
+      <form action="/tasks" method="POST">
+        <div>
+          <label for="body">Task: </label>
+          <input id="body" name="body" require>
+        </div>
+        <button type="submit">Save Task</button>
+      </form>
+    </div>
+    <% if (tasks.length > 0) { %>
+      <ol>
+        <% tasks.forEach((task, index) => { %>
+          <h3><%= index + 1 %>. <%= task.body %></h3>
+        <% }) %>
+      </ol>
+    <% } else { %>
+      <h3>No tasks created ...yet</h3>
+    <% } %>
+  </div>
+
+<%- include('partials/footer') %>

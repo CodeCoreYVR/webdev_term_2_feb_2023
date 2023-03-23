@@ -1,0 +1,80 @@
+---------------- To Create ----------------
+$ mkdir todo_list
+$ cd todo_list
+$ npm init -y
+$ npm i morgan ejs express pg knex
+  - installs morgan, ejs, express, pg, and knex
+$ npm i --save-dev nodemon
+$ npm i
+  same as: $ npm install
+add to package.json >
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1", // don't forget the ',' as this is an object
+    "start": "nodemon app.js" // add this line
+  }, 
+$ code app.js
+  - add content for lab
+  - add: app.use(express.static('public'));
+$ mkdir public
+$ mkdir public/css
+$ code public/css/style.css
+  - add whatever css you want
+$ mkdir views
+$ mkdir views/partials
+$ code views/partials/header.ejs
+  - add top of html template
+  - link stylesheet if using one 
+  - add nav bar
+$ code views/partials/footer.ejs
+  - add bottom of html template
+$ mkdir views
+- app.js
+  - add GET route for /
+$ code views/welcome.ejs
+  - add basic welcome title
+  - include partials
+$ createdb todo_list
+$ npx knex init
+- knexfile.js
+  - add content specific to client(i.e. 'pg'), db name, migrations path
+  - if linux also add your user name and password to user: and password:
+$ code db/client.js
+  - add standard client script to file
+$ npx knex migrate:make create_tasks_table
+  or if installed globally:
+  $ knex migrate:make create_tasks_table
+./db/migrations/name_of_migrations_file.js
+  - add columns to table 
+$ npx knex migrate:latest
+  or if installed globally:
+  $ knex migrate:latest
+$ mkdir views/tasks
+$ code views/tasks/index.ejs
+  - add code for lab
+  - include partials
+- app.js
+  - add GET route for /tasks
+$ code views/todo/index.ejs
+  - add content for lab
+  - include partials
+- app.js
+  - add POST route for /tasks
+------------------ To Run -----------------
+$ npm i
+$ npm start
+  or
+  $ nodemon app.js
+open a browser on url:
+  localhost:3000/
+-------------------- End ------------------
+
+[Lab] Todo List New and Create
+
+1. Build a simple todo list with Express that has one index page build on the project from the previous lab.
+2. Create two routes:
+  a. GET /tasks which should act as an index and the form for creating the tasks should be at the top of the tasks list.
+  b. POST /tasks which should create a task when the form from GET /tasks is submitted, then redirects back to GET /tasks
+3. You will need to create a new table, tasks, for your project.
+  a. It will have a table, tasks, which will have timestamps columns, an incrementing id column and a body column.
+
+
