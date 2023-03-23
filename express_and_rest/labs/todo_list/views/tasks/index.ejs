@@ -1,4 +1,4 @@
-<%- include('partials/header') %>
+<%- include('../partials/header') %>
 
   <div class="container">
     <h1>Tasks:</h1>
@@ -14,7 +14,7 @@
     <% if (tasks.length > 0) { %>
       <ol>
         <% tasks.forEach((task, index) => { %>
-          <h3><%= index + 1 %>. <%= task.body %></h3>
+          <h3><%= index + 1 %>. <a href="/tasks/<%= task.id %>"><%= task.body %></a></h3>
         <% }) %>
       </ol>
     <% } else { %>
@@ -22,4 +22,4 @@
     <% } %>
   </div>
 
-<%- include('partials/footer') %>
+<%- include('../partials/footer') %>

@@ -1,0 +1,17 @@
+<%- include('../partials/header') %>
+
+  <div class="container">
+    <h1>Task Edit</h1>
+    <form action="/tasks/<%= id %>" method="POST">
+      <div>
+        <input type="hidden" name="_method" value="PATCH">
+        <h2>Task #<%= id %></h2>
+        <br><br>
+        <h4>Body: </h4>
+        <textarea name="body" cols="30" rows="10"><%= body %></textarea>
+      </div>
+      <button type="submit">Edit</button>
+    </form>
+  </div>
+
+<%- include('../partials/footer') %>
