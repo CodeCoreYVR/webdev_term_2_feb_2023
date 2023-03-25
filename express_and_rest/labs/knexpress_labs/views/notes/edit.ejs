@@ -1,0 +1,25 @@
+<%- include('../partials/header') %>
+
+<!-- This .ejs file represents the form for editing a note -->
+<div class="container">
+  <h1>Edit Note</h1>
+  <div>
+    <!-- This form sends a PATCH request to the server to update the note -->
+    <form action="/notes/<%= id %>" method="POST">
+      <!-- This hidden input field is used to specify the HTTP method to use -->
+      <input type="hidden" name="_method" value="PATCH">
+      <div>
+        <label for="content">Note: </label>
+        <!-- This textarea allows the user to input the new note content -->
+        <textarea name="content" cols="50" rows="5"><%= content %></textarea>
+        <!-- This paragraph displays the date the note was last updated -->
+        <p class="date">Updated: <%= new Date(updated_at).toLocaleString() %></p>
+      </div>
+      <!-- This button submits the form and updates the note -->
+      <button type="submit">Save</button>
+    </form>
+  </div>
+</div>
+
+
+<%- include('../partials/footer') %>

@@ -1,0 +1,118 @@
+------------------ To Run -----------------
+$ npm i
+$ npm start
+  or
+  $ nodemon app.js
+open a browser on url:
+  localhost:3000/
+---------------- To Create ----------------
+$ mkdir knexpress_labs
+$ cd knexpress_labs
+$ npm init -y
+$ npm i morgan express pg knex ejs method-override
+  - installs morgan, express, pg, knex, ejs, method-override
+$ npm i nodemon --save-dev
+$ npm i
+  same as: $ npm install
+add to package.json >
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1", // don't forget the ',' as this is an object
+    "start": "nodemon app.js" // add this line
+  }, 
+$ npx knex init
+$ createdb knexpress_labs
+- knexfile.js
+  - add content specific to client(i.e. 'pg'), db name, migrations path
+  - if linux also add your user name and password to user: and password:
+$ npx knex migrate:make create_notes_table
+  or if installed globally:
+  $ knex migrate:make create_notes_table
+$ code db/client.js
+  - add standard client script to file
+- ./db/migrations/name_of_migrations_file.js
+  - add columns to table 
+$ npx knex migrate:latest
+  or if installed globally:
+  $ knex migrate:latest
+$ code app.js
+  - add content for lab
+  - add: app.use(express.static('public'));
+  - require method-override
+  - app.use methodOverride
+$ mkdir public
+$ mkdir public/css
+$ code public/css/style.css
+  - add whatever css you want
+$ mkdir views
+$ mkdir views/partials
+$ code views/partials/header.ejs
+  - add top of html template
+  - link stylesheet if using one 
+  - add nav bar
+$ code views/partials/footer.ejs
+  - add bottom of html template
+$ mkdir views
+- app.js
+  - add GET route for /
+$ code views/welcome.ejs
+  - add basic welcome title
+  - include partials
+- app.js
+  - requre('./routes/notes)
+  - app.use noteRouter
+$ mkdir routes
+$ code routes/notes.js
+  - add stuff for labs including
+  - add GET route for /
+$ mkdir views/notes
+$ code views/notes/index.ejs
+  - add content for lab
+  - include partials
+- routes/notes.js
+  - add GET route for /new
+- code views/notes/new.ejs
+  - add content for labs
+  - include partials
+- routes/notes.js
+  - add POST route for /
+$ code views/notes/show.ejs
+  - add content for labs
+  - include partials
+- routes/notes.js
+  - add GET route for /:id // show page
+  - add DELETE route for /:id
+- views/notes/show.ejs
+  - add delete button with POST/DELETE methods
+- routes/notes.js
+  - add GET method for /:id/edit
+$ code views/notes/edit.ejs
+  - add content for labs
+  - include partials
+  - add POST/UPDATE methods
+- views/notes/show.ejs
+  - add edit button or <a> with href to /notes/id_number_for_post/edit 
+- routes/notes.js
+  - add PATCH route for /:id
+-------------------- End ------------------
+
+[Lab] Note Saver
+
+1. In summary, build a small app where users will be able to create and read notes.
+2. To begin, create a new Express app, knexpress_labs, from scratch which you'll use for the remaining labs today.
+3. Things you might want to setup for your project:
+  a. Install nodemon.
+  b. Install knex and pg.
+  c. Create a db for your project.
+  d. Setup a  knexfile.js.
+  e. Install middleware you'll want to use such as  morgan for logging.
+4. With a solid foundation, begin work on the note taking app. First, create a table for storing notes which must have  id, content and createdAt columns.
+5. Then, create all CRUD routes for the notes in their own router module.
+  a. A route to show a form for creating a note at GET /notes/new
+  b. A route for create notes from form submissions at POST /notes
+  c. A route to list the notes at GET /notes
+  d. A route to show a single note at GET /notes/:id
+  e. A route to delete a note at DELETE /notes/:id
+  f. A route to edit a note at GET /notes/:id/:edit
+  g. A route to update an edited note at PATCH /notes/:id
+
+
