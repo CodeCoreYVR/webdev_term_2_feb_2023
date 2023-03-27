@@ -1,0 +1,20 @@
+<%- include('../partials/header') %>
+
+  <!-- This .ejs file represents the page displaying a list of notes -->
+  <div class="container">
+    <h1>Notes</h1>
+    <hr>
+    <ol>
+      <% if (notes.length > 0) { %>
+        <% /* loop through each note in the 'notes' array and generate an HTML list item for each one */ %>
+        <% notes.forEach((note, index) => { %>
+          <li><a href="/notes/<%= note.id %>"><%= note.content %></a></li>
+        <% }) %>
+      <% } else { %>
+        <% /* display a message if there are no notes */ %>
+        <li><h3>No notes created ...yet</h3></li>
+      <% } %>
+    </ol>
+  </div>
+
+<%- include('../partials/footer') %>

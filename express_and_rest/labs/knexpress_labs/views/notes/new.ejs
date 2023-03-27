@@ -1,0 +1,20 @@
+<%- include('../partials/header') %>
+
+<!-- This .ejs file represents the form for creating a new note -->
+<div class="container">
+  <h1>New Note</h1>
+  <div>
+    <!-- This form sends a POST request to the server to create a new note -->
+    <form action="/notes" method="POST">
+      <div>
+        <label for="content">Note: </label>
+        <!-- This input field allows the user to input the content of the new note -->
+        <input id="content" name="content" require>
+      </div>
+      <!-- This button submits the form and creates the new note -->
+      <button type="submit">Save</button>
+    </form>
+  </div>
+</div>
+
+<%- include('../partials/footer') %>

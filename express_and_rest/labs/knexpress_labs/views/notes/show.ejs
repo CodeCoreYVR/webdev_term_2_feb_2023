@@ -1,0 +1,29 @@
+<%- include('../partials/header') %>
+
+<!-- This .ejs file represents the display for a single note -->
+<div class="container">
+  <h1>Task Show</h1>
+  <div>
+    <div>
+      <h2>ID: <%= id %></h2>
+      <h4>Content: <%= content %></h4>
+      <!-- This paragraph displays the date the note was created -->
+      <p class="date">Created on: <%= new Date(created_at).toLocaleString() %></p>
+    </div>
+    <div class="show-buttons">
+      <!-- This form sends a GET request to the server to load the edit form for the note -->
+      <form action="/notes/<%= id %>/edit" method="GET">
+        <button type="submit">Edit</button>
+      </form>
+      <!-- This form sends a DELETE request to the server to delete the note -->
+      <form action="/notes/<%= id %>" method="POST">
+        <!-- This hidden input field is used to specify the HTTP method to use -->
+        <input type="hidden" name="_method" value="DELETE">
+        <button type="submit">Delete</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+
+<%- include('../partials/footer') %>

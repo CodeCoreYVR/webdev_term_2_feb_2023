@@ -1,0 +1,121 @@
+---------------- To Create ----------------
+$ mkdir todo_list
+$ cd todo_list
+$ npm init -y
+$ npm i morgan ejs express pg knex
+  - installs morgan, ejs, express, pg, and knex
+$ npm i --save-dev nodemon
+$ npm i
+  same as: $ npm install
+add to package.json >
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1", // don't forget the ',' as this is an object
+    "start": "nodemon app.js" // add this line
+  }, 
+$ code app.js
+  - add content for lab
+  - add: app.use(express.static('public'));
+$ mkdir public
+$ mkdir public/css
+$ code public/css/style.css
+  - add whatever css you want
+$ mkdir views
+$ mkdir views/partials
+$ code views/partials/header.ejs
+  - add top of html template
+  - link stylesheet if using one 
+  - add nav bar
+$ code views/partials/footer.ejs
+  - add bottom of html template
+$ mkdir views
+- app.js
+  - add GET route for /
+$ code views/welcome.ejs
+  - add basic welcome title
+  - include partials
+$ createdb todo_list
+$ npx knex init
+- knexfile.js
+  - add content specific to client(i.e. 'pg'), db name, migrations path
+  - if linux also add your user name and password to user: and password:
+$ code db/client.js
+  - add standard client script to file
+$ npx knex migrate:make create_tasks_table
+  or if installed globally:
+  $ knex migrate:make create_tasks_table
+./db/migrations/name_of_migrations_file.js
+  - add columns to table 
+$ npx knex migrate:latest
+  or if installed globally:
+  $ knex migrate:latest
+$ mkdir views/tasks
+$ code views/tasks/index.ejs
+  - add code for lab
+  - include partials
+- app.js
+  - add GET route for /tasks
+$ code views/todo/index.ejs
+  - add content for lab
+  - include partials
+- app.js
+  - add POST route for /tasks
+$ npm i method-override
+- app.js
+  - require method-override
+  - app.use methodOverride
+  - requre('./routes/tasks)
+  - app.use taskRouter
+  - move tasks routes to ./routes/tasks.js you're about to create
+$ mkdir routes
+$ code routes/tasks.js
+  - add stuff for labs including
+  - add tasks routes from app.js and taks /tasks from the route paths
+  - add GET route for /:id // show page
+$ mkdir views/tasks
+- move ./views/index.js inot ./views/tasks
+  - also change partials path in index.js
+$ code views/tasks/show.ejs
+  - add content for labs
+  - include partials
+- routes/tasks.js
+  - add DELETE route for /:id
+- views/tasks/show.ejs
+  - add delete button with POST/DELETE methods
+- routes/tasks.js
+  - add GET method for /:id/edit
+$ code views/tasks/edit.ejs
+  - add content for labs
+  - include partials
+  - add POST/UPDATE methods
+- routes/tasks.js
+  - add PATCH route for /:id
+- views/tasks/show.ejs
+  - add edit button or <a> with href to /posts/id_number_for_post/edit 
+------------------ To Run -----------------
+$ npm i
+$ npm start
+  or
+  $ nodemon app.js
+open a browser on url:
+  localhost:3000/
+-------------------- End ------------------
+
+[Lab] Todo List New and Create
+
+1. Build a simple todo list with Express that has one index page build on the project from the previous lab.
+2. Create two routes:
+  a. GET /tasks which should act as an index and the form for creating the tasks should be at the top of the tasks list.
+  b. POST /tasks which should create a task when the form from GET /tasks is submitted, then redirects back to GET /tasks
+3. You will need to create a new table, tasks, for your project.
+  a. It will have a table, tasks, which will have timestamps columns, an incrementing id column and a body column.
+
+[Lab] Todo List CRUD operations
+
+1. Separate the routes related to /tasks to it's own module and the rest of the routes in a root router.
+2. Complete the rest of the CRUD operations on tasks with REST conventions:
+  a. A route to show a single note at GET /tasks/:id
+  b. A route to delete a note at DELETE /tasks/:id
+  c. A route to edit a note at GET /tasks/:id/:edit
+  d. A route to update an edited note at PATCH /tasks/:id
+
+
