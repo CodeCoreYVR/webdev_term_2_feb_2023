@@ -1,0 +1,19 @@
+<%- include('../partials/header') %>
+
+  <div class="d-flex justify-content-center align-items-center mt-4">
+    <div class="column">
+
+      <h1 class="text-center">Login</h1>
+      <hr>
+      <form action="/user/login" method="GET">
+        <div class="form-group">
+          <label for="username">Username:</label>
+          <input type="text" class="form-control" id="username" name="username">
+        </div>
+        <button type="submit" class="btn btn-primary">Login</button>
+      </form>
+    </div>
+  </div>
+
+
+<%- include('../partials/footer') %>
