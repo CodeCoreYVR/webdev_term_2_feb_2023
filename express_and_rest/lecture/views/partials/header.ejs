@@ -29,8 +29,9 @@
             </ul>
             <% if (username) { %>
                 <span class="me-3">Hi <%=username %></span>
-                <form class="d-flex" action="/sign_out" method="POST">
-                    <button class="btn btn-danger" type="submit">Logout</button>
+                <form class="d-flex" action="/session" method="POST">
+                    <input type="hidden" name="_method" value="DELETE">
+                    <button class="btn btn-danger" type="submit">Sign Out</button>
                 </form>
             <% } else { %>
                   <a href="/session/new" class="btn btn-primary me-3">Log in</a>

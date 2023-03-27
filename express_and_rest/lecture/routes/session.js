@@ -34,4 +34,11 @@ router.post("/", async (request, response) => {
     }
 })
 
+router.delete("/", (request, response) => {
+    request.session.destroy(() => {
+        response.locals.username = null;
+        response.redirect("/")
+    })
+})
+
 module.exports = router
