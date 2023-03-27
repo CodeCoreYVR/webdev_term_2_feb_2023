@@ -1,0 +1,17 @@
+<%- include("../partials/header.ejs") %>
+
+  <h1>Sign Up</h1>
+
+  <form action="/users" method="POST">
+    <div class="form-group mb-3 mt-3">
+      <div class="form-label" for="username">Username</div>
+      <input type="text" class="form-control" name="username" placeholder="Your username" />
+    </div>
+    <div class="form-group mb-3">
+      <div class="form-label" for="password">Password</div>
+      <input type="password" class="form-control" name="password" placeholder="Password" />
+    </div>
+    <input type="submit" value="Submit" class="btn btn-success">
+  </form>
+
+  <%- include("../partials/footer.ejs") %>

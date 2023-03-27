@@ -8,6 +8,7 @@ module.exports = {
   development: {
     client: 'pg',
     connection: {
+      // For Linux
       // user: 'nimbus-user',
       // password: 'nimbus-user',
       database: 'express_rest_basic'
