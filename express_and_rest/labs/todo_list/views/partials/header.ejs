@@ -15,4 +15,12 @@
         |
         <li><a href="/tasks">Todo List</a></li>
       </ul>
+      <ul>
+        <% if (5 < 0) { %>
+          <li><a href="/users/logout">Log out</a></li>
+        <% } else { %>
+          <li><a href="/users/login">Log in</a></li>
+          <li><a href="/users/signup">Sign up</a></li>
+        <% } %>
+      </ul>
     </nav>

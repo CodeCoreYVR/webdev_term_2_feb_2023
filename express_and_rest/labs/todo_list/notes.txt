@@ -1,4 +1,15 @@
----------------- To Create ----------------
+------------------------------------------------- To Run --------------------------------------------------
+$ npm i
+$ createdb todo_list
+$ npx knex migrate:latest
+  or
+  $ knex migrate:latest
+$ npm start
+  or
+  $ nodemon app.js
+open a browser on url:
+  localhost:3000/
+------------------------------------------------ To Create ------------------------------------------------
 $ mkdir todo_list
 $ cd todo_list
 $ npm init -y
@@ -91,14 +102,32 @@ $ code views/tasks/edit.ejs
   - add PATCH route for /:id
 - views/tasks/show.ejs
   - add edit button or <a> with href to /posts/id_number_for_post/edit 
------------------- To Run -----------------
-$ npm i
-$ npm start
-  or
-  $ nodemon app.js
-open a browser on url:
-  localhost:3000/
--------------------- End ------------------
+$ npm i bcrypt
+$ npx knex migrate:make create_users_table
+  - add columns for lab to users table
+$ npx knex migrate:make add_user_id_to_tasks_table
+  - add reference to users table
+$ npx knex migrate:latest
+$ code routes/users.js
+  - add and require basic things for lab
+- app.js
+  - require users.js
+  - add route for users.js
+- routes/users.js
+  - add GET route for /signup
+$ mkdir views/users
+$ code views/users/signup.ejs
+  - add content for lab
+  - include partials
+  - add POST method and action for /users/signup
+- routes/users.js
+  - add POST route for /signup
+  - use bcrypt to encrypt password before inserting into database
+- views/partials/header.ejs
+  - add signup button
+--------------------------------------------------- End ---------------------------------------------------
+
+---------------------------------------------- Express & REST ---------------------------------------------
 
 [Lab] Todo List New and Create
 
@@ -118,4 +147,9 @@ open a browser on url:
   c. A route to edit a note at GET /tasks/:id/:edit
   d. A route to update an edited note at PATCH /tasks/:id
 
+---------------------------------------- Authentication & Sessions ----------------------------------------
 
+[Lab] Add Users to Todo List
+
+1. Add a users table with username and password fields. Associate a user to each task.
+2. Add a link to a sign up form on the navbar and hash the plain text password from the form using bcrpyt before saving it to the database.

@@ -36,6 +36,9 @@ app.get('/', (request, response) => {
   response.render('welcome'); // Renders the welcome template
 })
 
+const userRouter = require('./routes/users');
+app.use('/users', userRouter);
+
 const taskRouter = require('./routes/tasks');
 app.use('/tasks', taskRouter);
 
