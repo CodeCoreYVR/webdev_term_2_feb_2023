@@ -1,19 +1,27 @@
 <%- include('../partials/header') %>
 
-  <div class="container">
-    <h1>Task #<%= id %></h1>
-    <div>
+  <div class="container" style="align-items: start;">
+    <% if (alerts && alerts.length > 0) { %>
+      <% for (var i = 0; i < alerts.length; i++) { %>
+        <div class="alert alert-<%= alerts[i].type %>">
+          <%= alerts[i].message %>
+        </div>
+      <% } %>
+    <% } %>
+    <h1 style="margin: 0 auto;margin-top:40px;">Task #<%= id %></h1>
+    <div class="task-body">
       <div><%= body %></div>
-      <p>Created at: <%= new Date(created_at).toLocaleString() %></p>
-      <div class>
-        <form action="/tasks/<%= id %>" method="POST">
-          <input type="hidden" name="_method" value="DELETE">
-          <button type="submit">Delete</button>
-        </form>
-        <form action="/tasks/<%= id %>/edit" method="GET">
-          <button type="submit">Edit</button>
-        </form>
-      </div>
+    </div>
+      <p class="created-at"><b>Created at:</b> ~ <%= new Date(created_at).toLocaleString() %> ~</p>
+      
+    <div class="buttons">
+      <form action="/tasks/<%= id %>" method="POST">
+        <input type="hidden" name="_method" value="DELETE">
+        <button type="submit">Delete</button>
+      </form>
+      <form action="/tasks/<%= id %>/edit" method="GET">
+        <button type="submit">Edit</button>
+      </form>
     </div>
   </div>
 

@@ -8,16 +8,17 @@
         </div>
       <% } %>
     <% } %>
-    <h1>Task Edit</h1>
-    <form action="/tasks/<%= id %>" method="POST">
-      <div class="space-before-button">
-        <input type="hidden" name="_method" value="PATCH">
-        <h2>Task #<%= id %></h2>
-        <br><br>
-        <h4>Body: </h4>
-        <textarea name="body" cols="30" rows="10"><%= body %></textarea>
+    <h1>Login</h1>
+    <form method="POST" action="/sessions/login">
+      <div>
+        <label for="username">UserName:</label>
+        <input type="username" id="username" name="username" required>
       </div>
-      <button type="submit">Save</button>
+      <div class="space-before-button">
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required>
+      </div>
+      <button type="submit">Login</button>
     </form>
   </div>
 

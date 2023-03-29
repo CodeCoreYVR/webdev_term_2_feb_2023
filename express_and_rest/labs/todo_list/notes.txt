@@ -1,4 +1,15 @@
----------------- To Create ----------------
+------------------------------------------------- To Run --------------------------------------------------
+$ npm i
+$ createdb todo_list
+$ npx knex migrate:latest
+  or
+  $ knex migrate:latest
+$ npm start
+  or
+  $ nodemon app.js
+open a browser on url:
+  localhost:3000/
+------------------------------------------------ To Create ------------------------------------------------
 $ mkdir todo_list
 $ cd todo_list
 $ npm init -y
@@ -91,14 +102,93 @@ $ code views/tasks/edit.ejs
   - add PATCH route for /:id
 - views/tasks/show.ejs
   - add edit button or <a> with href to /posts/id_number_for_post/edit 
------------------- To Run -----------------
-$ npm i
-$ npm start
-  or
-  $ nodemon app.js
-open a browser on url:
-  localhost:3000/
--------------------- End ------------------
+$ npm i bcrypt
+$ npx knex migrate:make create_users_table
+  - add columns for lab to users table
+$ npx knex migrate:make add_user_id_to_tasks_table
+  - add reference to users table
+$ npx knex migrate:latest
+$ code routes/users.js
+  - add and require basic things for lab
+- app.js
+  - require users.js
+  - add route for users.js
+- routes/users.js
+  - add GET route for /signup
+$ mkdir views/users
+$ code views/users/signup.ejs
+  - add content for lab
+  - include partials
+  - add POST method and action for /users/signup
+- routes/users.js
+  - add POST route for /signup
+  - use bcrypt to encrypt password before inserting into database
+- views/partials/header.ejs
+  - add signup button
+$ npm i express-sessions
+- app.js
+  - require express-session
+  - add your session handling middleware
+$ code routes/sessions.js
+  - require everything you need to
+  - export the router at the end 
+  - add GET route for /login
+- app.js
+  - require ./routes/sessions.js
+  - add route for /sessions
+$ mkdir views/sessions
+$ code views/sessions/login.ejs
+  - copy content from ./views/users/login.ejs then delete users/login.ejs
+  - change action url in form to /sessions/login
+- app.js
+  - create custom middleware for extracting user from session
+  - if user exists assign it to locals
+- routes/sessions.js
+  - add POST route for /login
+  - create query to get user from database
+  - use bcrypt to check if password matches password from database
+  - if match, add use to session
+  - redirect to /tasks
+- ./views/partials/header.ejs
+  - add conditional for if !username
+  - add login button to navbar for /sessions/login
+  - move signup button to !username section
+  - add else secontion
+  - add logout button to /sessions/logout
+- ./routes/sessions.js
+  - add GET route for /logout
+  - destroy session
+  - render sessions/logout
+$ code views/sessions/logout.ejs
+  - add logout message
+  - add link to home page i.e. '/'
+  - include partials
+- app.js
+  - create requireAuth functiion for if !req.session.user then redirect to /sessions/login
+  // above step is better to be done in it's own middleware file, but we're doing it in app.js instead to be less confusing
+  - export requireAuth
+- ./routes/tasks.js
+  - require requireAuth from app.js
+  - add requireAuth as second argument to new POST, edit GET, edit PATCH, delete DELETE
+$ npm i bootstrap
+- ./views/partials/header.ejs
+  - in head add:
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+- ./views/partials/footer.ejs
+  - at top above </body> add:
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+- app.js
+  - add middleware for adding session.alerts to locals then deleting it from sessions
+- ./routes/tasks.js
+  - add success and error alerts to each and every route that purforms CRUD on tasks
+- ./views/tasks/{index.ejs, edit.ejs, delete.ejs}
+  - loop through any possible alerts and display them if they exists
+- ./routes/{users.js, sessions.js}
+  - add success and error alerts to each POST route
+  - don't add any to the logout route, as session will be destroyed so request.session.alart won't exist.
+--------------------------------------------------- End ---------------------------------------------------
+
+---------------------------------------------- Express & REST ---------------------------------------------
 
 [Lab] Todo List New and Create
 
@@ -109,6 +199,7 @@ open a browser on url:
 3. You will need to create a new table, tasks, for your project.
   a. It will have a table, tasks, which will have timestamps columns, an incrementing id column and a body column.
 
+
 [Lab] Todo List CRUD operations
 
 1. Separate the routes related to /tasks to it's own module and the rest of the routes in a root router.
@@ -118,4 +209,20 @@ open a browser on url:
   c. A route to edit a note at GET /tasks/:id/:edit
   d. A route to update an edited note at PATCH /tasks/:id
 
+---------------------------------------- Authentication & Sessions ----------------------------------------
 
+[Lab] Add Users to Todo List
+
+1. Add a users table with username and password fields. Associate a user to each task.
+2. Add a link to a sign up form on the navbar and hash the plain text password from the form using bcrpyt before saving it to the database.
+
+
+[Lab] Todo List Authentication & Sessions
+
+1. Add the ability to sign in and sign out using sessions. Use bcrpyt to hash the password from a sign in form to compare it to the field in the database.
+2. Only signed-in users may create, edit, and delete tasks.
+
+
+[Lab] Todo List Flash Messages
+
+1. Use Bootstrap alerts with sessions to display alerts after performing CRUD operations on tasks. Also add alerts when you sign in, sign out, and sign up.

@@ -1,7 +1,7 @@
 <%- include('partials/header') %>
 
   <div class="container">
-    <h1>Welcome to your Todo List</h1>
+    <h1>Welcome <%= username ? `${username} ` : '' %>to your Todo List</h1>
   </div>
 
 <%- include('partials/footer') %>

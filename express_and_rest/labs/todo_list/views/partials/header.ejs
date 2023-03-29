@@ -15,4 +15,13 @@
         |
         <li><a href="/tasks">Todo List</a></li>
       </ul>
+      <ul class="nav-end-ul">
+        <% if (!username) { %>
+          <li><button onclick="location.href='/sessions/login'">Log In</button></li>
+          <li><button onclick="location.href='/users/signup'">Sign Up</button></li>
+        <% } else { %>
+          <li><div>Welcome, <%= username %>!</div></li>
+          <li><button onclick="location.href='/sessions/logout'">Log Out</button></li>
+        <% } %>
+      </ul>
     </nav>
