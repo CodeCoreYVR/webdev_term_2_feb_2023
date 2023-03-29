@@ -1,7 +1,8 @@
-const express = require("express");
-const router = express.Router();
-const knex = require("../db/client");
-const { requireAuth } = require('../app');
+const express = require("express"); // import the express library
+const router = express.Router(); // create a new router instance
+const knex = require("../db/client"); // import the knex library to interact with the database
+const session = require('express-session')  // import the express-session library for session management
+const { requireAuth } = require('../app');  // import the requireAuth middleware function from app.js
 
 
 // ---------------------------------------------- INDEX ----------------------------------------------
@@ -11,26 +12,33 @@ router.get('/', (request, response) => {
     .select('id', 'body')
     .orderBy('created_at', 'DESC')
     .then(tasks => {
+      // Render the index view with tasks data passed as a parameter
       response.render('tasks/index', { tasks })
     })
     .catch(err => {
       console.error(err.message);
-      response.send(`<h1>Something happened, tasks weren't able to be retrevied from database...</h1>`);
+      // Set an alert message in the session and redirect back to the previous page
+      request.session.alerts = [{ type: 'danger', message: 'Something happened, tasks weren\'t able to be retrieved from database...' }];
+      response.redirect('back');
     });
 });
 
 // POST method - Route to save a new task to the database - For this instance form for New task is displayed on index page
 router.post('/', requireAuth, (request, response) => {
   const { body } = request.body;
-  console.log('body: ', body)
+
   knex('tasks')
     .insert({ body })
     .then( data => {
+      // Set an alert message in the session and redirect back to the tasks index page
+      request.session.alerts = [{ type: 'success', message: 'Your task has been created!' }];
       response.redirect('/tasks');
     })
     .catch(err => {
       console.error(err.message);
-      response.send(`<h1>Something happened, your task wasn't created...</h1>`);
+      // Set an alert message in the session and redirect back to the previous page
+      request.session.alerts = [{ type: 'danger', message: 'Something happened, your task wasn\'t created...' }];
+      response.redirect('back');
     });
 });
 
@@ -43,11 +51,14 @@ router.get('/:id', (request, response) => {
     .select('id', 'body', 'created_at')
     .where('id', id)
     .then(task => {
+      // Render the show view with the task data passed as a parameter
       response.render('tasks/show', ...task);
     })
     .catch(err => {
       console.error(err.message);
-      response.send('<h1>Something happened...</h1>');
+      // Set an alert message in the session and redirect back to the previous page
+      request.session.alerts = [{ type: 'danger', message: 'Something happened...' }];
+      response.redirect('back');
     });
 });
 
@@ -61,12 +72,15 @@ router.delete('/:id', requireAuth, (request, response) => {
     .del()
     .where('id', id)
     .then(data => {
-      console.log('Task successfully deleted...');
+      // Set an alert message in the session and redirect back to the tasks index page
+      request.session.alerts = [{ type: 'success', message: 'Your task has been deleted!' }];
       response.redirect('/tasks');
     })
     .catch(err => {
       console.error(err.message);
-      response.send('<h1>Something happened, task deletion unsuccessful...</h1>');
+      // Set an alert message in the session and redirect back to the tasks index page
+      request.session.alerts = [{ type: 'danger', message: 'Something happened, task deletion unsuccessful...' }];
+      response.redirect('back');
     });
 });
 
@@ -79,11 +93,14 @@ router.get('/:id/edit', requireAuth, (request, response) => {
     .where('id', id)
     .then(task => {
       console.log('Found your task...')
+      // Renders the 'tasks/edit' template with the task data
       response.render('tasks/edit', ...task);
     })
     .catch(err => {
       console.error(err.message);
-      response.send('<h1>Something happened, was not able to retrieve your task...</h1>');
+      // Set an alert message in the session and redirect back to the tasks edit page
+      request.session.alerts = [{ type: 'danger', message: 'Something happened, was not able to retrieve your task...' }];
+      response.redirect('back');
     })
 })
 
@@ -91,18 +108,20 @@ router.get('/:id/edit', requireAuth, (request, response) => {
 router.patch('/:id', requireAuth, (request, response) => {
   const { body } = request.body;
   const { id } = request.params;
-  console.log('body: ', body)
 
   knex('tasks')
     .update({ body: body })
     .where('id', id)
     .then(data => {
-      console.log('task successfully updated...');
+      // Set an alert message in the session and redirect back to the tasks show page
+      request.session.alerts = [{ type: 'success', message: 'Task updated successfully.' }];
       response.redirect(`/tasks/${id}`);
     })
     .catch(err => {
       console.error(err.message);
-      response.send('<h1>Something happened, your task was not updated...</h1>')
+      // Set an alert message in the session and redirect back to the tasks edit page
+      request.session.alerts = [{ type: 'error', message: 'Error updating task.' }];
+      response.redirect(`back`)
     })
 })
 

@@ -1,6 +1,13 @@
 <%- include('../partials/header') %>
 
   <div class="container" style="align-items: start;">
+    <% if (alerts && alerts.length > 0) { %>
+      <% for (var i = 0; i < alerts.length; i++) { %>
+        <div class="alert alert-<%= alerts[i].type %>">
+          <%= alerts[i].message %>
+        </div>
+      <% } %>
+    <% } %>
     <h1 style="margin: 0 auto;margin-top:40px;">Task #<%= id %></h1>
     <div class="task-body">
       <div><%= body %></div>

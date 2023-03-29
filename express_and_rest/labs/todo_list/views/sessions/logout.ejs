@@ -1,6 +1,11 @@
 <%- include('../partials/header') %>
 
   <div class="container">
+    <% if (alert) { %>
+        <div class="alert alert-success">
+          <%= alert.split('%20').join(' ') %>!
+        </div>
+    <% } %>
     <h1>Logout</h1>
     <p><%= username %> you have been logged out.</p>
     <p><a href="/">Return to Home Page</a></p>

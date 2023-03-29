@@ -1,6 +1,13 @@
 <%- include('../partials/header') %>
 
   <div class="container">
+    <% if (alerts && alerts.length > 0) { %>
+      <% for (var i = 0; i < alerts.length; i++) { %>
+        <div class="alert alert-<%= alerts[i].type %>">
+          <%= alerts[i].message %>
+        </div>
+      <% } %>
+    <% } %>
     <h1>Tasks:</h1>
     <div>
       <form action="/tasks" method="POST">
