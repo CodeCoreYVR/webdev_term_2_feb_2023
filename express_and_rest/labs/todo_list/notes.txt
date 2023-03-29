@@ -125,6 +125,51 @@ $ code views/users/signup.ejs
   - use bcrypt to encrypt password before inserting into database
 - views/partials/header.ejs
   - add signup button
+$ npm i express-sessions
+- app.js
+  - require express-session
+  - add your session handling middleware
+$ code routes/sessions.js
+  - require everything you need to
+  - export the router at the end 
+  - add GET route for /login
+- app.js
+  - require ./routes/sessions.js
+  - add route for /sessions
+$ mkdir views/sessions
+$ code views/sessions/login.ejs
+  - copy content from ./views/users/login.ejs then delete users/login.ejs
+  - change action url in form to /sessions/login
+- app.js
+  - create custom middleware for extracting user from session
+  - if user exists assign it to locals
+- routes/sessions.js
+  - add POST route for /login
+  - create query to get user from database
+  - use bcrypt to check if password matches password from database
+  - if match, add use to session
+  - redirect to /tasks
+- ./views/partials/header.ejs
+  - add conditional for if !username
+  - add login button to navbar for /sessions/login
+  - move signup button to !username section
+  - add else secontion
+  - add logout button to /sessions/logout
+- ./routes/sessions.js
+  - add GET route for /logout
+  - destroy session
+  - render sessions/logout
+$ code views/sessions/logout.ejs
+  - add logout message
+  - add link to home page i.e. '/'
+  - include partials
+- app.js
+  - create requireAuth functiion for if !req.session.user then redirect to /sessions/login
+  // above step is better to be done in it's own middleware file, but we're doing it in app.js instead to be less confusing
+  - export requireAuth
+- ./routes/tasks.js
+  - require requireAuth from app.js
+  - add requireAuth as second argument to new POST, edit GET, edit PATCH, delete DELETE
 --------------------------------------------------- End ---------------------------------------------------
 
 ---------------------------------------------- Express & REST ---------------------------------------------
@@ -153,3 +198,9 @@ $ code views/users/signup.ejs
 
 1. Add a users table with username and password fields. Associate a user to each task.
 2. Add a link to a sign up form on the navbar and hash the plain text password from the form using bcrpyt before saving it to the database.
+
+
+[Lab] Todo List Authentication & Sessions
+
+1. Add the ability to sign in and sign out using sessions. Use bcrpyt to hash the password from a sign in form to compare it to the field in the database.
+2. Only signed-in users may create, edit, and delete tasks.

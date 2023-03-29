@@ -15,12 +15,13 @@
         |
         <li><a href="/tasks">Todo List</a></li>
       </ul>
-      <ul>
-        <% if (5 < 0) { %>
-          <li><a href="/users/logout">Log out</a></li>
+      <ul class="nav-end-ul">
+        <% if (!username) { %>
+          <li><button onclick="location.href='/sessions/login'">Log In</button></li>
+          <li><button onclick="location.href='/users/signup'">Sign Up</button></li>
         <% } else { %>
-          <li><a href="/users/login">Log in</a></li>
-          <li><a href="/users/signup">Sign up</a></li>
+          <li><div>Welcome, <%= username %>!</div></li>
+          <li><button onclick="location.href='/sessions/logout'">Log Out</button></li>
         <% } %>
       </ul>
     </nav>

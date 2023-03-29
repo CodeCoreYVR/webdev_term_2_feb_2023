@@ -13,17 +13,19 @@ router.get("/signup", (req, res) => {
 router.post('/signup', (request, response) => {
   const { username, password } = request.body;
 
+  formattedName = username.toLowerCase().split(' ').map(name => name.charAt(0).toUpperCase() + name.slice(1)).join(' ');
+  
   bcrypt.hash(password, 10)
     .then(hashedPassword => {
       return knex('users')
         .insert({
-          username,
+          username: formattedName,
           password: hashedPassword
         });
     })
     .then(user => {
       console.log('User successfully created...')
-      response.status(201).redirect('/users/login');
+      response.status(201).redirect('/sessions/login');
      })
      .catch(err => {
       console.error(err.message);

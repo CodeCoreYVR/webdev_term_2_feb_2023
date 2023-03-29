@@ -4,7 +4,8 @@ const morgan = require('morgan'); // HTTP request logger middleware
 const path = require("path");
 const ejs = require('ejs')
 const methodOverride = require('method-override');
-const knex = require('./db/client')
+const session = require('express-session');
+const knex = require('./db/client');
 
 // create an instance of the Express application
 const app = express();
@@ -23,6 +24,20 @@ app.use(express.static('public'));
 // middleware to log HTTP requests in the console
 app.use(morgan('dev'));
 
+app.use(session({
+  name: 'user',
+  secret: 'your secret here',
+  resave: false,
+  saveUninitialized: true
+}));
+
+app.use((request, response, next) => {
+  const { user } = request.session; 
+  
+  response.locals.username = user && user.username;
+  next();
+})
+
 app.use(methodOverride((request, response) => {
   if (request.body._method) {
       const method = request.body._method;
@@ -31,10 +46,23 @@ app.use(methodOverride((request, response) => {
   }
 }))
 
+
+function requireAuth(req, res, next) {
+  if (!req.session.user) {
+    return res.redirect("/sessions/login");
+  }
+  next();
+}
+
+module.exports = { requireAuth };
+
 // Route for the homepage
 app.get('/', (request, response) => {
   response.render('welcome'); // Renders the welcome template
 })
+
+const sessionRouter = require('./routes/sessions');
+app.use('/sessions', sessionRouter);
 
 const userRouter = require('./routes/users');
 app.use('/users', userRouter);

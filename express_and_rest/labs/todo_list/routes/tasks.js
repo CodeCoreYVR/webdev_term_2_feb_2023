@@ -1,11 +1,12 @@
 const express = require("express");
-const knex = require("../db/client");
-
 const router = express.Router();
+const knex = require("../db/client");
+const { requireAuth } = require('../app');
 
 
+// ---------------------------------------------- INDEX ----------------------------------------------
+// GET method - Route to retrieve all tasks from the database
 router.get('/', (request, response) => {
-  console.log('here')
   knex('tasks')
     .select('id', 'body')
     .orderBy('created_at', 'DESC')
@@ -18,7 +19,8 @@ router.get('/', (request, response) => {
     });
 });
 
-router.post('/', (request, response) => {
+// POST method - Route to save a new task to the database - For this instance form for New task is displayed on index page
+router.post('/', requireAuth, (request, response) => {
   const { body } = request.body;
   console.log('body: ', body)
   knex('tasks')
@@ -32,6 +34,8 @@ router.post('/', (request, response) => {
     });
 });
 
+// ---------------------------------------------- SHOW -----------------------------------------------
+// GET method - Route to retrieve a specific task from the database
 router.get('/:id', (request, response) => {
   const { id } = request.params;
 
@@ -47,7 +51,9 @@ router.get('/:id', (request, response) => {
     });
 });
 
-router.delete('/:id', (request, response) => {
+// --------------------------------------------- DELETE ----------------------------------------------
+// DELETE method - Route to delete a specific task
+router.delete('/:id', requireAuth, (request, response) => {
   const { id } = request.params;
   console.log('delete :id: ', id)
 
@@ -64,7 +70,9 @@ router.delete('/:id', (request, response) => {
     });
 });
 
-router.get('/:id/edit', (request, response) => {
+// ---------------------------------------------- EDIT -----------------------------------------------
+// GET method - Route to render the 'tasks/edit' template to edit a specific task
+router.get('/:id/edit', requireAuth, (request, response) => {
   const { id } = request.params;
 
   knex('tasks')
@@ -79,7 +87,8 @@ router.get('/:id/edit', (request, response) => {
     })
 })
 
-router.patch('/:id', (request, response) => {
+// PATCH method - Route to update a specific task in the database
+router.patch('/:id', requireAuth, (request, response) => {
   const { body } = request.body;
   const { id } = request.params;
   console.log('body: ', body)
