@@ -4,6 +4,18 @@ const knex = require('../db/client')
 
 const router = express.Router()
 
+function authenticate(request, response, next) {
+    if (request.session.user) {
+        next()
+    } else {
+        request.session.alert = {
+            type: 'warning',
+            message: 'You need to be logged in'
+        }
+        response.redirect("/posts");
+    }
+}
+
 //-----------POST ROUTES--------------------------
 
 //-----------------------Index of all Posts---------------
@@ -20,7 +32,7 @@ router.get('/', (req, res) => {
 })
 
 // ----------------- Render New Post Template----------
-router.get('/new', (req, res) => {
+router.get('/new', authenticate, (req, res) => {
     res.render('posts/new')
 })
 
@@ -74,7 +86,7 @@ router.get('/:id', async (request, response) => {
 
 
 
-router.get('/:id/edit', (request, response) => {
+router.get('/:id/edit', authenticate, (request, response) => {
     const { id } = request.params; // const id = request.params.id;
 
     knex("posts")
@@ -90,7 +102,7 @@ router.get('/:id/edit', (request, response) => {
 
 })
 
-router.patch('/:id', (request, response) => {
+router.patch('/:id', authenticate, (request, response) => {
     //delete post
     let { title, content, image_url } = request.body;
 
@@ -111,7 +123,7 @@ router.patch('/:id', (request, response) => {
 })
 
 
-router.delete('/:id', (request, response) => {
+router.delete('/:id', authenticate, (request, response) => {
     //delete post
     knex("posts")
         .del()
