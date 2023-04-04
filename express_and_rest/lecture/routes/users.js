@@ -25,10 +25,20 @@ router.post("/", async (request, response) => {
             username: user.username
         }
 
+        request.session.alert = {
+            type: 'info',
+            message: `Welcome, ${user.username}`
+        }
+        
         response.redirect("/");
     }
     catch (err) {
         console.error(err);
+        request.session.alert = {
+            type: 'warning',
+            message: err.detail
+        }
+        response.redirect("/users/new")
     }
 })
 

@@ -54,7 +54,11 @@ router.post('/', (request, response) => {
         })
         .catch(ex => {
             console.error(ex);
-            response.send("<h1>Something went wrong</h1>")
+            request.session.alert = {
+                type: 'warning',
+                message: 'Something went wrong'
+            }
+            response.redirect("/posts");
         });
 })
 
@@ -79,7 +83,11 @@ router.get('/:id', async (request, response) => {
         }
         response.render('posts/details', post);
     } else {
-        response.send("<h1>Something went wrong</h1>")
+        request.session.alert = {
+            type: 'warning',
+            message: 'Something went wrong'
+        }
+        response.redirect("/posts");
     }
 
 })
@@ -97,7 +105,11 @@ router.get('/:id/edit', authenticate, (request, response) => {
         })
         .catch(ex => {
             console.error(ex);
-            response.send("<h1>Something went wrong</h1>")
+            request.session.alert = {
+                type: 'warning',
+                message: 'Something went wrong'
+            }
+            response.redirect("/posts");
         });
 
 })
@@ -118,7 +130,11 @@ router.patch('/:id', authenticate, (request, response) => {
         })
         .catch(ex => {
             console.error(ex);
-            response.send("<h1>Something went wrong</h1>")
+            request.session.alert = {
+                type: 'warning',
+                message: 'Something went wrong'
+            }
+            response.redirect("/posts");
         });
 })
 
@@ -133,7 +149,11 @@ router.delete('/:id', authenticate, (request, response) => {
         })
         .catch(ex => {
             console.error(ex);
-            response.send("<h1>Something went wrong</h1>")
+            request.session.alert = {
+                type: 'warning',
+                message: 'Something went wrong'
+            }
+            response.redirect("/posts");
         });
 })
 
