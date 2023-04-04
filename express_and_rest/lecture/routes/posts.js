@@ -1,6 +1,7 @@
 const { render } = require('ejs')
 const express = require('express')
 const knex = require('../db/client')
+const friendlyDate = require("../lib/friendlyDate")
 
 const router = express.Router()
 
@@ -81,7 +82,7 @@ router.get('/:id', async (request, response) => {
         } else {
             post.posted_by = 'Anonymously'
         }
-        response.render('posts/details', post);
+        response.render('posts/details', {post, friendlyDate});
     } else {
         request.session.alert = {
             type: 'warning',
