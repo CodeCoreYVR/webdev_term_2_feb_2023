@@ -48,9 +48,11 @@ app.use((request, response, next) => {
     // const { username } = request.cookies;
 
     console.log(request.session);
-    const { user } = request.session; 
+    const { user, alert } = request.session; 
 
     response.locals.username = user && user.username; // => user ? user.username : undefined;
+    response.locals.alert = alert
+    delete request.session.alert
     next();
 })
 

@@ -12,7 +12,9 @@
                 <a class="nav-link" href="/posts/<%= post.id %>">
                     <div class="card-body">
                         <h5 class="card-title"><%- post.title %></h5>
+                        <small>Viewed: <%- post.view_count%></small>
                         <p class="card-text"><%- post.content %></p>
+                        <small>Wriiten by: <%- post.posted_by ? post.posted_by:'Anonymous'  %></small>
                     </div>
                 </a>
             </div>
