@@ -16,8 +16,7 @@ end
 last_four_characters(my_string)
 
 
-
-# ******************** [Exercise] Print 10 to 20 Using for Loop ********************
+# ******************** [Exercise] Find Substring ********************
 
 # Given the string:
 # 1 | my_string ="Hello World"
