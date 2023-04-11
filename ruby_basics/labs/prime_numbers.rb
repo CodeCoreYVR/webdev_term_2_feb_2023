@@ -55,4 +55,4 @@ prime_numbers
 # > 5
 
 # should print out:
-# > 1 2 3 5 7
+# > 2 3 5 7 11
