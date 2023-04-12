@@ -1,11 +1,24 @@
-def minimum_number(*args)
-    acc = args.reduce { |accumulator, next_item|
-        if accumulator > next_item
-            next_item
-        else
-            accumulator
-        end
-    }
+def name(first: "First name", last: "Last name")
+    "#{first}  #{last}"
 end
 
-p minimum_number 100, 24,2,3,4
+# it gives error
+# name("I", "U")
+
+p name(first: "I", last:"U")
+p name
+
+def hash(hash)
+    p hash[:a]
+    p hash[:b]
+end
+
+hash a:1, b:2
+
+method_name = "Three"
+
+define_method(method_name) do 
+    p eval("3*3+4")
+end
+
+Three()
