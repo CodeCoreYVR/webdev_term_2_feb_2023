@@ -59,7 +59,7 @@ end
 ask_user_for_information
 
 
-# ******************************* Lab *******************************
+# **************************** Exercise *****************************
 
 # [Exercise] Ask user for information
 
