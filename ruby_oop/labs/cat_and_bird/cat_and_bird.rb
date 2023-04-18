@@ -37,7 +37,7 @@ class Cat < Animal
 end
 
 # Define the Bird class with the name attribute
-class Bird
+class Bird < Animal
   # Define a getter method for the name attribute
   attr_reader :name
 
