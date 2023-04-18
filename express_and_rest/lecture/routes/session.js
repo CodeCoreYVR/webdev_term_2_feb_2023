@@ -23,14 +23,26 @@ router.post("/", async (request, response) => {
                 id: user.id,
                 username: user.username
             }
+            request.session.alert = {
+                type: 'info',
+                message: `Welcome, ${user.username}`
+            }
             response.redirect("/");
         }
         else {
-            response.send("<h1>Invalid Password</h1>");
+            request.session.alert = {
+                type: 'warning',
+                message: 'Password was incorrect'
+            }
+            response.redirect('/session/new')
         }
     }
     else {
-        response.send("<h1>User not found</h1>");
+        request.session.alert = {
+            type: 'warning',
+            message: 'User was not found'
+        }
+        response.redirect('/session/new')
     }
 })
 

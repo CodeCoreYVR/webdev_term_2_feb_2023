@@ -1,10 +1,10 @@
 <%- include("../partials/header.ejs") %>
-
+    <% const {id, title, content, posted_by, created_at, image_url} = post %>
     <div class="card mt-4">
         <div class="card-header">
             <%= title %>
                 <div>
-                    <%= created_at %>
+                    <%= friendlyDate(created_at) %>
                 </div>
                 <div>
                     Posted by <%= posted_by %>
