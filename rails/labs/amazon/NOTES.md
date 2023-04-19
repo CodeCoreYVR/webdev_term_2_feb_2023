@@ -7,6 +7,7 @@
   * $ brew install yarn
 * $ rails db:create
 * $ rails db:migrate
+* $ rails db:seed
 * $ rails s
   or
   * $ rails server
@@ -79,6 +80,31 @@
       home.html.erb
       about.html.erb
       contact_us.html.erb
+# Active Record
+* $ rails generate model Product title:string description:text price:integer
+* $ rails db:migrate
+* $ rails console
+  * > product = Product.create(title: "Product Title", description: "Product Description", price: 100)
+  * > Product.find(product.id)
+  * > product.update(title: "New Product Title")
+  * > product.update(title: "New Product Title")
+  * > product.destroy
+  * > exit
+* ./db/seeds
+  * add:
+    * Product.destroy_all
+    * loop to create x number of products using faker for names
+    * print to terminal number of products
+* $ rails db:seed
+  * <rails db:reset> does the following:
+    * rails db:drop
+    * rails db:create
+    * rails db:migrate
+    * rails db:seed
+* $ rails console
+  * > Product.count
+  * > Product.all
+  * > exit
 # ********************** End *********************
 
 # ********************* Labs *********************
@@ -100,3 +126,17 @@ Build 'home' and 'about' pages for your Amazon application that just display sim
 # [Lab] Build a contact us page
 
 Build a 'contact us' page for your Amazon application that has a name, email and text area fields. When the user submits, it should just show a "Thank you  for contacting us!" message.
+
+# [Lab] Product model
+
+  Step 1
+Generate a Product model for your Amazon application. Make sure it has the following attributes: title, description and price.
+  - Title must be of type String
+  - Description must be of type Text
+  - Price must be of type Integer
+Run the migration.
+  Step 2
+Open up the Rails console then create a product, then find it then update its title and then delete it.
+  Step 3
+Change your db/seeds.rb file to generate a 1000 products with Faker then run the seeds.
+
