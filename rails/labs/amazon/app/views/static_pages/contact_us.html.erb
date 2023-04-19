@@ -1,23 +1,27 @@
-<% if @message %>
-  <p><%= @message %></p>
-<% else %>
-  <h1>Contact Us</h1>
-  <%= form_tag contact_us_path, method: :post, data: { turbo: false } do %>
-    <p>
-      <%= label_tag(:name, "Name:") %><br>
-      <%= text_field_tag(:name) %>
-    </p>
+  <div class="text-center">
+    <% if @message %>
+      <div class="alert alert-success">
+        <%= @message %>
+      </div>
+    <% else %>
+      <h1>Contact Us</h1>
+      <%= form_tag contact_us_path, method: :post, data: { turbo: false }, class: "mx-auto" do %>
+        <div class="form-group">
+          <%= label_tag(:name, "Name:") %>
+          <%= text_field_tag(:name, nil, class: "form-control text-field-wrap") %>
+        </div>
 
-    <p>
-      <%= label_tag(:email, "Email:") %><br>
-      <%= email_field_tag(:email) %>
-    </p>
+        <div class="form-group">
+          <%= label_tag(:email, "Email:") %>
+          <%= email_field_tag(:email, nil, class: "form-control text-field-wrap") %>
+        </div>
 
-    <p>
-      <%= label_tag(:body, "Body:") %><br>
-      <%= text_area_tag(:body) %>
-    </p>
+        <div class="form-group">
+          <%= label_tag(:body, "Body:") %>
+          <%= text_area_tag(:body, nil, class: "form-control text-field-wrap") %>
+        </div>
 
-    <%= submit_tag("Send") %>
-  <% end %>
-<% end %>
+        <%= submit_tag("Send", class: "btn btn-primary") %>
+      <% end %>
+    <% end %>
+  </div>

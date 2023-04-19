@@ -55,6 +55,30 @@
 * ./app/views/static_pages/contact_us.html.erb
   * add if statement to display message instead if form has already been submitted
   * add data: { turbo: false } to form so turbo-rails won't cause a conflict when rendering the same page.
+* Gemfile
+  * add:
+    * gem 'bootstrap', '~> 5.3.0.alpha3'
+    * gem 'jquery-rails'
+* bundle i
+* ./app/assets/stylesheets/application.css
+  * rename to application.scss
+  * add:  
+    * @import "bootstrap";
+    * @import "custom"; 
+* $ code app/assets/stylesheets/custom.css
+  * add desired css
+* $ mkdir app/assets/javascript
+* $ code app/assets/javascript/application.js
+  * add:
+    * //= require jquery3
+    * //= require popper
+    * //= require bootstrap
+* added bootstrap classes to:
+  * ./app/views/static_pages/
+      application.html.erb
+      home.html.erb
+      about.html.erb
+      contact_us.html.erb
 # ********************** End *********************
 
 # ********************* Labs *********************
