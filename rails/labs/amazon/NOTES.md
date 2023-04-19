@@ -110,6 +110,18 @@
   * add:
     * change_column :products, :price, :float
 * $ rails db:migrate
+* ./app/models/product.rb
+  * add validations to model
+* $ rails c
+  or
+  * $ rails console
+  then
+  * check if validations are working:
+    * p = Product.create("description" => "shouldn\'t work because title isn't present", "price" => 2)
+    * p = Product.create("title" => "shouldn\'t work because description isn't present", "price" => 2)
+    * p = Product.create("title" => "Shouldn\'t work because description is less than 10 characters", "description" => "nine char" "price" => 2)
+    * p = Product.create("title" => "should work fine", "description" => "should work fine", "price" => 2)
+    * exit
 # ********************** End *********************
 
 # ********************* Labs *********************
