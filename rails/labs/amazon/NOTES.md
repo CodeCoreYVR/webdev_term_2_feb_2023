@@ -42,7 +42,19 @@
 * ./app/views/layouts/application.html.erb
   * add link_to contact_us 
   <!-- this will throw an error as there is no route or view page for contact_us yet -->
-
+* ./config/routes.rb
+  * add route for GET contact_us
+* ./app/controllers/static_pages_controller.rb
+  * add contact_us method
+* $ code app/views/static_pages/contact_us.html.erb
+  * add contact_us content and form
+* ./config/routes.rb
+  * add route for POST contact_us
+* ./app/controllers/static_pages_controller.rb
+  * add logic in contact_us method so you can know in your view page if the form has been submitted or not
+* ./app/views/static_pages/contact_us.html.erb
+  * add if statement to display message instead if form has already been submitted
+  * add data: { turbo: false } to form so turbo-rails won't cause a conflict when rendering the same page.
 # ********************** End *********************
 
 # ********************* Labs *********************
@@ -59,3 +71,8 @@ So make sure to do the following:
 # [Lab] Build a home and about pages
 
 Build 'home' and 'about' pages for your Amazon application that just display simple text. Build 'nav bar' to link to both pages. Include a link to the 'contact us' page in the 'nav bar'.
+
+
+# [Lab] Build a contact us page
+
+Build a 'contact us' page for your Amazon application that has a name, email and text area fields. When the user submits, it should just show a "Thank you  for contacting us!" message.
