@@ -105,6 +105,11 @@
   * > Product.count
   * > Product.all
   * > exit
+* $ rails generate migration ChangePriceToFloatInProducts
+* ./db/migrate/...date_numbers..._chang_price_to_float_in_products.rb
+  * add:
+    * change_column :products, :price, :float
+* $ rails db:migrate
 # ********************** End *********************
 
 # ********************* Labs *********************
@@ -139,4 +144,8 @@ Run the migration.
 Open up the Rails console then create a product, then find it then update its title and then delete it.
   Step 3
 Change your db/seeds.rb file to generate a 1000 products with Faker then run the seeds.
+
+# [Lab] Product model modification
+
+Generate a migration to change the type of the price field from Integer to Float. Then run the migration.
 
