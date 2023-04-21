@@ -126,8 +126,13 @@
   * add callback methods
   * call the methods before product saves
 * rails c
-  * heck if callback methods are working correctly by creating products and see if the callback methods altered the content before validation.
+  * check if callback methods are working correctly by creating products and see if the callback methods altered the content before validation.
   * exit
+* ./app/models/product.rb
+  * add Class method
+* rails c
+  * check if Class method works
+    * $ Product.search('de')
 # ********************** End *********************
 
 # ********************* Labs *********************
@@ -150,6 +155,7 @@ Build 'home' and 'about' pages for your Amazon application that just display sim
 
 Build a 'contact us' page for your Amazon application that has a name, email and text area fields. When the user submits, it should just show a "Thank you  for contacting us!" message.
 
+
 # [Lab] Product model
 
   Step 1
@@ -163,7 +169,18 @@ Open up the Rails console then create a product, then find it then update its ti
   Step 3
 Change your db/seeds.rb file to generate a 1000 products with Faker then run the seeds.
 
+
 # [Lab] Product model modification
 
 Generate a migration to change the type of the price field from Integer to Float. Then run the migration.
+
+
+# [Exercise] Product model custom methods
+
+Add a custom methods called search to the product model to search for a product with its title or description if it contains a specific word. For instance you should be able to do:
+Product.search("car")
+
+Which should return all the products that have the word car in it's title or description (case insensitive).
+
+[Challenge]: Show the products that contain the searched word in their title before the ones that contain the searched word only in the description. For instance, if a product contains the word car in its title, it should before a product that only contains the word car only in the description.
 

@@ -9,7 +9,7 @@ class Product < ApplicationRecord
   validates :price, numericality: { greater_than: 0 }
   validates :description, presence: true, length: { minimum: 10 }
 
-  
+
   # Private methods
   private
 
@@ -26,5 +26,16 @@ class Product < ApplicationRecord
   # Method to capitalize the title before saving it
   def capitalize_title
     self.title = title.capitalize
+  end
+
+  # Class methods (self.method_name) are methods that can be called on the class itself
+  def self.search(keyword)
+    if keyword.present? # If keyword is not nil or empty
+      # Search for products whose title or description contains the keyword (case insensitive) and order them by title
+      where("LOWER(title) LIKE ? OR LOWER(description) LIKE ?", "%#{keyword.downcase}%", "%#{keyword.downcase}%")
+        .order(Arel.sql("CASE WHEN LOWER(title) LIKE '#{keyword.downcase}%' THEN 0 ELSE 1 END"))
+    else
+      all
+    end
   end
 end
