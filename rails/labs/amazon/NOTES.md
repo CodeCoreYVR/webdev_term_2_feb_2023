@@ -122,6 +122,12 @@
     * p = Product.create("title" => "Shouldn\'t work because description is less than 10 characters", "description" => "nine char" "price" => 2)
     * p = Product.create("title" => "should work fine", "description" => "should work fine", "price" => 2)
     * exit
+* ./app/models/product.rb
+  * add callback methods
+  * call the methods before product saves
+* rails c
+  * heck if callback methods are working correctly by creating products and see if the callback methods altered the content before validation.
+  * exit
 # ********************** End *********************
 
 # ********************* Labs *********************
