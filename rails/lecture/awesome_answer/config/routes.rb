@@ -8,4 +8,8 @@ Rails.application.routes.draw do
   get('/goodbye', {to: 'welcome#goodbye', as: :tata})
   get('/form_example', {to: 'welcome#form_example'})
   # get('/question/:id') # dynamic id's will replace type number or param in url
+
+  # Question routes
+  get "/questions/new" => "questions#new", as: :new_question
+  post "/questions" => "questions#create", as: :questions #questions_path (_path is postfix)
 end
