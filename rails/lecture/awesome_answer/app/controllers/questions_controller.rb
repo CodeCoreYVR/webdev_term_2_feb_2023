@@ -6,7 +6,45 @@ class QuestionsController < ApplicationController
 
     def create
         question_params = params.require(:question).permit(:title, :body)
-        Question.create(question_params)
+        @question = Question.new question_params
+
+        if @question.save
+            redirect_to question_path(@question)
+        else
+            render :new # it will go to 'def new' method
+            return false
+        end
+        # Question.create(question_params)
         # render text: "Question created successfully"
+    end
+
+    def show
+        @question = Question.find(params[:id])
+    end
+
+    def index
+        @questions = Question.order("created_at desc")
+    end
+
+    def edit
+        @question = Question.find(params[:id])
+    end
+
+    def update
+        question_params = params.require(:question).permit(:title, :body)
+        @question = Question.find params[:id]
+        
+        if @question.update (question_params)
+            redirect_to question_path(@question)
+        else
+            render :edit # it will go to 'def edit' method
+            return false
+        end
+    end    
+
+    def destroy
+        question = Question.find params[:id]
+        question.destroy
+        redirect_to questions_path
     end
 end
