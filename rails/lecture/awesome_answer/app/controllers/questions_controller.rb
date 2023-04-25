@@ -12,10 +12,7 @@ class QuestionsController < ApplicationController
             redirect_to question_path(@question)
         else
             render :new # it will go to 'def new' method
-            return false
         end
-        # Question.create(question_params)
-        # render text: "Question created successfully"
     end
 
     def show
@@ -38,7 +35,6 @@ class QuestionsController < ApplicationController
             redirect_to question_path(@question)
         else
             render :edit # it will go to 'def edit' method
-            return false
         end
     end    
 
