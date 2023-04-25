@@ -152,7 +152,7 @@
   * redirect_to products_path
 * ./config/routes.rb
   * add GET route for index action
-* ./app/controller/products_controller.rb
+* ./app/controllers/products_controller.rb
   * add index method
   * create @products array
 * $ code ./app/views/products/index.html.erb
@@ -160,7 +160,7 @@
   * titles should be links to product_path
 * ./config/routes.rb
   * add GET route for show action
-* ./app/controller/products_controller.rb
+* ./app/controllers/products_controller.rb
   * add show method
   * declare @product and find Product by params id
 * $ code ./app/views/products/show.html.erb
@@ -171,12 +171,29 @@
   * add link for New
 * ./config/routes.rb
   * add DELETE route for destroy action
-* ./app/controller/products_controller.rb
+* ./app/controllers/products_controller.rb
   * add destroy method
   * declare @product and find Product by params id
 * ./app/views/products/show.html.erb
   * add button_to delete
   * include destroy_product_path and method: :delete
+* ./config/routes.rb
+  * add GET route for edit action
+* ./app/controllers/products_controller.rb
+  * add edit method
+  * declare @product and find Product by params id
+* ./app/views/products/show.html.erb
+  * add link_to edit
+  * include edit_product_path and/or @product
+* $ code ./app/views/products/edit.html.erb
+  * add content for edit form
+  * send form to update_product_path and/or @product
+* ./config/routes.rb
+  * add PATCH route for update action
+* ./app/controllers/products_controller/rb
+  * add update method
+  * declare @product and find Product by params id
+  * if product updates redirect_to product_path
 # ********************** End *********************
 
 # ********************* Labs *********************
@@ -259,5 +276,14 @@ Implement the following action for your Amazon application:
 1. Destroy Action
     url: /products/:id: Handle deleting a product having an id of :id then redirect to the Product index page upon successful deletion.
 
+
+# [Lab] Amazon: Edit and Update
+
+Implement the following actions for your Amazon application:
+1. Edit Action
+    url: /products/:id/edit: Shows a form pre-populated with data from a product having an id of :id.
+2. Update Action
+    url: /products/:id: Handles updating a product then redirects to its show page on a successful update.
+3. Add a link in your Products show pages to their edit page.
 
 
