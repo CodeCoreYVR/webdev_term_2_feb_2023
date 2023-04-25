@@ -27,6 +27,14 @@ class ProductsController < ApplicationController
     end
   end
 
+  def destroy
+    # Find the product with the given id and delete it
+    @product = Product.find(params[:id])
+    @product.destroy
+    # Redirect to the products index page
+    redirect_to products_path
+  end
+
   private
 
   def product_params

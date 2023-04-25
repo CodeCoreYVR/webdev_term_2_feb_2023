@@ -14,7 +14,8 @@ Rails.application.routes.draw do
   # Defines the "products" routes
   get '/products/new', to: 'products#new', as: "new_product" # new_product_path
   post '/products', to: 'products#create', as: "products" # products_path
-  get '/products', to: 'products#index'
+  get '/products', to: 'products#index' # products_path
   get '/products/:id', to: 'products#show', as: 'product' # product_path
+  delete '/products/:id', to: 'products#destroy', as: 'destroy_product' # destroy_product_path
 
 end

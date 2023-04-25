@@ -169,6 +169,14 @@
 * ./app/views/layouts/application.html.erb
   * add link for Products
   * add link for New
+* ./config/routes.rb
+  * add DELETE route for destroy action
+* ./app/controller/products_controller.rb
+  * add destroy method
+  * declare @product and find Product by params id
+* ./app/views/products/show.html.erb
+  * add button_to delete
+  * include destroy_product_path and method: :delete
 # ********************** End *********************
 
 # ********************* Labs *********************
@@ -243,5 +251,13 @@ Implement the following actions for your Amazon application:
 
 Bonus:
 1. Display the price formatted as a currency (with two decimal points and a dollar sign beforehand).
+
+
+# [Lab] Amazon: Destroy
+
+Implement the following action for your Amazon application:
+1. Destroy Action
+    url: /products/:id: Handle deleting a product having an id of :id then redirect to the Product index page upon successful deletion.
+
 
 
