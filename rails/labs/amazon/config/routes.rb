@@ -11,6 +11,13 @@ Rails.application.routes.draw do
   get '/contact_us', to: 'static_pages#contact_us'
   post '/contact_us', to: 'static_pages#contact_us'
 
+  # Defines the "products" routes
+  get '/products/new', to: 'products#new', as: "new_product" # new_product_path
+  post '/products', to: 'products#create', as: "products" # products_path
+  get '/products', to: 'products#index' # products_path
+  get '/products/:id', to: 'products#show', as: 'product' # product_path
+  delete '/products/:id', to: 'products#destroy', as: 'destroy_product' # destroy_product_path
+  get '/products/:id/edit', to: 'products#edit', as: 'edit_product' # edit_product_path
+  patch '/products/:id', to: 'products#update', as: 'update_product' # update_product_path
 
-  
 end

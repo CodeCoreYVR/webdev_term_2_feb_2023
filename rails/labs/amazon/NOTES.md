@@ -133,6 +133,67 @@
 * rails c
   * check if Class method works
     * $ Product.search('de')
+# CRUD
+* ./config/routes.rb
+  * add GET route for new action
+* $ rails g controller products
+* ./app/controllers/products_controller.rb
+  * add new method
+  * create new instance of Product
+* $ code ./app/views/products/new.html.erb
+  * add form_to @product or product_new_path
+  * add contents of form
+* ./config/routes.rb
+  * add POST route for create action
+* ./app/controllers/products_controller.rb
+  * add create method
+  * add private product_params method
+  * add rest of content
+  * redirect_to products_path
+* ./config/routes.rb
+  * add GET route for index action
+* ./app/controllers/products_controller.rb
+  * add index method
+  * create @products array
+* $ code ./app/views/products/index.html.erb
+  * loop through @products and and display
+  * titles should be links to product_path
+* ./config/routes.rb
+  * add GET route for show action
+* ./app/controllers/products_controller.rb
+  * add show method
+  * declare @product and find Product by params id
+* $ code ./app/views/products/show.html.erb
+  * display product title, description, and price
+  * use number_by_currency to add $ and .00
+* ./app/views/layouts/application.html.erb
+  * add link for Products
+  * add link for New
+* ./config/routes.rb
+  * add DELETE route for destroy action
+* ./app/controllers/products_controller.rb
+  * add destroy method
+  * declare @product and find Product by params id
+* ./app/views/products/show.html.erb
+  * add button_to delete
+  * include destroy_product_path and method: :delete
+* ./config/routes.rb
+  * add GET route for edit action
+* ./app/controllers/products_controller.rb
+  * add edit method
+  * declare @product and find Product by params id
+* ./app/views/products/show.html.erb
+  * add link_to edit
+  * include edit_product_path and/or @product
+* $ code ./app/views/products/edit.html.erb
+  * add content for edit form
+  * send form to update_product_path and/or @product
+* ./config/routes.rb
+  * add PATCH route for update action
+* ./app/controllers/products_controller/rb
+  * add update method
+  * declare @product and find Product by params id
+  * if product updates redirect_to product_path
 # ********************** End *********************
 
 # ********************* Labs *********************
@@ -183,4 +244,46 @@ Product.search("car")
 Which should return all the products that have the word car in it's title or description (case insensitive).
 
 [Challenge]: Show the products that contain the searched word in their title before the ones that contain the searched word only in the description. For instance, if a product contains the word car in its title, it should before a product that only contains the word car only in the description.
+
+
+# [Lab] Amazon: New and Create
+
+This lab assumes that you have an Amazon application with a Product model that has the following attributes: title, description and price. Depending on the exercises you've followed, your application may have more. Feel free to incorporate the extra attributes in the following labs:
+
+Implement the following actions for your Amazon application:
+1. New Action
+  url: /products/new: Shows a form to create a product that should have the attributes above.
+2. Create Action
+  url: /products: Handles creating a product based on the form submitted in the new page.
+
+
+# [Lab] Amazon: Show and Index
+
+Implement the following actions for your Amazon application:
+1. Show Action
+    url: /products/:id: Displays detail product information for a product having an id of :id.
+2. Index Action
+    url: /products: Displays the titles of all products in the database as links to their respective show pages.
+3. Update the create action to redirect to the created product's show page upon successful creation.
+
+Bonus:
+1. Display the price formatted as a currency (with two decimal points and a dollar sign beforehand).
+
+
+# [Lab] Amazon: Destroy
+
+Implement the following action for your Amazon application:
+1. Destroy Action
+    url: /products/:id: Handle deleting a product having an id of :id then redirect to the Product index page upon successful deletion.
+
+
+# [Lab] Amazon: Edit and Update
+
+Implement the following actions for your Amazon application:
+1. Edit Action
+    url: /products/:id/edit: Shows a form pre-populated with data from a product having an id of :id.
+2. Update Action
+    url: /products/:id: Handles updating a product then redirects to its show page on a successful update.
+3. Add a link in your Products show pages to their edit page.
+
 
