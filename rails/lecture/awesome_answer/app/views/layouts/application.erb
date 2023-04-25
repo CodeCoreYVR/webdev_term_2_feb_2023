@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>AwesomeAnswer</title>
+    <title>Awesome Answer</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
@@ -12,9 +12,9 @@
 
   <body>
     <nav>
-      <%= link_to("Welcome", welcome_path)  %>
-      <%= link_to("GoodBye", tata_path)  %>
-      <%= link_to("Form_Example", form_example_path)  %>
+      <%= link_to("Welcome", welcome_path)  %> | 
+      <%= link_to("GoodBye", tata_path)  %> | 
+      <%= link_to("Questions", questions_path) %>
     </nav>
 
     <%= yield %>

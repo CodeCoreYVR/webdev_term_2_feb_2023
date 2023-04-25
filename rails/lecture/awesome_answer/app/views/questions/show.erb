@@ -1,0 +1,6 @@
+<h2><%= @question.title %></h2>
+<p><%= @question.body %></p>
+<p><%= @question.created_at %></p>
+
+<%= button_to "Edit", edit_question_path(@question), :method => :get %>
+<%= button_to "Delete", @question, :method => :delete %>

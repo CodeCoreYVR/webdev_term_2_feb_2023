@@ -1,11 +1,11 @@
 class Question < ApplicationRecord
 
-    validates :title, presence: true, uniqueness: {message: "needs to be unique!"}
-    validates :body, length: {minimum: 5, maximum: 100} 
+    validates :title, presence: true #, uniqueness: {message: "needs to be unique!"}
+    validates :body, length: {minimum: 5} 
 
     # custom validation
-    validate :no_monkey
-    validate :no_title_in_body
+    # validate :no_monkey
+    # validate :no_title_in_body
 
     # life cycle events
     before_save {
@@ -29,17 +29,18 @@ class Question < ApplicationRecord
 
     private
     # custom validation method
-    def no_monkey
-        if body && body.downcase.include?("monkey")
-            self.errors.add(:body, "must not contain monkey")
-        end
-    end
+    # def no_monkey
+    #     if body && body.downcase.include?("monkey")
+    #         self.errors.add(:body, "must not contain monkey")
+    #     end
+    # end
 
-    def no_title_in_body
-        if body&.downcase.include?(title.downcase)
-            self.errors.add(:body, "must not include title of question")
-        end
-    end
+    # def no_title_in_body
+    #     if body&.downcase.include?(title.downcase)
+    #         self.errors.add(:body, "must not include title of question")
+    #     end
+    # end
+    # end of custom validation method
 
     def set_default_view_count
         self.view_count ||=0
