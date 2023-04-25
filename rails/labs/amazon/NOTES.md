@@ -133,6 +133,23 @@
 * rails c
   * check if Class method works
     * $ Product.search('de')
+# CRUD
+* ./config/routes.rb
+  * add GET route for new action
+* $ rails g controller products
+* ./app/controllers/products_controller.rb
+  * add new method
+  * create new instance of Product
+* $ code ./app/views/products/new.html.erb
+  * add form_to @product or product_new_path
+  * add contents of form
+* ./config/routes.rb
+  * add POST route for create action
+* ./app/controllers/products_controller.rb
+  * add create method
+  * add private product_params method
+  * add rest of content
+  * redirect_to products_path
 # ********************** End *********************
 
 # ********************* Labs *********************
@@ -183,4 +200,16 @@ Product.search("car")
 Which should return all the products that have the word car in it's title or description (case insensitive).
 
 [Challenge]: Show the products that contain the searched word in their title before the ones that contain the searched word only in the description. For instance, if a product contains the word car in its title, it should before a product that only contains the word car only in the description.
+
+
+# [Lab] Amazon: New and Create
+
+This lab assumes that you have an Amazon application with a Product model that has the following attributes: title, description and price. Depending on the exercises you've followed, your application may have more. Feel free to incorporate the extra attributes in the following labs:
+
+Implement the following actions for your Amazon application:
+1. New Action
+  url: /products/new: Shows a form to create a product that should have the attributes above.
+2. Create Action
+  url: /products: Handles creating a product based on the form submitted in the new page.
+
 

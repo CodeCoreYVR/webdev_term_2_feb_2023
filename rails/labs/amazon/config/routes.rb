@@ -11,6 +11,8 @@ Rails.application.routes.draw do
   get '/contact_us', to: 'static_pages#contact_us'
   post '/contact_us', to: 'static_pages#contact_us'
 
+  # Defines the "products" routes
+  get '/products/new', to: 'products#new', as: "new_product" # new_product_path
+  post '/products', to: 'products#create', as: "products" # products_path
 
-  
 end
