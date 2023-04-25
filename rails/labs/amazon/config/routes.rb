@@ -14,5 +14,7 @@ Rails.application.routes.draw do
   # Defines the "products" routes
   get '/products/new', to: 'products#new', as: "new_product" # new_product_path
   post '/products', to: 'products#create', as: "products" # products_path
+  get '/products', to: 'products#index'
+  get '/products/:id', to: 'products#show', as: 'product' # product_path
 
 end

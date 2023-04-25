@@ -1,0 +1,15 @@
+<div class="container mt-5">
+  <h1 class="text-center">Product Show</h1>
+  <div class="card border-light mx-auto">
+    <div class="card-header bg-secondary text-white">
+      <h3 class="card-title"><%= @product.title %></h3>
+    </div>
+    <div class="card-body">
+      <h3>Description:</h3>
+      <p class="card-text"><%= @product.description %></p>
+      <hr>
+      <h3>Price:</h3>
+      <p class="card-text"><%= number_to_currency(@product.price) %></p>
+    </div>
+  </div>
+</div>

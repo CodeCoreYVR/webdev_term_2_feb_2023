@@ -150,6 +150,25 @@
   * add private product_params method
   * add rest of content
   * redirect_to products_path
+* ./config/routes.rb
+  * add GET route for index action
+* ./app/controller/products_controller.rb
+  * add index method
+  * create @products array
+* $ code ./app/views/products/index.html.erb
+  * loop through @products and and display
+  * titles should be links to product_path
+* ./config/routes.rb
+  * add GET route for show action
+* ./app/controller/products_controller.rb
+  * add show method
+  * declare @product and find Product by params id
+* $ code ./app/views/products/show.html.erb
+  * display product title, description, and price
+  * use number_by_currency to add $ and .00
+* ./app/views/layouts/application.html.erb
+  * add link for Products
+  * add link for New
 # ********************** End *********************
 
 # ********************* Labs *********************
@@ -211,5 +230,18 @@ Implement the following actions for your Amazon application:
   url: /products/new: Shows a form to create a product that should have the attributes above.
 2. Create Action
   url: /products: Handles creating a product based on the form submitted in the new page.
+
+
+# [Lab] Amazon: Show and Index
+
+Implement the following actions for your Amazon application:
+1. Show Action
+    url: /products/:id: Displays detail product information for a product having an id of :id.
+2. Index Action
+    url: /products: Displays the titles of all products in the database as links to their respective show pages.
+3. Update the create action to redirect to the created product's show page upon successful creation.
+
+Bonus:
+1. Display the price formatted as a currency (with two decimal points and a dollar sign beforehand).
 
 
