@@ -1,5 +1,7 @@
 class Question < ApplicationRecord
 
+    has_many :answers, dependent: :destroy
+
     validates :title, presence: true #, uniqueness: {message: "needs to be unique!"}
     validates :body, length: {minimum: 5} 
 

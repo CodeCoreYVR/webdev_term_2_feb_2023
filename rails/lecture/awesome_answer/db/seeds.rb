@@ -9,13 +9,24 @@
 
 #if it is in development environment or testing environment
 Question.destroy_all()
+Answer.destroy_all()
 
 200.times do
-    Question.create(
+    q = Question.create(
         created_at: Faker::Date.backward(days: 365),
         title: Faker::ChuckNorris.fact,
         body: Faker::Hacker.say_something_smart,
         view_count: rand(10_000),
         updated_at: Faker::Date.backward(days: 365)
     )
+    
+    if q.valid?
+        rand(1..5).times do
+            Answer.create(body: Faker::Hacker.say_something_smart, question: q)
+        end
+    end
 end
+
+
+puts Cowsay.say("Generated #{Question.all.count}# questions", :Elephant)
+puts Cowsay.say("Generated #{Answer.all.count}# answers", :Dragon)

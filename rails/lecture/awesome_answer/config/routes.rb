@@ -10,11 +10,16 @@ Rails.application.routes.draw do
   # get('/question/:id') # dynamic id's will replace type number or param in url
 
   # Question routes
-  get "/questions/new" => "questions#new", as: :new_question
-  post "/questions" => "questions#create", as: :questions #questions_path (_path is postfix)
-  get "/questions/:id" => "questions#show", as: :question #question_path (_path is postfix)
-  get "/questions" => "questions#index"
-  get "/questions/:id/edit" => "questions#edit", as: :edit_question
-  patch "/questions/:id" => "questions#update"
-  delete "/questions/:id" => "questions#destroy", as: :delete_question
+  # get "/questions/new" => "questions#new", as: :new_question
+  # post "/questions" => "questions#create", as: :questions #questions_path (_path is postfix)
+  # get "/questions/:id" => "questions#show", as: :question #question_path (_path is postfix)
+  # get "/questions" => "questions#index"
+  # get "/questions/:id/edit" => "questions#edit", as: :edit_question
+  # patch "/questions/:id" => "questions#update"
+  # delete "/questions/:id" => "questions#destroy", as: :delete_question
+
+  resources :questions do 
+    resources :answers, only: [:create, :destroy]
+  end
+
 end

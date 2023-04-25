@@ -4,3 +4,21 @@
 
 <%= button_to "Edit", edit_question_path(@question), :method => :get %>
 <%= button_to "Delete", @question, :method => :delete %>
+
+<% @question.answers.each do |answer| %>
+    <div>
+    <%= answer.body %>
+    <small> Answered <%= time_ago_in_words(answer.created_at) %> </small>
+    <%= button_to "Delete", [@question, answer], :method => :delete %>
+    </div>
+    <hr>
+<% end %>
+
+<%= form_for [@question, @answer] do |f| %>
+    <div>
+        <%= f.label :body %>
+        <%= f.text_area :body %>
+    </div>
+    <%= f.submit %>
+<% end %>
+
