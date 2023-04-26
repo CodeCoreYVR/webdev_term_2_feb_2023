@@ -1,4 +1,4 @@
-# ******************** To Run ********************
+## ******************** To Run ********************
 * $ bundle i
 * $ npm i
   or
@@ -13,7 +13,7 @@
   * $ rails server
 * Open browser and navigate to:
   * localhost:3000/
-# ******************* To Create ******************
+## ******************* To Create ******************
 * $ rails new amazon -T -d postgresql --skip-git
 * $ cd amazon
 * $ bundle i
@@ -80,7 +80,7 @@
       home.html.erb
       about.html.erb
       contact_us.html.erb
-# Active Record
+### Active Record
 * $ rails generate model Product title:string description:text price:integer
 * $ rails db:migrate
 * $ rails console
@@ -133,7 +133,7 @@
 * rails c
   * check if Class method works
     * $ Product.search('de')
-# CRUD
+### CRUD
 * ./config/routes.rb
   * add GET route for new action
 * $ rails g controller products
@@ -194,7 +194,7 @@
   * add update method
   * declare @product and find Product by params id
   * if product updates redirect_to product_path
-# One to Many
+### One to Many
 * $ rails generate model Review rating:integer body:text product:references
 * ./config/routes.rb
   * switch from custom product routes to resources
@@ -237,11 +237,32 @@
   * in the review form we have to switch to using url instead of path helper and tell the form to use post method 
     * url: product_reviews_path(@product)
     * method: :post
-# ********************** End *********************
+* ./config/routes.rb
+  * add , :destroy to reviews only: array
+* ./app/controllers/reviews_controller.rb
+  * add destroy action method
+    * make define @product in the destroy action or as a custom before_action
+    * declare @review and find review by params :id
+    * destroy @review
+    * redirect_to product_path(@product)
+* ./app/views/products/show.html.erb
+  * add link_to to each review
+    * product_review_path(@product, review)
+    * method: :delete
+* link_to uses javascript to submit requests using DELETE method. this is handled by rails UJS library. 
+  newer versions of rails require you to explicitly include the UJS code.
+  * if newer rails:
+    * ./app/assets/javascripts/application.js
+      * add: //= require rails-ujs
+    * ./app/views/layouts/application.html.erb
+      * add to head:
+        * <%= csrf_meta_tags %>
+        * <%= javascript_include_tag 'application' %>
+## ********************** End *********************
 
-# ********************* Labs *********************
+## ********************* Labs *********************
 
-# [Lab] Set up the Amazon Application
+### [Lab] Set up the Amazon Application
 
 Set up a Rails application for `Amazon`. We will use this application to practice many of the Rails concepts in the upcoming weeks.
 
@@ -250,17 +271,17 @@ So make sure to do the following:
   2. Run your application and make sure to get the welcome page from Rails
 
 
-# [Lab] Build a home and about pages
+### [Lab] Build a home and about pages
 
 Build 'home' and 'about' pages for your Amazon application that just display simple text. Build 'nav bar' to link to both pages. Include a link to the 'contact us' page in the 'nav bar'.
 
 
-# [Lab] Build a contact us page
+### [Lab] Build a contact us page
 
 Build a 'contact us' page for your Amazon application that has a name, email and text area fields. When the user submits, it should just show a "Thank you  for contacting us!" message.
 
 
-# [Lab] Product model
+### [Lab] Product model
 
   Step 1
 Generate a Product model for your Amazon application. Make sure it has the following attributes: title, description and price.
@@ -274,12 +295,12 @@ Open up the Rails console then create a product, then find it then update its ti
 Change your db/seeds.rb file to generate a 1000 products with Faker then run the seeds.
 
 
-# [Lab] Product model modification
+### [Lab] Product model modification
 
 Generate a migration to change the type of the price field from Integer to Float. Then run the migration.
 
 
-# [Exercise] Product model custom methods
+### [Exercise] Product model custom methods
 
 Add a custom methods called search to the product model to search for a product with its title or description if it contains a specific word. For instance you should be able to do:
 Product.search("car")
@@ -289,7 +310,7 @@ Which should return all the products that have the word car in it's title or des
 [Challenge]: Show the products that contain the searched word in their title before the ones that contain the searched word only in the description. For instance, if a product contains the word car in its title, it should before a product that only contains the word car only in the description.
 
 
-# [Lab] Amazon: New and Create
+### [Lab] Amazon: New and Create
 
 This lab assumes that you have an Amazon application with a Product model that has the following attributes: title, description and price. Depending on the exercises you've followed, your application may have more. Feel free to incorporate the extra attributes in the following labs:
 
@@ -300,7 +321,7 @@ Implement the following actions for your Amazon application:
   url: /products: Handles creating a product based on the form submitted in the new page.
 
 
-# [Lab] Amazon: Show and Index
+### [Lab] Amazon: Show and Index
 
 Implement the following actions for your Amazon application:
 1. Show Action
@@ -313,14 +334,14 @@ Bonus:
 1. Display the price formatted as a currency (with two decimal points and a dollar sign beforehand).
 
 
-# [Lab] Amazon: Destroy
+### [Lab] Amazon: Destroy
 
 Implement the following action for your Amazon application:
 1. Destroy Action
     url: /products/:id: Handle deleting a product having an id of :id then redirect to the Product index page upon successful deletion.
 
 
-# [Lab] Amazon: Edit and Update
+### [Lab] Amazon: Edit and Update
 
 Implement the following actions for your Amazon application:
 1. Edit Action
@@ -330,7 +351,7 @@ Implement the following actions for your Amazon application:
 3. Add a link in your Products show pages to their edit page.
 
 
-# [Lab] Amazon: Creating reviews
+### [Lab] Amazon: Creating reviews
 
 Add reviews for products in your Amazon application as follows:
   1. Product has many reviews
@@ -342,11 +363,16 @@ Add reviews for products in your Amazon application as follows:
 Test your association in Rails console to make sure that it works.
 
 
-# [Lab] Amazon: Reviews Controller Create
+### [Lab] Amazon: Reviews Controller Create
 
 Start to build the reviews controller and implement the create action as follows:
   1. Reviews can be created from the product show page
   2. If the review is created successfully, redirect back to the product show page
   3. If the review is not created successfully, then show the product show page again with errors
 
+
+### [Lab] Amazon: Reviews controller destroy
+
+1. Implement the ability to delete reviews for products by having a delete link by each review.
+3. After deleting a review the user should be redirected back to the product show page.
 

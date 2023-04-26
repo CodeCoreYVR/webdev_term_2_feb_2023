@@ -52,8 +52,8 @@
       <% if @reviews && @reviews != [] %>
         <% @reviews.each do |review| %>
           <li class="list-group-item">
-            <strong>Rating:</strong> <%= review.rating %> <br>
-            <strong>Body:</strong> <%= review.body %>
+            <%= review.rating %> - <%= review.body %>
+            ~ <%= link_to "Delete", product_review_path(@product, review), method: :delete, data: { confirm: "Are you sure?" } %> ~
           </li>
         <% end %>
       <% else %>

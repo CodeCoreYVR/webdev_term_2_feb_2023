@@ -1,7 +1,13 @@
 class ReviewsController < ApplicationController
+  # This will call the find_product method before the specified actions
+  before_action :find_product, only: [:create, :destroy]
+
+
+
   def create
-    # Find the product with the given id
-    @product = Product.find(params[:product_id])
+    # # Find the product with the given id
+    # @product = Product.find(params[:product_id]) # @product is already declaired by the before_action :find_product
+    
     # Create a new review with the given params
     @review = @product.reviews.create(review_params)
     # Get all the reviews for the product in descending order
@@ -21,10 +27,33 @@ class ReviewsController < ApplicationController
     end
   end
 
+  def destroy
+    # # Find the product with the given id
+    # @product = Product.find(params[:product_id]) # @product is already declaired by the before_action :find_product
+
+    @review = @product.reviews.find(params[:id])
+    
+    # If the review is successfully deleted from the database
+    if @review.destroy
+      # Redirect to the product show page with a notice message
+      redirect_to @product, notice: "Review deleted successfully"
+    else
+      # Otherwise, redirect to the product show page with an alert message
+      redirect_to @product, alert: "Review not deleted"
+    end
+  end
+  
+  
   private
   
   # Method to get the review params from the form and only permit the rating and body attributes
   def review_params
     params.require(:review).permit(:rating, :body)
+  end
+
+  # Method to find the product with the given id. This is used as a before_action to avoid repeating code.
+  # This method is called before the show, edit, update and destroy actions
+  def find_product
+    @product = Product.find(params[:product_id])
   end
 end

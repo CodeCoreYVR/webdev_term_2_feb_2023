@@ -10,6 +10,7 @@ class ProductsController < ApplicationController
   def show
     # # Get the product with the given id from the database
     # @product = Product.find(params[:id]) # @product is already declaired by the before_action :find_product
+    
     @review = Review.new
     @reviews = @product.reviews.order(created_at: :desc) || []
   end
