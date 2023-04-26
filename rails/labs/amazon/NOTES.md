@@ -194,6 +194,30 @@
   * add update method
   * declare @product and find Product by params id
   * if product updates redirect_to product_path
+# One to Many
+* $ rails generate model Review rating:integer body:text product:references
+* ./config/routes.rb
+  * switch from custom product routes to resources
+  * add review resources within products for create action only
+* ./app/models/product.rb
+  * has_many :reviews, dependent: :destroy
+* ./app/models/review.rb
+  * belongs_to :product
+  * add rating validations to only allow between 1-5
+* $ rails g controller reviews
+* ./app/controllers/reviews_controller.rb
+  * add create method
+  * declare @product and find Product by params :product_id
+  * create a review_params private method to require review and permit only rating and body
+  * declare @review and create a review with review_params
+  * redirect_to product_path @product
+* ./app/controllers/products_controller.rb
+  * within show method declare @review and create new instance from Review
+* ./app/views/products/show.html.erb
+  * add review form to create new product review
+  * use product_reviews_path(@product) or [@product, @review]
+  * check if there are any @product.reviews
+  * if so loop through them and display rating and body
 # ********************** End *********************
 
 # ********************* Labs *********************
@@ -286,4 +310,15 @@ Implement the following actions for your Amazon application:
     url: /products/:id: Handles updating a product then redirects to its show page on a successful update.
 3. Add a link in your Products show pages to their edit page.
 
+
+# [Lab] Amazon: Creating reviews
+
+Add reviews for products in your Amazon application as follows:
+  1. Product has many reviews
+  2. The form to create reviews should be on the product page much like a comment section in a post of a blog.
+  3. The reviews associated to products should be shown on the respective product show.
+  4. Every review has rating and body (for now just have the user enter a number for the value of rating, later you will learn how to display interactive stars with javascript)
+  5. Validate that body is optional but the rating is required and must be a number between 1 and 5 inclusive.
+
+Test your association in Rails console to make sure that it works.
 
