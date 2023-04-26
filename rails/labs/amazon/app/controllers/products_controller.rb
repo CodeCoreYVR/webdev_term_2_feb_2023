@@ -3,14 +3,15 @@ class ProductsController < ApplicationController
   before_action :find_product, only: [:show, :edit, :update, :destroy]
 
   def index
-    # Get all the products from the database
-    @products = Product.all
+    # Get all the products from the database and order them by the created_at column in descending order
+    @products = Product.all.order(created_at: :desc)
   end
 
   def show
     # # Get the product with the given id from the database
     # @product = Product.find(params[:id]) # @product is already declaired by the before_action :find_product
     @review = Review.new
+    @reviews = @product.reviews.order(created_at: :desc) || []
   end
 
   def new

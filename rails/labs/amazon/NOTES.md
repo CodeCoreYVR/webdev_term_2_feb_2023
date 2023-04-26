@@ -218,6 +218,25 @@
   * use product_reviews_path(@product) or [@product, @review]
   * check if there are any @product.reviews
   * if so loop through them and display rating and body
+* ./app/controllers/reviews_controller.rb
+  * add if conditional for if review saves
+  * if saves redirect_to @product or product_path @product
+  * if not saves render products show page with error message
+* ./app/controllers/reviews_controller.rb
+  * add conditional. if @review.save then redirect_to @product
+  * else render 'products/show'
+  * for reviews to display in desc order add:
+    * @reviews = @product.reviews.order(created_at: :desc)
+* ./app/controllers/products_controller.rb
+  * in show action add:
+    * @reviews = @product.reviews.order(created_at: :desc) || []
+  * since we're here, in index action add:
+    * .order(created_at: :desc) to end of Product.all
+* ./app/views/products/show.html.erb
+  * change reviews conditional to be if @reviews exist || @reviews != []
+  * in the review form we have to switch to using url instead of path helper and tell the form to use post method 
+    * url: product_reviews_path(@product)
+    * method: :post
 # ********************** End *********************
 
 # ********************* Labs *********************
@@ -321,4 +340,13 @@ Add reviews for products in your Amazon application as follows:
   5. Validate that body is optional but the rating is required and must be a number between 1 and 5 inclusive.
 
 Test your association in Rails console to make sure that it works.
+
+
+# [Lab] Amazon: Reviews Controller Create
+
+Start to build the reviews controller and implement the create action as follows:
+  1. Reviews can be created from the product show page
+  2. If the review is created successfully, redirect back to the product show page
+  3. If the review is not created successfully, then show the product show page again with errors
+
 
