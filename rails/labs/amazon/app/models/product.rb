@@ -1,4 +1,7 @@
 class Product < ApplicationRecord
+  # Associations
+  has_many :reviews, dependent: :destroy
+
   # Callbacks
   before_validation :set_default_price
   before_validation :round_price_to_two_decimal_places
