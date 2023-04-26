@@ -1,7 +1,7 @@
 
 1. Create the model for user
 ```ruby
-rails g model user first_name:string last_name:string email:string:index password_digest:string_digest:string
+rails g model user first_name:string last_name:string email:string:index password_digest:string
 ```
 Here, the email has been indexed because it will be used frequently for user login and others.
 The command will generate the following files
@@ -248,7 +248,7 @@ We make the current_user and user_signed_in? helper methods by adding helper_met
 ```
 # app/controllers/application_controller.rb
   def authenticate_user!
-    redirect_to new_sessions_path unless user_signed_in?
+    redirect_to sessions_new_path unless user_signed_in?
   end
 
   def user_signed_in?
@@ -284,8 +284,8 @@ end
   Hello <%= current_user.full_name %> | 
   <%= link_to "Logout", sessions_destroy_path %>
 <% else %>
-  <%= link_to "Login", new_sessions_path %> |
-  <%= link_to "Sign Up", new_user_path %>
+  <%= link_to "Login", sessions_new_path %> |
+  <%= link_to "Sign Up", user_new_path %>
 <% end %>
 <hr>
 ```
