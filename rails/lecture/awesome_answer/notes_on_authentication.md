@@ -1,7 +1,7 @@
 
 1. Create the model for user
 ```ruby
-rails g model user first_name:string last_name:string email:string:index password_digest:string_digest:string
+rails g model user first_name:string last_name:string email:string:index password_digest:string
 ```
 Here, the email has been indexed because it will be used frequently for user login and others.
 The command will generate the following files
