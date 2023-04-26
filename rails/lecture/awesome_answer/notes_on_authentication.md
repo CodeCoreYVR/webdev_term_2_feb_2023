@@ -248,7 +248,7 @@ We make the current_user and user_signed_in? helper methods by adding helper_met
 ```
 # app/controllers/application_controller.rb
   def authenticate_user!
-    redirect_to new_sessions_path unless user_signed_in?
+    redirect_to sessions_new_path unless user_signed_in?
   end
 
   def user_signed_in?
@@ -284,8 +284,8 @@ end
   Hello <%= current_user.full_name %> | 
   <%= link_to "Logout", sessions_destroy_path %>
 <% else %>
-  <%= link_to "Login", new_sessions_path %> |
-  <%= link_to "Sign Up", new_user_path %>
+  <%= link_to "Login", sessions_new_path %> |
+  <%= link_to "Sign Up", user_new_path %>
 <% end %>
 <hr>
 ```
