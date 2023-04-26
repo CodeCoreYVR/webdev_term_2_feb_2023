@@ -10,6 +10,7 @@
 #if it is in development environment or testing environment
 Question.destroy_all()
 Answer.destroy_all()
+User.destroy_all()
 
 200.times do
     q = Question.create(
@@ -27,6 +28,8 @@ Answer.destroy_all()
     end
 end
 
+super_user = User.create(first_name:"Tony", last_name:"Stark",email:"tony@stark.com", password:"123abc",password_confirmation:"123abc")
 
 puts Cowsay.say("Generated #{Question.all.count}# questions", :Elephant)
 puts Cowsay.say("Generated #{Answer.all.count}# answers", :Dragon)
+puts Cowsay.say("Created a user with the email #{User.first.email}", :Cow)

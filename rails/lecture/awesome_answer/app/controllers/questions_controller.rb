@@ -1,5 +1,5 @@
 class QuestionsController < ApplicationController
-    
+    before_action :authenticate_user!, except: [:index, :show]
     def new
         @question = Question.new
     end
@@ -7,11 +7,12 @@ class QuestionsController < ApplicationController
     def create
         question_params = params.require(:question).permit(:title, :body)
         @question = Question.new question_params
+        @question.user = current_user
 
         if @question.save
             redirect_to question_path(@question)
         else
-            render :new # it will go to 'def new' method
+            render :new
         end
     end
 
@@ -35,7 +36,7 @@ class QuestionsController < ApplicationController
         if @question.update (question_params)
             redirect_to question_path(@question)
         else
-            render :edit # it will go to 'def edit' method
+            render :edit
         end
     end    
 
