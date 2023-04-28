@@ -258,6 +258,23 @@
       * add to head:
         * <%= csrf_meta_tags %>
         * <%= javascript_include_tag 'application' %>
+        ### Authentication
+* $ rails generate migration CreateUsers first_name:string last_name:string email:string password_digest:string
+* $ rails generate migration AddUserToReviews user:references
+* $ rails generate migration AddUserToProducts user:references
+* $ rails db:migrate
+* $ rails generate model User first_name:string last_name:string email:string password_digest:string
+* ./app/models/user.rb
+  * add has_many for products and reviews
+* ./app/models/product.rb
+  * add belongs_to user
+* ./app/models/review.rb
+  * add belongs_to user
+* make sure tables are connected correctly, $ rails c
+  * > user = User.create(first_name: "John", last_name: 'Doe', email: "johndoe@example.com", password_digest: "password")
+  * > product = user.products.create(title: "Product Name", description: "Product description", price: 5.009)
+  * > review = Review.create(user: user, product: product, rating: 4, body: "Great product!")
+  * > exit
 ## ********************** End *********************
 
 ## ********************* Labs *********************
@@ -375,4 +392,14 @@ Start to build the reviews controller and implement the create action as follows
 
 1. Implement the ability to delete reviews for products by having a delete link by each review.
 3. After deleting a review the user should be redirected back to the product show page.
+
+
+### [Lab] Amazon: User Model
+
+Create a user model for your Amazon application as follows:
+  1. User has the following attributes: first_name, last_name, email, password_digest (all required)
+  2. User has_many products
+  3. User has_many reviews
+
+
 
