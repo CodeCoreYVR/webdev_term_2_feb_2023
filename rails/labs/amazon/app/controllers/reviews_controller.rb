@@ -1,7 +1,8 @@
 class ReviewsController < ApplicationController
   # This will call the find_product method before the specified actions
   before_action :find_product, only: [:create, :destroy]
-
+  # This will call the find_user method before the specified actions
+  before_action :require_login, only: [:create]
 
 
   def create
@@ -10,8 +11,11 @@ class ReviewsController < ApplicationController
     
     # Create a new review with the given params
     @review = @product.reviews.create(review_params)
+    # Set the user_id to the current user's id
+    @review.user = current_user
     # Get all the reviews for the product in descending order
     @reviews = @product.reviews.order(created_at: :desc)
+
 
     # If the review is successfully saved to the database
     if @review.save

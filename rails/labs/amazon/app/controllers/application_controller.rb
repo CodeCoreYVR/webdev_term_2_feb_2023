@@ -10,4 +10,11 @@ class ApplicationController < ActionController::Base
     user.last_name = user.last_name.downcase.split(' ').map { |word| word.capitalize }.join(' ')
     user
   end
+
+  def require_login
+    unless current_user
+      flash[:error] = "You must be logged in to create a product or review."
+      redirect_to new_session_path
+    end
+  end
 end

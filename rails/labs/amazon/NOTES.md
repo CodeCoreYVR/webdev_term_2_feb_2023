@@ -336,8 +336,27 @@
   * add :destroy action to sessions resources
 * ./app/controllers/sessions_controller.rb
   * add destroy action method
-  * set session to nil
-  * redirect
+  * set session to nil then redirect
+* ./app/views/layouts/application.html.erb
+  * add buttons or links to navbar for sign in, out, edit, and welcome message
+  * edit - edit_user_path(current_user)
+  * logout - session_path(current_user)
+  * signup - new_user_path
+  * login - new_session_path
+* ./app/controllers/application_controller.rb
+  * add require_login method to check if the user is signed in
+* ./app/controllers/products_controller.rb
+  * add:
+    * before_action for require_login and have it only for :new and :create action methods
+    * create custom method to find_user and call in a before_action for only :create action method
+    * in create action change product creation to @user.product.build()
+* ./app/controllers/reviews_controller.rb
+  * add:
+    * before_action for require_login and have it only for :create action method
+* ./app/views/products/show.html.erb
+  * add:
+    * @product.user.full_name to product section
+    * review.user.full_name to review section
 ## ********************** End *********************
 
 ## ********************* Labs *********************
@@ -392,7 +411,12 @@ Which should return all the products that have the word car in it's title or des
 
 ### [Lab] Amazon: New and Create
 
-This lab assumes that you have an Amazon application with a Product model that has the following attributes: title, description and price. Depending on the exercises you've followed, your application may have more. Feel free to incorporate the extra attributes in the following labs:
+This lab assumes that you have an Amazon application with a Product model that has the following attributes: title, description and price. Depending on the exercises you've followed, your application may have m
+    Assignment
+    Settings
+    Advanced grading
+    More
+ore. Feel free to incorporate the extra attributes in the following labs:
 
 Implement the following actions for your Amazon application:
 1. New Action
@@ -463,6 +487,24 @@ Create a user model for your Amazon application as follows:
   1. User has the following attributes: first_name, last_name, email, password_digest (all required)
   2. User has_many products
   3. User has_many reviews
+
+
+### [Lab] Amazon: Sessions Controller
+
+Create a sessions controller for your Amazon application as follows:
+
+  1. The controller must have a new action that displays a form with an email & password`
+  2. The controller must have a create action that signs in the user by setting session[:user_id] to the appropriately and redirects to the home page
+
+
+### [Lab] Amazon: Complete authentication
+
+Complete the User Authentication system for your Amazon application as follows:
+  1. At the top, display the current user name and a logout link if they are signed in or display a sign up and a sign in link if they are not
+  2. Enforce that the user must be signed in to create products or reviews
+  3. Make sure to associate the created products and reviews to the user
+  4. Display user names beside their reviews and their products
+
 
 
 

@@ -5,11 +5,20 @@
       <h3 class="card-title"><%= @product.title %></h3>
     </div>
     <div class="card-body">
-      <h3>Description:</h3>
-      <p class="card-text"><%= @product.description %></p>
+      <div>
+        <h3>Created By:</h3>
+        <p class="card-text"><%= @product.user.full_name %></p>
+      </div>
       <hr>
-      <h3>Price:</h3>
-      <p class="card-text"><%= number_to_currency(@product.price) %></p>
+      <div>
+        <h3>Description:</h3>
+        <p class="card-text"><%= @product.description %></p>
+      </div>
+      <hr>
+      <div>
+        <h3>Price:</h3>
+        <p class="card-text"><%= number_to_currency(@product.price) %></p>
+      </div>
     </div>
     <div class="card-footer d-flex justify-content-around">
       <div>
@@ -52,7 +61,8 @@
       <% if @reviews && @reviews != [] %>
         <% @reviews.each do |review| %>
           <li class="list-group-item">
-            <%= review.rating %> - <%= review.body %>
+            <div><%= review.rating %> <strong>~ <%= review.user.full_name %> ~</strong></div>
+            <div><%= review.body %></div> 
             ~ <%= link_to "Delete", product_review_path(@product, review), method: :delete, data: { confirm: "Are you sure?" } %> ~
           </li>
         <% end %>

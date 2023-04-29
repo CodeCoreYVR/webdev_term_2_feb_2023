@@ -22,8 +22,15 @@
           <li class="nav-item"><%= link_to 'Products', products_path, class: 'nav-link' %></li>
           <li class="nav-item"><%= link_to 'New', new_product_path, class: 'nav-link' %></li>
         </ul>
-        <ul class="navbar-nav ms-auto">
-          <!-- Add future buttons here -->
+        <ul class="navbar-nav ms-auto align-items-center">
+          <% if current_user %>
+            <li class="nav-item welcome-message">Welcome<%= current_user ? " #{current_user.full_name}" : "" %>!</li>
+            <li class="nav-item"><%= link_to 'Edit Profile', edit_user_path(current_user), class: 'nav-link' %></li>
+            <li class="nav-item"><%= link_to 'Logout', session_path(current_user), method: :delete, class: 'nav-link' %></li>
+          <% else %>
+            <li class="nav-item"><%= link_to 'Sign up', new_user_path, class: 'nav-link' %></li>
+            <li class="nav-item"><%= link_to 'Login', new_session_path, class: 'nav-link' %></li>
+          <% end %>
         </ul>
       </div>
     </nav>
