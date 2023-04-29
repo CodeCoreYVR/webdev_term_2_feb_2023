@@ -1,4 +1,4 @@
 <div class="text-center">
-  <h1>Welcome to Amazon!</h1>
+  <h1>Welcome <%= current_user ? "#{current_user.full_name} " : "" %>to Amazon!</h1>
   <p>This is the home page.</p>
 </div>

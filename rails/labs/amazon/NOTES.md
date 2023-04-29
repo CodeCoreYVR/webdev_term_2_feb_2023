@@ -258,6 +258,105 @@
       * add to head:
         * <%= csrf_meta_tags %>
         * <%= javascript_include_tag 'application' %>
+        ### Authentication
+* $ rails generate migration CreateUsers first_name:string last_name:string email:string password_digest:string
+* $ rails generate migration AddUserToReviews user:references
+* $ rails generate migration AddUserToProducts user:references
+* $ rails db:migrate
+* $ rails generate model User first_name:string last_name:string email:string password_digest:string
+* ./app/models/user.rb
+  * add has_many for products and reviews
+* ./app/models/product.rb
+  * add belongs_to user
+* ./app/models/review.rb
+  * add belongs_to user
+* make sure tables are connected correctly, $ rails c
+  * > user = User.create(first_name: "John", last_name: 'Doe', email: "johndoe@example.com", password_digest: "password")
+  * > product = user.products.create(title: "Product Name", description: "Product description", price: 5.009)
+  * > review = Review.create(user: user, product: product, rating: 4, body: "Great product!")
+  * > exit
+* Gemfile
+  * uncomment out bcrypt
+* $ bundle i
+* ./db/seeds.rb
+  * add:
+    * User.destroy_all & Review.destroy_all
+    * loop to create x number of users and reviews using faker for names
+    * print to terminal number of users and reviews 
+* ./db/seeds.rb
+  * encrypt password before saving
+* config/routes.rb
+  * add resources for user new only
+* $ rails g controller user
+* ./app/controllers/users_controller.rb
+  * add new action method
+  * create new instance of User
+* $ code ./app/views/users/new.html.erb
+  * add contents for lab
+  * form should use users_path
+* config/routes.rb
+  * add :create to user's resources
+* ./app/controllers/users_controller.rb
+  * add create action method
+  * declare @user and create a user with user_params
+  * if @user.save add user to session and redirect
+  * else render :new action method
+* ./config/routes.rb
+  * add :edit to user's resources
+* ./app/controllers/users_controller.rb
+  * add edit action method
+  * create custom method for finding @user by params and calling it set_user
+* $ code ./app/views/users/edit.html.erb
+  * add contents for editing user
+  * form should use user_path(@user)
+* ./config/routes.rb
+  * add :update to user's resources
+* ./app/controllers/users_controller.rb
+  * add update action method
+  * add :update to before_action set_user call
+* config/routes.rb
+  * add resources for sessions with only :new
+* rails generate controller Sessions new create
+* ./app/controllers/sessions_controller.rb
+  * add new action method
+* $ code ./app/views/sessions/new.html.erb
+  * create form and use sessions_path
+* ./config/routes.rb
+  * add :create action to sessions resources
+* ./app/controllers/sessions_controller.rb
+  * add create action method
+  * declare user and find by params :email
+  * if user and user.authenticate with params :password then add user to session and redirect
+  * else render :new action method
+* ./app/models/user.rb
+  * add: 
+    * has_secure_password
+    * full_name method (this is for later)
+* ./config/routes.rb
+  * add :destroy action to sessions resources
+* ./app/controllers/sessions_controller.rb
+  * add destroy action method
+  * set session to nil then redirect
+* ./app/views/layouts/application.html.erb
+  * add buttons or links to navbar for sign in, out, edit, and welcome message
+  * edit - edit_user_path(current_user)
+  * logout - session_path(current_user)
+  * signup - new_user_path
+  * login - new_session_path
+* ./app/controllers/application_controller.rb
+  * add require_login method to check if the user is signed in
+* ./app/controllers/products_controller.rb
+  * add:
+    * before_action for require_login and have it only for :new and :create action methods
+    * create custom method to find_user and call in a before_action for only :create action method
+    * in create action change product creation to @user.product.build()
+* ./app/controllers/reviews_controller.rb
+  * add:
+    * before_action for require_login and have it only for :create action method
+* ./app/views/products/show.html.erb
+  * add:
+    * @product.user.full_name to product section
+    * review.user.full_name to review section
 ## ********************** End *********************
 
 ## ********************* Labs *********************
@@ -312,7 +411,12 @@ Which should return all the products that have the word car in it's title or des
 
 ### [Lab] Amazon: New and Create
 
-This lab assumes that you have an Amazon application with a Product model that has the following attributes: title, description and price. Depending on the exercises you've followed, your application may have more. Feel free to incorporate the extra attributes in the following labs:
+This lab assumes that you have an Amazon application with a Product model that has the following attributes: title, description and price. Depending on the exercises you've followed, your application may have m
+    Assignment
+    Settings
+    Advanced grading
+    More
+ore. Feel free to incorporate the extra attributes in the following labs:
 
 Implement the following actions for your Amazon application:
 1. New Action
@@ -375,4 +479,32 @@ Start to build the reviews controller and implement the create action as follows
 
 1. Implement the ability to delete reviews for products by having a delete link by each review.
 3. After deleting a review the user should be redirected back to the product show page.
+
+
+### [Lab] Amazon: User Model
+
+Create a user model for your Amazon application as follows:
+  1. User has the following attributes: first_name, last_name, email, password_digest (all required)
+  2. User has_many products
+  3. User has_many reviews
+
+
+### [Lab] Amazon: Sessions Controller
+
+Create a sessions controller for your Amazon application as follows:
+
+  1. The controller must have a new action that displays a form with an email & password`
+  2. The controller must have a create action that signs in the user by setting session[:user_id] to the appropriately and redirects to the home page
+
+
+### [Lab] Amazon: Complete authentication
+
+Complete the User Authentication system for your Amazon application as follows:
+  1. At the top, display the current user name and a logout link if they are signed in or display a sign up and a sign in link if they are not
+  2. Enforce that the user must be signed in to create products or reviews
+  3. Make sure to associate the created products and reviews to the user
+  4. Display user names beside their reviews and their products
+
+
+
 

@@ -1,6 +1,10 @@
 class ProductsController < ApplicationController
   # This will call the find_product method before the specified actions
   before_action :find_product, only: [:show, :edit, :update, :destroy]
+  # This will call the find_user method before the specified actions
+  before_action :find_user, only: [:create]
+  # This will call the authenticate_user! method before the specified actions
+  before_action :require_login, only: [:new, :create]
 
   def index
     # Get all the products from the database and order them by the created_at column in descending order
@@ -21,8 +25,8 @@ class ProductsController < ApplicationController
   end
 
   def create
-    # Create a new product with the given params
-    @product = Product.new(product_params)
+    # Create a new product with the given params and assign it to the current user
+    @product = @user.products.build(product_params)
     # If the product is successfully saved to the database
     if @product.save
       # Redirect to the products index page
@@ -70,5 +74,12 @@ class ProductsController < ApplicationController
   # This method is called before the show, edit, update and destroy actions
   def find_product
     @product = Product.find(params[:id])
+  end
+
+  # Method to find the user with the given id. This is used as a before_action to avoid repeating code.
+  def find_user
+    if current_user
+      @user = User.find(current_user.id)
+    end
   end
 end

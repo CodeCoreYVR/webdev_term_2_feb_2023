@@ -38,6 +38,12 @@
 /vendor/cache/
 # Ignore all files in the bin directory except for bin/bundle and bin/yarn, which are needed to install dependencies.
 /bin/*
+# Un-ignore the bin/rails file. This binstub launches the Rails CLI.
+# It's necessary for running various Rails tasks (like generating models, running migrations, starting the server, etc.)
+!/bin/rails
+# Un-ignore the bin/rake file. This binstub launches the Rake task runner.
+# It's necessary for running various Rake tasks (like database tasks, custom tasks defined in lib/tasks, etc.)
+!/bin/rake
 # Un-ignore the bin/bundle file, which is needed to install Ruby gems.
 !/bin/bundle
 # Ignore the bin/yarn file, which is needed to install JavaScript dependencies.

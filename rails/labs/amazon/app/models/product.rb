@@ -1,6 +1,7 @@
 class Product < ApplicationRecord
   # Associations
   has_many :reviews, dependent: :destroy
+  belongs_to :user
 
   # Callbacks
   before_validation :set_default_price
