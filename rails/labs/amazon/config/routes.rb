@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'sessions/new'
+  get 'sessions/create'
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Defines the root path route ("/")
@@ -22,6 +24,13 @@ Rails.application.routes.draw do
   # patch '/products/:id', to: 'products#update', as: 'update_product' # update_product_path
   # ******* The above routes are not needed because we are using the resources :products line below *******
 
+  # Routes for user authentication
+  # Defines the "signup" and "login" routes
+  resources :users, only: [:new, :create, :edit, :update]
+  # Defines the "login" and "logout" routes
+  resources :sessions, only: [:new, :create, :destroy]
+
+  # Routes for products and reviews
   # Defines the "reviews" routes i.e. "/products/:id
   resources :products do
     # Defines the "reviews" routes nested under "products" i.e. "/products/:product_id/reviews"

@@ -275,6 +275,69 @@
   * > product = user.products.create(title: "Product Name", description: "Product description", price: 5.009)
   * > review = Review.create(user: user, product: product, rating: 4, body: "Great product!")
   * > exit
+* Gemfile
+  * uncomment out bcrypt
+* $ bundle i
+* ./db/seeds.rb
+  * add:
+    * User.destroy_all & Review.destroy_all
+    * loop to create x number of users and reviews using faker for names
+    * print to terminal number of users and reviews 
+* ./db/seeds.rb
+  * encrypt password before saving
+* config/routes.rb
+  * add resources for user new only
+* $ rails g controller user
+* ./app/controllers/users_controller.rb
+  * add new action method
+  * create new instance of User
+* $ code ./app/views/users/new.html.erb
+  * add contents for lab
+  * form should use users_path
+* config/routes.rb
+  * add :create to user's resources
+* ./app/controllers/users_controller.rb
+  * add create action method
+  * declare @user and create a user with user_params
+  * if @user.save add user to session and redirect
+  * else render :new action method
+* ./config/routes.rb
+  * add :edit to user's resources
+* ./app/controllers/users_controller.rb
+  * add edit action method
+  * create custom method for finding @user by params and calling it set_user
+* $ code ./app/views/users/edit.html.erb
+  * add contents for editing user
+  * form should use user_path(@user)
+* ./config/routes.rb
+  * add :update to user's resources
+* ./app/controllers/users_controller.rb
+  * add update action method
+  * add :update to before_action set_user call
+* config/routes.rb
+  * add resources for sessions with only :new
+* rails generate controller Sessions new create
+* ./app/controllers/sessions_controller.rb
+  * add new action method
+* $ code ./app/views/sessions/new.html.erb
+  * create form and use sessions_path
+* ./config/routes.rb
+  * add :create action to sessions resources
+* ./app/controllers/sessions_controller.rb
+  * add create action method
+  * declare user and find by params :email
+  * if user and user.authenticate with params :password then add user to session and redirect
+  * else render :new action method
+* ./app/models/user.rb
+  * add: 
+    * has_secure_password
+    * full_name method (this is for later)
+* ./config/routes.rb
+  * add :destroy action to sessions resources
+* ./app/controllers/sessions_controller.rb
+  * add destroy action method
+  * set session to nil
+  * redirect
 ## ********************** End *********************
 
 ## ********************* Labs *********************

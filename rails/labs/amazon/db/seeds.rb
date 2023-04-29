@@ -17,7 +17,7 @@ Review.destroy_all
     first_name: Faker::Name.first_name,
     last_name: Faker::Name.last_name,
     email: Faker::Internet.email(domain: "example"),
-    password_digest: "password"
+    password_digest: BCrypt::Password.create('password')
   )
 end
 
