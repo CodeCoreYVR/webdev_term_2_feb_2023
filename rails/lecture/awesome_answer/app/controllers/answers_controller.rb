@@ -15,9 +15,15 @@ class AnswersController < ApplicationController
     end
 
     def destroy
+        
         @question = Question.find(params[:question_id])
         @answer = Answer.find(params[:id])
-        @answer.destroy
-        redirect_to question_path(@question)
+
+        if can?(:delete, @answer) == false
+            redirect_to root_path, alert: "Unauthoized user!"
+        else
+            @answer.destroy
+            redirect_to question_path(@question)
+        end
     end
 end

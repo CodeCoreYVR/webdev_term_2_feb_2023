@@ -27,12 +27,19 @@ class QuestionsController < ApplicationController
 
     def edit
         @question = Question.find(params[:id])
+        if can?(:edit, @question) == false
+            redirect_to root_path, alert: "Unauthoized user!"
+        end
     end
 
     def update
         question_params = params.require(:question).permit(:title, :body)
         @question = Question.find params[:id]
         
+        if can?(:edit, @question) == false
+            redirect_to root_path, alert: "Unauthoized user!"
+        end
+
         if @question.update (question_params)
             redirect_to question_path(@question)
         else

@@ -28,7 +28,13 @@ User.destroy_all()
     end
 end
 
-super_user = User.create(first_name:"Tony", last_name:"Stark",email:"tony@stark.com", password:"123abc",password_confirmation:"123abc")
+super_user = User.create(
+    first_name:"Tony", 
+    last_name:"Stark",
+    email:"tony@stark.com", 
+    password:"123abc",
+    password_confirmation:"123abc", 
+    is_admin: true)
 
 puts Cowsay.say("Generated #{Question.all.count}# questions", :Elephant)
 puts Cowsay.say("Generated #{Answer.all.count}# answers", :Dragon)

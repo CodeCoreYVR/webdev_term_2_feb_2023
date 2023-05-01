@@ -3,8 +3,10 @@
 <% if @question.user %>
     <small><%= @question.user.full_name %> asked about <%= time_ago_in_words(@question.created_at) %> ago</small>
 <% end %>
-<%= button_to "Edit", edit_question_path(@question), :method => :get %>
-<%= button_to "Delete", @question, :method => :delete %>
+<% if can?(:edit, @question) %>
+    <%= button_to "Edit", edit_question_path(@question), :method => :get %>
+    <%= button_to "Delete", @question, :method => :delete %>
+<% end %>
 <hr>
 <% @question.answers.each do |answer| %>
     <div>
@@ -17,7 +19,9 @@
         </small>      
     <% end %>
     <small>answered <%= time_ago_in_words(answer.created_at) %> </small>
-    <%= button_to "Delete", [@question, answer], :method => :delete %>
+    <% if can?(:delete, answer) %>
+        <%= button_to "Delete", [@question, answer], :method => :delete %>
+    <% end %>
     </div>
     <hr>
 <% end %>
