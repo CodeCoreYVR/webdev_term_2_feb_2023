@@ -11,3 +11,7 @@ class AwesomeTest < MiniTest::Test
     end
 
 end
+
+#to run this file, execute ruby
+
+ #cd into minitest then run: ruby AwesomeTest.rb

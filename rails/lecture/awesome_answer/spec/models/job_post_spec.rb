@@ -12,7 +12,16 @@ RSpec.describe JobPost, type: :model do
   # above is just the boilerplate as an example
 
   describe "validates" do
+    #the keyword "describe" describes the context within which the test willl happen
+    #The `describe` is used to group related tests together. 
+    #i.e. we are describing the context of testing validations
+    #then we are describing the context of tests for "title", "description", etc.
+    # It's primarily an organizational tool.
+    # All of the grouped tests should be written within the block of the method
     describe "title" do
+      # `it` is another RSpec keyword which is used to define an "Example"(test case)
+      # The string argument often uses the word `should`
+      # and it meant to describe what specific behaviour should happen inside this block
       it "requires a title to be present" do
         #GIVEN
         # job_post = JobPost.new()
@@ -22,6 +31,10 @@ RSpec.describe JobPost, type: :model do
         job_post.valid?
 
         #THEN
+        #expect is passed a value we're asserting that we can chain with .to()
+        #.to() accepts an assertion/expectation clause
+        #Ther following will pass the test if the errors.messages hash has a key named :title
+        #This occurs when "title" validation fails
         expect(job_post.errors.messages).to(have_key(:title))
       end
 

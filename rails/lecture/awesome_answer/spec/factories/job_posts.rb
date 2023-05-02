@@ -7,6 +7,8 @@ FactoryBot.define do
   hello world hello world hello world hello world hello world"
   factory :job_post do
     sequence(:title) { |n| Faker::Job.title+ " #{n}"}
+    #sequence is a method provided by factory-bot which accepts a lambda injecting a variable n. n is usually a number that factory-bot increments on every object it generates so we can use it to make sure all instances created are unique
+    #All objects created using Factories should be valid objects. In this case, we're adding 100 characters to the description of any job_post to make sure it passes the description length validation
     describe { Faker::Job.field + "-#{RANDOM_100_CHARS}" }
     company_name {Faker::Company.name}
     min_salary {rand(80_000..200_0000)}
