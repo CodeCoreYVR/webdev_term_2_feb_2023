@@ -258,7 +258,7 @@
       * add to head:
         * <%= csrf_meta_tags %>
         * <%= javascript_include_tag 'application' %>
-        ### Authentication
+### Authentication
 * $ rails generate migration CreateUsers first_name:string last_name:string email:string password_digest:string
 * $ rails generate migration AddUserToReviews user:references
 * $ rails generate migration AddUserToProducts user:references
@@ -357,6 +357,40 @@
   * add:
     * @product.user.full_name to product section
     * review.user.full_name to review section
+### Authorization, Asset Pipeline & Heroku
+* Gemfile
+  * add: cancancan gem
+* $ bundle i
+* $ rails g cancan:ability
+* ./app/models/ability.rb
+  * create guest user if one doesn't already exist
+    * user ||= User.new
+  * add can check for :update and :delete for both Product and Review to confirm only owner can access
+* ./app/views/products/show.html.erb
+  * can? check for product edit link
+  * can? check for product delete link
+  * can? check for review delete link
+* ./app/controllers/products_controller.rb
+  * add:
+    * can? :update check to update action method
+    * can? :destroy check to destroy action method
+* ./app/controllers/products_controller.rb
+  * add: can? :destroy check to destroy action method
+$ rails g migration AddHiddenToReviews hidden:boolean
+$ rails db:migrate
+* ./app/models/ability.rb
+  * add can check for hide and unhide review to see if review.product.user = user
+* ./app/controllers/reviews_controller.rb
+  * add: 
+    * hide and unhide action methods to reviews controller
+    * can? :hide, can? :unhide checks before data manipulation
+* ./config/routes.rb
+  * add: member do put 'hide'; put 'unhide' to routes
+* ./app/views/products/show.html.erb
+  * add if review.hidden and cancan checks to products/show.html.erb
+  * add hidden-review css class to tag around the hidden review
+* app/assets/stylesheets/custom.scss
+  * add properties to grey out hidden-review
 ## ********************** End *********************
 
 ## ********************* Labs *********************
@@ -505,6 +539,16 @@ Complete the User Authentication system for your Amazon application as follows:
   3. Make sure to associate the created products and reviews to the user
   4. Display user names beside their reviews and their products
 
+
+### [Lab] Add Authorization to the Amazon application
+
+Add authorization to the amazon application as follows:
+  1. Only the product owner can edit / delete a product
+  2. Only the review owner can edit / delete a review
+
+Stretch
+Hide a review:
+  1.  Allow the product owner to hide a review by setting a hidden field as true. Only display non-hidden reviews on the public show page. If the product owner is logged in then show the hidden review(s) greyed out and allow them to unhide it if they want.
 
 
 

@@ -77,6 +77,7 @@ GEM
       popper_js (>= 2.11.7, < 3)
       sassc-rails (>= 2.0.0)
     builder (3.2.4)
+    cancancan (3.5.0)
     concurrent-ruby (1.2.2)
     crass (1.0.6)
     date (3.3.3)
@@ -210,6 +211,7 @@ DEPENDENCIES
   bcrypt (~> 3.1.7)
   bootsnap
   bootstrap (~> 5.3.0.alpha3)
+  cancancan
   debug
   faker (~> 2.18.0)
   importmap-rails

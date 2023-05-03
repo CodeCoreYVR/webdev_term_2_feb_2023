@@ -3,7 +3,7 @@ class ReviewsController < ApplicationController
   before_action :find_product, only: [:create, :destroy]
   # This will call the find_user method before the specified actions
   before_action :require_login, only: [:create]
-
+  before_action :find_review, only: [:hide, :unhide]
 
   def create
     # # Find the product with the given id
@@ -37,6 +37,10 @@ class ReviewsController < ApplicationController
 
     @review = @product.reviews.find(params[:id])
     
+    if !(can? :delete, @review)
+      redirect_to @product, error: "Not authorized!"
+    end
+
     # If the review is successfully deleted from the database
     if @review.destroy
       # Redirect to the product show page with a notice message
@@ -47,6 +51,23 @@ class ReviewsController < ApplicationController
     end
   end
   
+  def hide
+    # bellow if can? statment prevents a hacker from typing the update command in the url to see if passes.
+    if !(can? :hide, @review)
+      redirect_to @review.product, error: "Not authorized!"
+    end
+    @review.update(hidden: true)
+    redirect_to @review.product
+  end
+
+  def unhide
+    # bellow if can? statment prevents a hacker from typing the update command in the url to see if passes.
+    if !(can? :unhide, @review)
+      redirect_to @review.product, error: "Not authorized!"
+    end
+    @review.update(hidden: false)
+    redirect_to @review.product
+  end
   
   private
   
@@ -59,5 +80,9 @@ class ReviewsController < ApplicationController
   # This method is called before the show, edit, update and destroy actions
   def find_product
     @product = Product.find(params[:product_id])
+  end
+
+  def find_review
+    @review = Review.find(params[:id])
   end
 end
