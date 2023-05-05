@@ -19,3 +19,20 @@ nav {
 .welcome-message {
   margin-right: 20px;
 }
+
+.hidden-review {
+  opacity: 0.6;
+  filter: alpha(opacity = 60);
+}
+
+.admin-red {
+  color: red;
+}
+
+.admin-width {
+  width: auto;
+}
+
+.wide-container {
+  width: max-content;
+}

@@ -40,10 +40,20 @@ class ProductsController < ApplicationController
   def destroy
     # # Find the product with the given id
     # @product = Product.find(params[:id]) # @product is already declaired by the before_action :find_product
+    
+    # bellow if can? statment prevents a hacker from typing the destroy command in the url to see if passes.
+    if !(can? :delete, @product)
+      redirect_to @product, error: "Not authorized!"
+      # redirect_to product_path(@product), error: "not authorized" -- also works
+    end
 
     @product.destroy
     # Redirect to the products index page
-    redirect_to products_path
+    if !(can? :manage , :all)
+      redirect_to products_path
+    else
+      redirect_to admin_panel_path
+    end
   end
 
   def edit
@@ -54,6 +64,12 @@ class ProductsController < ApplicationController
   def update
     # # Find the product with the given id
     # @product = Product.find(params[:id]) # @product is already declaired by the before_action :find_product
+
+    # bellow if can? statment prevents a hacker from typing the update command in the url to see if passes.
+    if !(can? :update, @product)
+      redirect_to @product, error: "Not authorized!"
+      # redirect_to product_path(@product), error: "not authorized" -- also works
+    end
 
     # Update the product with the given params
     if @product.update(product_params)
