@@ -30,19 +30,26 @@ class Ability
     # https://github.com/CanCanCommunity/cancancan/blob/develop/docs/define_check_abilities.md
     
     user ||= User.new # guest user (not logged in)
-    # the below line defines an alias for the action of create, update, destroy, and read 
-    # as :crud, however, it is not needed because :manage does the same thing and is built in
-    # alias_action :create, :update, :destroy, :read, to: :crud
+    
+    if user.admin?
+      # This allows the admin to do anything
+      can :manage, :all
+    else
+      # the below line defines an alias for the action of create, update, destroy, and read 
+      # as :crud, however, it is not needed because :manage does the same thing and is built in
+      # alias_action :create, :update, :destroy, :read, to: :crud
 
-    # This addes the ability to update and delete products and reviews to the user who created them all in one line
-    can [:update, :delete], [Product, Review], user_id: user.id
-    # bellow two lines are the same as the above line
-    # can [:update, :delete], Product, user_id: user.id
-    # can [:update, :delete], Review, user_id: user.id
+      # This addes the ability to update and delete products and reviews to the user who created them all in one line
+      can [:update, :delete], [Product, Review], user_id: user.id
+      # bellow two lines are the same as the above line
+      # can [:update, :delete], Product, user_id: user.id
+      # can [:update, :delete], Review, user_id: user.id
 
-    # This allows the owner of the product to hide and unhide reviews on their product
-    can [:hide, :unhide], Review do |review|
-      review.product.user == user
+      # This allows the owner of the product to hide and unhide reviews on their product
+      can [:hide, :unhide], Review do |review|
+        review.product.user == user
+      end
     end
+
   end
 end

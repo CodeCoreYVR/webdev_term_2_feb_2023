@@ -391,6 +391,28 @@ $ rails db:migrate
   * add hidden-review css class to tag around the hidden review
 * app/assets/stylesheets/custom.scss
   * add properties to grey out hidden-review
+* $ rails g migration AddAdminToUsers admin:boolean
+* $ rails db:migrate
+* ./app/models/user.rb
+  * add: admin method to return true or false
+* .config/routes.rb
+  * add route or admins panel action method
+* $ rails g controller admins
+* ./app/controllers/admins_controller.rb
+  * add:
+    * panel method helper
+    * define and create objects for users count,products count, reviews count, products array, and users array.
+    * private check_admin method to check for current_user && current_user.admin?
+    * add before_action for require_login and check_admin
+* $ code app/views/admins/panel.html.erb
+* ./app/views/admins/panel.html.erb
+  * add content for views page
+    * add link to product.title product_path(@product)
+    * add link for user.id edit_user_path(user)
+* ./app/models/ability.rb
+  * add manage all for if admin
+* ./app/controllers/products_controller.rb
+  * add: in destroy action method, cancan check for :admin if so redirect to admin_panel_path
 ## ********************** End *********************
 
 ## ********************* Labs *********************
@@ -549,6 +571,18 @@ Add authorization to the amazon application as follows:
 Stretch
 Hide a review:
   1.  Allow the product owner to hide a review by setting a hidden field as true. Only display non-hidden reviews on the public show page. If the product owner is logged in then show the hidden review(s) greyed out and allow them to unhide it if they want.
+
+
+### [Lab] Add Admin panel
+
+Add an admin user to the Amazon application and add an admin panel accessible only by admin users with url /admin/panel that shows a page with:
+  1. Number of proudcts
+  2. Number of reviews
+  3. Number of users
+
+Stretch
+  1. Display a list of products with their id and title in a table. The title should link to the post show.
+  2. Display a list of users with their id, first_name, last_name and email.
 
 
 

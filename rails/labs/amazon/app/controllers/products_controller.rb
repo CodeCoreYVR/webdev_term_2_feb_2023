@@ -49,7 +49,11 @@ class ProductsController < ApplicationController
 
     @product.destroy
     # Redirect to the products index page
-    redirect_to products_path
+    if !(can? :manage , :all)
+      redirect_to products_path
+    else
+      redirect_to admin_panel_path
+    end
   end
 
   def edit

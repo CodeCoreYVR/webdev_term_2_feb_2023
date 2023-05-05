@@ -24,6 +24,9 @@ Rails.application.routes.draw do
   # patch '/products/:id', to: 'products#update', as: 'update_product' # update_product_path
   # ******* The above routes are not needed because we are using the resources :products line below *******
 
+  # Route for admin panel
+  get 'admin/panel', to: 'admins#panel'
+
   # Routes for user authentication
   # Defines the "signup" and "login" routes
   resources :users, only: [:new, :create, :edit, :update]

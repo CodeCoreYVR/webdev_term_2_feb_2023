@@ -11,18 +11,29 @@ User.destroy_all
 Product.destroy_all
 Review.destroy_all
 
+
+# Create an admin user
+User.create(
+  first_name: "Admin",
+  last_name: "User",
+  email: "admin@user.ca",
+  password_digest: BCrypt::Password.create('password'),
+  admin: true
+)
+
 # create 5 users with the Faker gem
 5.times do
   User.create(
     first_name: Faker::Name.first_name,
     last_name: Faker::Name.last_name,
     email: Faker::Internet.email(domain: "example"),
-    password_digest: BCrypt::Password.create('password')
+    password_digest: BCrypt::Password.create('password'),
+    admin: false
   )
 end
 
-# create 5 products for each user (25 total)
-User.all.each do |user|
+# create 5 products for each user (25 total), first user(admin) is skipped
+User.all.drop(1).each do |user|
   5.times do
     product = user.products.create(
       title: Faker::Commerce.product_name,
@@ -38,6 +49,7 @@ Product.all.each do |product|
     product.reviews.create(
       rating: Faker::Number.between(from: 1, to: 5),
       body: Faker::Lorem.paragraph_by_chars(number: 256, supplemental: false),
+      hidden: false,
       user_id: User.all.sample.id
     )
   end
