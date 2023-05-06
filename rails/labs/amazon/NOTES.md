@@ -413,6 +413,50 @@ $ rails db:migrate
   * add manage all for if admin
 * ./app/controllers/products_controller.rb
   * add: in destroy action method, cancan check for :admin if so redirect to admin_panel_path
+
+### Amazon: Test Drive a NewsArticle Model
+* Gemfile
+  * Add to :development, :test group
+    * 'rspec-rails' 
+    * 'factory_bot_rails'
+* $ bundle install
+* $ rails generate rspec:install
+* $ rails generate model NewsArticle title:string description:text published_at:datetime view_count:integer
+* $ rails db:migrate
+* ./spec/factories/news_articles.rb
+  * Create a factory for news_articles
+* $ code ./spec/models/news_article_spec.rb
+  * Add tests for: 
+    * presence of title 
+    * description
+* ./app/models/news_article.rb
+  * Add validations for: 
+    * presence of title 
+    * description
+* $ rspec spec/models/news_article_spec.rb
+  * Make sure tests pass
+* ./spec/models/news_article_spec.rb
+  * Add tests for: 
+    * uniqueness of title 
+    * custom validation for published_at
+* $ rspec spec/models/news_article_spec.rb
+  * Make sure all tests pass
+* ./app/models/news_article.rb
+  * Add: before_save callback to titleize title
+* $ rspec spec/models/news_article_spec.rb
+  * Make sure all tests pass
+* ./spec/models/news_article_spec.rb
+  * Add: test for publish method
+* ./app/models/news_article.rb
+  * Add: publish method
+* $ rspec spec/models/news_article_spec.rb
+  * Make sure all tests pass
+* ./spec/models/news_article_spec.rb
+  * Add: test for published scope
+* ./app/models/news_article.rb
+  * Add: published scope
+* $ rspec spec/models/news_article_spec.rb
+  * Make sure tests pass
 ## ********************** End *********************
 
 ## ********************* Labs *********************
@@ -584,5 +628,24 @@ Stretch
   1. Display a list of products with their id and title in a table. The title should link to the post show.
   2. Display a list of users with their id, first_name, last_name and email.
 
+
+### [Lab] Amazon: Test Drive a NewsArticle Model
+
+Add new model, NewsArticle, to your Amazon application following the TDD process. The NewsArticle will have a title, a description, a published_at date, and a view_count.
+
+Requirements
+
+Validations
+  1. title must be present
+  2. title is unique
+  3. description must be present
+  4. published_at must be after created_at date (you will need to write a custom validation to implement this)
+
+Others
+  1. title gets titleized after getting saved to the database
+  2. publish method that publishes a NewsArticle by setting published_at to the current date.
+
+Stretch
+  1. published scope (class method) that returns only published NewsArticle. Only articles whose published_at date comes after the current date.
 
 
