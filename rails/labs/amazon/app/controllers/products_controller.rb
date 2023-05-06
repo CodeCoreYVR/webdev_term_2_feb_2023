@@ -80,7 +80,7 @@ class ProductsController < ApplicationController
   end
 
   private
-
+  
   def product_params
     # Returns a sanitized hash of the params with nothing extra
     params.require(:product).permit(:title, :description, :price)
