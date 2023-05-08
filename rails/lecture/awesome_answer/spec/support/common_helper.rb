@@ -33,4 +33,12 @@ module CommonHelpers
             user_id: user[:id]
         }
     end
+
+    def valid_answer(user_id, question_id)
+        {
+            body: "A valid answer",
+            user_id: user_id,
+            question_id: question_id
+          }
+    end
 end

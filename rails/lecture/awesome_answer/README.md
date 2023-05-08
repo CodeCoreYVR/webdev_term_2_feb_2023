@@ -21,4 +21,4 @@ Things you may want to cover:
 
 * Deployment instructions
 
-* ...
+* **Check the 'class_notes' directory for notes of on class**

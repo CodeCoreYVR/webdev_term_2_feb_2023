@@ -102,7 +102,33 @@ RSpec.describe "Questions", type: :request do
       expect(response).to redirect_to(root_path)
     end
 
-    
+    describe "#destroy" do
+
+      it "redirects to question index page" do
+        user1 = User.create(valid_user)
+        question1 = Question.create(valid_question(user1))
+        login(valid_user)
+        delete "/questions/" + question1.id.to_s, params: { id: question1[:id] }
+        expect(response).to redirect_to(questions_path)
+      end
+
+      it "redirect to root path for unauthorized user" do
+        user1 = User.create(valid_user)
+        question1 = Question.create(valid_question(user1))
+        user2 = User.create(valid_user_2)
+        login(valid_user_2)
+        delete "/questions/" + question1.id.to_s, params: { id: question1[:id] }
+        expect(response).to redirect_to(root_path)
+      end
+
+      it "redirect to sign in page for unauthenticated user" do
+        user1 = User.create(valid_user)
+        question1 = Question.create(valid_question(user1))
+        delete "/questions/" + question1.id.to_s, params: { id: question1[:id] }
+        expect(response).to redirect_to(sessions_new_path)
+      end
+
+    end
 
   end
 

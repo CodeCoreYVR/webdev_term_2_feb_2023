@@ -11,7 +11,7 @@ class Ability
 
     #1st arg: authorization type/name, Model Name, condition.
     can :edit, Question, user_id:user.id
-
+    can :delete, Question, user_id:user.id
     can :delete, Answer, user_id:user.id
 
     
