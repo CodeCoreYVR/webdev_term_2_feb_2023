@@ -38,9 +38,7 @@ class QuestionsController < ApplicationController
         
         if can?(:edit, @question) == false
             redirect_to root_path, alert: "Unauthoized user!"
-        end
-
-        if @question.update (question_params)
+        elsif @question.update (question_params)
             redirect_to question_path(@question)
         else
             render :edit
@@ -49,7 +47,12 @@ class QuestionsController < ApplicationController
 
     def destroy
         question = Question.find params[:id]
-        question.destroy
-        redirect_to questions_path
+        
+        if can?(:delete, question) == false
+            redirect_to root_path, alert: "Unauthorized user!"
+        else
+            question.destroy
+            redirect_to questions_path
+        end
     end
 end
