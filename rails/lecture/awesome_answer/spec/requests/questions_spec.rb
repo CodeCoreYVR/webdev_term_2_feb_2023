@@ -27,4 +27,30 @@ RSpec.describe "Questions", type: :request do
     end
   end
 
+  describe "#create" do
+    it 'redirects to question show page' do
+      user2 = User.create(valid_user_2)
+      login(valid_user_2)
+      post "/questions", params: { question: valid_question(user2.id) }
+      expect(response).to redirect_to(question_path(Question.last))
+    end
+  end
+
+  describe "#edit" do
+
+    it 'redirects to homepage for unauthorized user' do
+      user1 = User.create(valid_user)
+      question1 = Question.create(valid_question(user1.id))
+      user2 = User.create(valid_user_2)
+      login(valid_user_2)
+      get "/questions/"+ question1.id.to_s + "/edit"
+      expect(response).to redirect_to(root_path)
+    end
+
+    it 'show message for unauthorized user'
+
+    it 'edit for authorized user'
+
+  end
+
 end
