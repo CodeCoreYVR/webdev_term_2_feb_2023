@@ -413,7 +413,6 @@ $ rails db:migrate
   * add manage all for if admin
 * ./app/controllers/products_controller.rb
   * add: in destroy action method, cancan check for :admin if so redirect to admin_panel_path
-
 ### Amazon: Test Drive a NewsArticle Model
 * Gemfile
   * Add to :development, :test group
@@ -457,6 +456,56 @@ $ rails db:migrate
   * Add: published scope
 * $ rspec spec/models/news_article_spec.rb
   * Make sure tests pass
+### Testing Controller & Factories
+##### Test Drive New and Create
+* Gemfile
+  * add: rails-controller-testing gem to gemfile
+  * for some unknown reason i could net get some of the important rspec methods to work without this gem, even though the documentation says those methods should work with rspec alone.
+* $ bundle i
+* $ rails generate controller NewsArticles --no-helper --no-assets --no-controller-specs
+* ./spec/requests/news_articles_spec.rb
+  * write tests for:
+    * renders new template
+    * assigns a new instance of NewsArticle to @news_article
+* $ spec ./spec/requests/news_articles_spec.rb
+  * test should fail and say there's no route matching
+* ./config/routes.rb
+  * add route for only news_article :new action method
+* $ spec ./spec/requests/news_articles_spec.rb
+  * test should fail and say there's no new action method in news_articles_controller.rb
+* ./app/controllers/news_articles_controller.rb
+  * add:
+  * new action method
+  * create new instance of NewsArticle
+* $ spec ./spec/requests/news_articles_spec.rb
+  * first test fails: there's no template for new.html.erb
+  * second test passes
+* $ code ./app/views/news_articles/new.html.erb
+  * add: form for creating new news_article and send it to new_news_article_path through @news_article
+* $ spec ./spec/requests/news_articles_spec.rb
+  * both tests should match
+* ./spec/requests/news_articles_spec.rb
+  * write tests for:
+    * Create a new NewsArticle
+    * does not create a new NewsArticle
+    * renders the new template
+* $ spec ./spec/requests/news_articles_spec.rb
+  * all three should fail and say no route for :create
+* ./config/routes.rb
+  * add :create to only section of news_articles routes
+* $ spec ./spec/requests/news_articles_spec.rb
+  * all three should fail and say no create action method in news_articles_controller.rb
+* ./app/controller/news_articles_controller.rb
+  * add:
+    * create action method
+    * add conditional logic to handle valid and invalid attributes
+    * private method for news_articles_params
+* $ spec ./spec/requests/news_articles_spec.rb
+  * all three should fail and say something related to incorrect form fields
+* ./app/views/news_products_controller.rb
+  * include all necessary form fields and correct form action
+* $ spec ./spec/requests/news_articles_spec.rb
+  * all three should pass
 ## ********************** End *********************
 
 ## ********************* Labs *********************
@@ -647,5 +696,11 @@ Others
 
 Stretch
   1. published scope (class method) that returns only published NewsArticle. Only articles whose published_at date comes after the current date.
+
+
+### [Lab] Amazon: Test Drive New and Create
+
+1. Start building actions for the NewsArticlesController using TDD.
+2. Test drive new and create actions for the controller.
 
 

@@ -1,0 +1,42 @@
+<div class="container mt-5">
+  <div class="card border-light mx-auto">
+    <% if @news_article.errors.any? %>
+      <div class="card-header bg-secondary text-white">
+        <h1 class="card-title text-center">Errors</h1>
+      </div>
+      <div class="card-body">
+        <h2><%= pluralize(@news_article.errors.count, "error") %> prohibited this news_article from being saved:</h2>
+        <ul class="list-group list-group-flush">
+          <% @news_article.errors.full_messages.each do |message| %>
+            <li class="list-group-item"><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div class="card-header bg-secondary text-white">
+      <h1 class="card-title text-center">New News Article</h1>
+    </div>
+    <div class="card-body">
+      <%= form_for @news_article do |f| %>
+        <div class="form-group">
+          <strong><%= f.label 'title:' %></strong>
+          <%= f.text_field :title, class: 'form-control' %>
+        </div>
+        <hr>
+        <div class="form-group">
+          <strong><%= f.label 'description:' %></strong>
+          <%= f.text_area :description, class: 'form-control' %>
+        </div>
+        <hr>
+        <div class="form-group">
+          <strong><%= f.label 'published_at:' %></strong>
+          <%= f.date_field :published_at, class: 'form-control' %>
+        </div>
+        <div class="card-footer text-center">
+          <%= f.submit "Create News Article", class: 'btn btn-secondary' %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
