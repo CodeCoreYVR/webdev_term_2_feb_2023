@@ -56,4 +56,9 @@ class QuestionsController < ApplicationController
             redirect_to questions_path
         end
     end
+
+    #This controller will be used to show all the questions liked by the current user:
+    def liked
+       @questions = current_user.liked_questions 
+    end
 end

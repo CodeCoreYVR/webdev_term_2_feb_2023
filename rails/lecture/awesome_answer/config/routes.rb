@@ -24,6 +24,11 @@ Rails.application.routes.draw do
   resources :questions do 
     resources :answers, only: [:create, :destroy]
     resources :likes, shallow: true, only: [:create, :destroy]
+    # original route /question/:question_id/likes/:like_id
+    # route with shallow: true -> likes/:like_id
+    get :liked, on: :collection
+    # the above route creates a path like: GET "/questions/liked" similar to the question index,
+    # but it will only show the questions liked by the current user
   end
 
   # get 'sessions/new'
