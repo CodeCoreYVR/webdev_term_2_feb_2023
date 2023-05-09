@@ -15,10 +15,27 @@ class Ability
     can :delete, Answer, user_id:user.id
 
     
-    return unless user.is_admin
+    # return unless user.is_admin
     # :manage means user can perform any opertion like read/edit/update/delete/create,
     # :all means it can act on any resource or class
-    can :manage, :all
+    # can :manage, :all
+    if user.is_admin
+      can :manage, :all
+    else
+      can :manage, :read
+    end
+
+    can :like, Question do |question|
+      user.persisted? && question.user != user
+      # checks if the user is in the database
+      # does not allow the question'owner ti like their own question
+    end
+    # the above method will allow us to:
+    # can? :like @question -> this will excutethe above rule
+
+    can :destroy, Like do |like|
+      like.user == user
+    end
 
     #
     # The first argument to `can` is the action you are giving the user

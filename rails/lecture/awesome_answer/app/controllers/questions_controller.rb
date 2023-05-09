@@ -19,6 +19,7 @@ class QuestionsController < ApplicationController
     def show
         @question = Question.find(params[:id])
         @answer = Answer.new
+        @like = @question.likes.find_by(user: current_user)
     end
 
     def index
