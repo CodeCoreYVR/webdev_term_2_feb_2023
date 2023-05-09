@@ -506,6 +506,28 @@ $ rails db:migrate
   * include all necessary form fields and correct form action
 * $ spec ./spec/requests/news_articles_spec.rb
   * all three should pass
+#### Test Drive Destroy, Show and Index
+* ./spec/requests/news_articles_spec.rb
+  * add tests:
+    * renders show template
+    * renders index template
+    * successfully deletes a NewsArticle
+* $ rspec ./spec/requests/news_articles_spec.rb
+  * The tests should fail and say there's no route matching
+* ./config/routes.rb
+  * add: routes for :show, :index, and :destroy action methods
+* $ rspec ./spec/requests/news_articles_spec.rb
+  * The tests should fail and say there's no action method in news_articles_controller.rb for :show, :index, and :destroy
+* /app/controllers/news_articles_controller.rb
+  * add: :show, :index, and :destroy action methods 
+* $ rspec ./spec/requests/news_articles_spec.rb
+  * the tests should fail, and say there's no template for show.html.erb and index.html.erb
+* $ code ./app/views/news_articles/show.html.erb
+  * add: content for labs
+* $ code ./app/views/news_articles/index.html.erb
+  * add: content for labs
+* $ rspec ./spec/requests/news_articles_spec.rb
+  * all tests should pass
 ## ********************** End *********************
 
 ## ********************* Labs *********************
@@ -703,4 +725,14 @@ Stretch
 1. Start building actions for the NewsArticlesController using TDD.
 2. Test drive new and create actions for the controller.
 
+
+### [Lab] Amazon: Test Drive Destroy, Show and Index
+
+Continue building actions for the NewsArticlesController using TDD.
+Test drive the destroy, show and index actions. Assume that they are standard as done in class.
+
+[Stretch]: 
+Refactor your controller as follows:
+  1. Have a find_news_article before_action to find the news_article for the edit / show / update / destroy actions
+  2. Refactor news_article_params into a method
 

@@ -34,7 +34,7 @@ Rails.application.routes.draw do
   resources :sessions, only: [:new, :create, :destroy]
 
   # Routes for news articles
-  resources :news_articles, only: [:new, :create]
+  resources :news_articles, only: [:new, :create, :index, :show, :destroy]
 
   # Routes for products and reviews
   # Defines the "reviews" routes i.e. "/products/:id
