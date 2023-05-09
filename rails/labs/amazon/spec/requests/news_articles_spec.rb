@@ -30,6 +30,12 @@ RSpec.describe NewsArticlesController, type: :controller do
           post :create, params: { news_article: valid_attributes }
         }. to change(NewsArticle, :count).by(1)
       end
+
+      # This test checks if the 'create' action redirects to the news article show page after creation
+      it 'redirects to the news article show page' do
+        post :create, params: { news_article: valid_attributes }
+        expect(response).to redirect_to(news_article_path(assigns(:news_article)))
+      end
     end
 
     # This context block tests the behavior of the 'create' action with invalid attributes
@@ -102,4 +108,54 @@ RSpec.describe NewsArticlesController, type: :controller do
       expect(response).to redirect_to(news_articles_path)
     end
   end  
+
+  # The sixth group of tests is for the 'edit' action in the controller
+  describe 'GET #edit' do
+    let(:news_article) { create(:news_article) }
+  
+    # This test checks if the 'edit' action renders the correct template
+    it 'renders the edit template' do
+      get :edit, params: { id: news_article.id }
+      expect(response).to render_template(:edit)
+    end
+  end
+  
+  # The seventh group of tests is for the 'update' action in the controller
+  describe 'PUT #update' do
+    let(:news_article) { create(:news_article) }
+    let(:valid_attributes) { attributes_for(:news_article, title: 'Updated Title') }
+    let(:invalid_attributes) { attributes_for(:news_article, title: nil) }
+  
+    # This test checks if the 'update' action updates the news_article with valid attributes
+    context 'with valid attributes' do
+      # This test checks if the 'update' action updates the news_article
+      it 'updates the news_article' do
+        put :update, params: { id: news_article.id, news_article: valid_attributes }
+        news_article.reload
+        expect(news_article.title).to eq('Updated Title')
+      end
+  
+      # This test checks if the 'update' action redirects to the news_article show page
+      it 'redirects to the news_article show page' do
+        put :update, params: { id: news_article.id, news_article: valid_attributes }
+        expect(response).to redirect_to(news_article_path(news_article))
+      end
+    end
+  
+    # This test checks if the 'update' action does not update the news_article with invalid attributes
+    context 'with invalid attributes' do
+      # This test checks if the 'update' action does not update the news_article
+      it 'does not update the news_article' do
+        put :update, params: { id: news_article.id, news_article: invalid_attributes }
+        news_article.reload
+        expect(news_article.title).not_to eq(nil)
+      end
+  
+      # This test checks if the 'update' action renders the edit template
+      it 'renders the edit template' do
+        put :update, params: { id: news_article.id, news_article: invalid_attributes }
+        expect(response).to render_template(:edit)
+      end
+    end
+  end
 end

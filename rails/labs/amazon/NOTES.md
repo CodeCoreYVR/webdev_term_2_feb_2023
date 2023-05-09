@@ -528,6 +528,30 @@ $ rails db:migrate
   * add: content for labs
 * $ rspec ./spec/requests/news_articles_spec.rb
   * all tests should pass
+#### Test Drive Edit and Update
+* ./spec/requests/news_articles_spec.rb
+  * add tests for:
+    * renders edit template
+    * successfully updates a NewsArticle with valid attributes
+    * does not update a NewsArticle with invalid attributes
+    * renders the edit template when the update has invalid attributes
+* $ rspec ./spec/requests/news_articles_spec.rb
+  * the tests should fail and say there's no route matching
+* ./config/routes.rb
+  * add: routes for :edit and :update
+  * or: change news_articles routes to just resources :news_articles
+* $ rspec ./spec/requests/news_articles_spec.rb
+  * the tests should fail and say there's no action method in news_articles_controller.rb for :edit and :update
+* ./app/controllers/news_articles_controller.rb
+  * add :edit and :update action methods
+* $ rspec ./spec/requests/news_articles_spec.rb
+  * the tests should fail and say there's no template for edit.html.erb
+* $ code ./app/views/news_articles/edit.html.erb
+  * add: content for lab
+* $ rspec ./spec/requests/news_articles_spec.rb
+  * the tests should now pass
+* ./app/views/news_articles/show.html.erb
+  * add: edit link
 ## ********************** End *********************
 
 ## ********************* Labs *********************
@@ -735,4 +759,11 @@ Test drive the destroy, show and index actions. Assume that they are standard as
 Refactor your controller as follows:
   1. Have a find_news_article before_action to find the news_article for the edit / show / update / destroy actions
   2. Refactor news_article_params into a method
+
+
+### [Lab] Amazon: Test Drive Edit and Update
+
+1. Continue building actions for the NewsArticlesController using TDD.
+2. Test drive the edit and update actions.
+
 
