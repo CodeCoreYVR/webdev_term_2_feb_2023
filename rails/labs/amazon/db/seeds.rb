@@ -10,7 +10,7 @@
 User.destroy_all
 Product.destroy_all
 Review.destroy_all
-
+NewsArticle.destroy_all
 
 # Create an admin user
 User.create(
@@ -55,9 +55,20 @@ Product.all.each do |product|
   end
 end
 
+# create 10 news articles
+10.times do
+  NewsArticle.create(
+    title: Faker::Lorem.sentence(word_count: 5),
+    description: Faker::Lorem.paragraph_by_chars(number: 256, supplemental: false),
+    published_at: Faker::Time.between(from: 30.days.ago, to: Time.now)
+  )
+end
+
 # Print the number of users created
 puts "Created #{User.count} users"
 # Print the number of products created
 puts "Created #{Product.count} products"
 # Print the number of reviews created
 puts "Created #{Review.count} reviews"
+# Print the number of news articles created
+puts "Created #{NewsArticle.count} news articles"

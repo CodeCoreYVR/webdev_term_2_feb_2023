@@ -33,6 +33,9 @@ Rails.application.routes.draw do
   # Defines the "login" and "logout" routes
   resources :sessions, only: [:new, :create, :destroy]
 
+  # Routes for news articles
+  resources :news_articles
+
   # Routes for products and reviews
   # Defines the "reviews" routes i.e. "/products/:id
   resources :products do

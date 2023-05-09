@@ -1,5 +1,7 @@
+# This file is a Rails test file for the NewsArticlesController
 require 'rails_helper'
 
+# RSpec is the testing framework being used here
 RSpec.describe NewsArticle, type: :model do
   # Associations
   describe 'validations' do
