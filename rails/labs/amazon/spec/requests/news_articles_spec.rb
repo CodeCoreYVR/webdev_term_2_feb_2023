@@ -5,6 +5,8 @@ require 'rails_helper'
 RSpec.describe NewsArticlesController, type: :controller do
   # Create a user factory
   let(:user) { create(:user) }
+  # Create another user factory for testing authorization
+  let(:other_user) { create(:user) }
 
   # The first group of tests is for the 'new' action in the controller
   describe 'GET #new' do
@@ -115,8 +117,8 @@ RSpec.describe NewsArticlesController, type: :controller do
     end
   end
   
-   # The fourth group of tests is for the 'index' action in the controller
-   describe 'GET #index' do
+  # The fourth group of tests is for the 'index' action in the controller
+  describe 'GET #index' do
     # This test checks if the 'index' action renders the correct template
     it 'renders the index template' do
       get :index
@@ -152,23 +154,101 @@ RSpec.describe NewsArticlesController, type: :controller do
 
   # The sixth group of tests is for the 'edit' action in the controller
   describe 'GET #edit' do
+    # Create a news_article factory
     let(:news_article) { create(:news_article) }
-  
-    # This test checks if the 'edit' action renders the correct template
-    it 'renders the edit template' do
-      get :edit, params: { id: news_article.id }
-      expect(response).to render_template(:edit)
+    
+    # This context block tests the behavior of the 'edit' action when the user is not signed in
+    context 'when user is not signed in' do
+      it 'redirects the user to the sign up or sign in page' do
+        get :edit, params: { id: news_article.id }
+        expect(response).to redirect_to(new_session_path)
+      end
+    end
+
+    # This context block tests the behavior of the 'edit' action when the user is signed in
+    context 'when user is signed in but not the owner of the news article' do
+      # This before block stubs the current_user method to return the other_user factory
+      before do
+        allow(controller).to receive(:current_user).and_return(other_user)
+      end
+
+      # This test checks if the 'edit' action redirects to the root page
+      it 'redirects the user to the root_page' do
+        get :edit, params: { id: news_article.id }
+        expect(response).to redirect_to(root_path)
+      end
+
+      # This test checks if the 'edit' action alerts the user with a flash
+      it 'alerts the user with a flash' do
+        get :edit, params: { id: news_article.id }
+        expect(flash[:alert]).to be_present
+      end
+    end
+
+    # This context block tests the behavior of the 'edit' action when the user is signed in
+    context 'when user is signed in and is the owner of the news article' do
+      # This before block stubs the current_user method to return the user factory
+      before do
+        news_article.update(user: user)
+        allow(controller).to receive(:current_user).and_return(user)
+      end
+
+      # This test checks if the 'edit' action renders the correct template
+      it 'renders the edit template' do
+        get :edit, params: { id: news_article.id }
+        expect(response).to render_template(:edit)
+      end
+
+      # This test checks if the 'edit' action assigns an instance variable to the campaign being edited
+      it 'assigns an instance variable to the campaign being edited' do
+        get :edit, params: { id: news_article.id }
+        expect(assigns(:news_article)).to eq(news_article)
+      end
     end
   end
-  
+
   # The seventh group of tests is for the 'update' action in the controller
   describe 'PUT #update' do
     let(:news_article) { create(:news_article) }
     let(:valid_attributes) { attributes_for(:news_article, title: 'Updated Title') }
     let(:invalid_attributes) { attributes_for(:news_article, title: nil) }
+      
+    # This context block tests the behavior of the 'update' action when the user is not signed in
+    context 'when user is not signed in' do
+      it 'redirects the user to the sign up page' do
+        put :update, params: { id: news_article.id, news_article: valid_attributes }
+        expect(response).to redirect_to(new_session_path)
+      end
+    end
   
-    # This test checks if the 'update' action updates the news_article with valid attributes
-    context 'with valid attributes' do
+    # This context block tests the behavior of the 'update' action when the user is signed in
+    context 'when user is signed in but not the owner of the news article' do
+      # This before block stubs the current_user method to return the other_user factory
+      before do
+        allow(controller).to receive(:current_user).and_return(other_user)  # *********************
+      end
+  
+      # This test checks if the 'update' action redirects to the root page
+      it 'redirects the user to the root_page' do
+        put :update, params: { id: news_article.id, news_article: valid_attributes }
+        expect(response).to redirect_to(root_path)
+      end
+  
+      # This test checks if the 'update' action alerts the user with a flash
+      it 'alerts the user with a flash' do
+        put :update, params: { id: news_article.id, news_article: valid_attributes }
+        expect(flash[:alert]).to be_present
+      end
+    end
+
+    # This context block tests the behavior of the 'update' action when the user is signed in
+    context 'when user is signed in and is the owner of the news article with valid attributes' do
+      # This before block stubs the current_user method to return the user factory
+      before do
+        news_article.update(user: user)
+        allow(controller).to receive(:current_user).and_return(user)
+      end
+
       # This test checks if the 'update' action updates the news_article
       it 'updates the news_article' do
         put :update, params: { id: news_article.id, news_article: valid_attributes }
@@ -183,8 +263,12 @@ RSpec.describe NewsArticlesController, type: :controller do
       end
     end
   
-    # This test checks if the 'update' action does not update the news_article with invalid attributes
-    context 'with invalid attributes' do
+    context 'when user is signed in and is the owner of the news article with invalid attributes' do
+      before do
+        news_article.update(user: user)
+        allow(controller).to receive(:current_user).and_return(user)
+      end
+      
       # This test checks if the 'update' action does not update the news_article
       it 'does not update the news_article' do
         put :update, params: { id: news_article.id, news_article: invalid_attributes }
