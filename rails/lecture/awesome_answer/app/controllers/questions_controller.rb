@@ -2,14 +2,24 @@ class QuestionsController < ApplicationController
     before_action :authenticate_user!, except: [:index, :show]
     def new
         @question = Question.new
+        @tags = Tag.order("created_at desc")
     end
 
     def create
+        p "----------------------"
+        p params[:tags][:id].length
+        p "----------------------"
         question_params = params.require(:question).permit(:title, :body)
         @question = Question.new question_params
         @question.user = current_user
 
         if @question.save
+            if params[:tags][:id].length
+                tag_ids = params[:tags][:id]
+                tag_ids.each do |tag_id|
+                    tag = Tagging.create(tag_id: tag_id, question_id: @question.id)
+                end
+            end
             redirect_to question_path(@question)
         else
             render :new
