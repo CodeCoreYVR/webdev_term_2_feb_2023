@@ -4,6 +4,8 @@ class NewsArticle < ApplicationRecord
   validates :description, presence: true
   validate :published_at_after_created_at
 
+  belongs_to :user
+
   # Callbacks 
   before_save :titleize_title
 

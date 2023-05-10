@@ -4,5 +4,6 @@ FactoryBot.define do
     sequence(:title) { |n| "Sample Title #{n}" }
     description { "Sample Description" }
     published_at { nil }
+    user
   end
 end

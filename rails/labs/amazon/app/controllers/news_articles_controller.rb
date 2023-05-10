@@ -1,5 +1,6 @@
 class NewsArticlesController < ApplicationController
   before_action :find_news_article, only: [:show, :destroy, :edit, :update]
+  before_action :require_login, only: [:new, :create]
 
   def index
     @news_articles = NewsArticle.all.order(published_at: :desc)
@@ -10,7 +11,7 @@ class NewsArticlesController < ApplicationController
   end
 
   def create
-    @news_article = NewsArticle.new(news_article_params)
+    @news_article = current_user.news_articles.build(news_article_params)
 
     if @news_article.save
       redirect_to @news_article, notice: 'News Article was successfully created.'

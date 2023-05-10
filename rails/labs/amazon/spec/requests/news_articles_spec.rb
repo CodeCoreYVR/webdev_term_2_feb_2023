@@ -3,56 +3,97 @@ require 'rails_helper'
 
 # RSpec is the testing framework being used here
 RSpec.describe NewsArticlesController, type: :controller do
+  # Create a user factory
+  let(:user) { create(:user) }
+
   # The first group of tests is for the 'new' action in the controller
   describe 'GET #new' do
-    # This test checks if the 'new' action renders the correct template
-    it 'renders the new template' do
-      get :new
-      expect(response).to render_template(:new)
+    # This context block tests the behavior of the 'new' action when the user is not signed in
+    context 'when user is not signed in' do
+      it 'redirects the user to the sign up page' do
+        get :new
+        expect(response).to redirect_to(new_session_path)
+      end
     end
 
-    # This test checks if the 'new' action assigns a new instance of NewsArticle to @news_article
-    it 'assigns a new instance of NewsArticle to @news_article' do
-      get :new
-      expect(assigns(:news_article)).to be_a_new(NewsArticle)
+    # This context block tests the behavior of the 'new' action when the user is signed in
+    context 'when user is signed in' do
+      # This before block stubs the current_user method to return the user factory
+      before do
+        allow(controller).to receive(:current_user).and_return(user)
+      end
+
+      # This test checks if the 'new' action renders the correct template
+      it 'renders the new template' do
+        get :new
+        expect(response).to render_template(:new)
+      end
+
+      # This test checks if the 'new' action assigns a new instance of NewsArticle to @news_article
+      it 'assigns a new instance of NewsArticle to @news_article' do
+        get :new
+        expect(assigns(:news_article)).to be_a_new(NewsArticle)
+      end
     end
   end
 
   # The second group of tests is for the 'create' action in the controller
   describe 'POST #create' do
-    # This context block tests the behavior of the 'create' action with valid attributes
-    context 'with valid attributes' do
-      let (:valid_attributes) { attributes_for(:news_article) }
-
-      # This test checks if the 'create' action creates a new NewsArticle with valid attributes
-      it 'creates a new NewsArticle' do
-        expect {
-          post :create, params: { news_article: valid_attributes }
-        }. to change(NewsArticle, :count).by(1)
-      end
-
-      # This test checks if the 'create' action redirects to the news article show page after creation
-      it 'redirects to the news article show page' do
-        post :create, params: { news_article: valid_attributes }
-        expect(response).to redirect_to(news_article_path(assigns(:news_article)))
+    # This context block tests the behavior of the 'create' action when the user is not signed in
+    context 'when user is not signed in' do
+      it 'redirects the user to the sign up page' do
+        post :create, params: { news_article: attributes_for(:news_article) }
+        expect(response).to redirect_to(new_session_path)
       end
     end
-
-    # This context block tests the behavior of the 'create' action with invalid attributes
-    context 'with invalid attributes' do
-      let (:invalid_attributes) { attributes_for(:news_article, title: nil) }
-
-      # This test checks if the 'create' action does not create a new NewsArticle with invalid attributes
-      it 'does not create a new NewsArticle' do
-        expect {
-          post :create, params: { news_article: invalid_attributes  }
-        }.to_not change(NewsArticle, :count)
+  
+    # This context block tests the behavior of the 'create' action when the user is signed in
+    context 'when user is signed in' do
+      # This before block stubs the current_user method to return the user factory
+      before do
+        allow(controller).to receive(:current_user).and_return(user)
       end
 
-      # This test checks if the 'create' action renders the 'new' template when given invalid attributes
-      it 'renders the new template' do
-        post :create, params: { news_article: invalid_attributes}
-        expect(response).to render_template(:new)
+      # This context block tests the behavior of the 'create' action with valid attributes
+      context 'with valid attributes' do
+        let (:valid_attributes) { attributes_for(:news_article) }
+
+        # This test checks if the 'create' action creates a new NewsArticle with valid attributes
+        it 'creates a new NewsArticle' do
+          expect {
+            post :create, params: { news_article: valid_attributes }
+          }. to change(NewsArticle, :count).by(1)
+        end
+
+        # This test checks if the 'create' action associates the news article with the signed in user
+        it 'associates the news article with the signed in user' do
+          post :create, params: { news_article: valid_attributes }
+          expect(assigns(:news_article).user).to eq(user)
+        end
+
+        # This test checks if the 'create' action redirects to the news article show page after creation
+        it 'redirects to the news article show page' do
+          post :create, params: { news_article: valid_attributes }
+          expect(response).to redirect_to(news_article_path(assigns(:news_article)))
+        end
+      end
+
+      # This context block tests the behavior of the 'create' action with invalid attributes
+      context 'with invalid attributes' do
+        let (:invalid_attributes) { attributes_for(:news_article, title: nil) }
+
+        # This test checks if the 'create' action does not create a new NewsArticle with invalid attributes
+        it 'does not create a new NewsArticle' do
+          expect {
+            post :create, params: { news_article: invalid_attributes  }
+          }.to_not change(NewsArticle, :count)
+        end
+
+        # This test checks if the 'create' action renders the 'new' template when given invalid attributes
+        it 'renders the new template' do
+          post :create, params: { news_article: invalid_attributes}
+          expect(response).to render_template(:new)
+        end
       end
     end
   end
