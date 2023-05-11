@@ -506,7 +506,7 @@ $ rails db:migrate
   * include all necessary form fields and correct form action
 * $ spec ./spec/requests/news_articles_spec.rb
   * all three should pass
-#### Test Drive Destroy, Show and Index
+##### Test Drive Destroy, Show and Index
 * ./spec/requests/news_articles_spec.rb
   * add tests:
     * renders show template
@@ -528,7 +528,7 @@ $ rails db:migrate
   * add: content for labs
 * $ rspec ./spec/requests/news_articles_spec.rb
   * all tests should pass
-#### Test Drive Edit and Update
+##### Test Drive Edit and Update
 * ./spec/requests/news_articles_spec.rb
   * add tests for:
     * renders edit template
@@ -552,6 +552,131 @@ $ rails db:migrate
   * the tests should now pass
 * ./app/views/news_articles/show.html.erb
   * add: edit link
+### Testing Authentication
+##### Test Drive New and Create with Users
+* ./spec/requests/news_articles_spec.rb
+  * add test for:
+    * use factories to define and create a :user
+    * #new
+      * if user is 'not' signed in
+        * redirects user to sign up page
+      * if user 'is' signed in
+        * allow controller to receive :current_user and to return user
+    * #create
+      * if user is 'not' signed in
+        * redirects user to sign up page
+      * if user 'is' signed in
+        * allow controller to receive :current_user and to return user
+        * associates the news article with the signed in user
+* rspec ./spec/requests/news_articles_spec.rb
+  * should throw errors saying something about user being nil or not existing
+* $ code ./spec/factories/users.rb
+  * add: content for creating a factory bot for user
+* rspec ./spec/requests/news_articles_spec.rb
+  * should throw errors saying user has no associations with news_articles
+* $ rails generate migration AddUserIdToNewsArticles user:references
+* $ rails db:drop
+* $ rails db:create
+* $ rails db:migrate
+* $ rails db:seed
+* ./spec/factories/news_articles.rb
+  * add: user column
+* ./app/models/user.rb
+  * add: has_many :news_articles
+* ./app/models/news_article.rb
+  * add: belongs_to :user
+* rspec ./spec/requests/news_articles_spec.rb
+  * user signed in tests should fail saying something about news_article.user_id = nil
+  * user 'not' signed in tests should throw errors saying not redirected to the correct page if user not signed in
+* ./app/controllers/news_articles_controller.rb
+  * connect current_user to news_article or the other way around
+  * change if not signed in, change redirect to login page
+* rspec ./spec/requests/news_articles_spec.rb
+  * all tests should pass
+* ./db/seeds.rb
+  * add: news_articles to users
+* $ rails db:reset
+##### Test Drive Edit and Update with Users
+* ./spec/requests/news_articles_spec.rb
+  * create other_user
+  * Add tests for:
+    * #edit
+      * if user is 'not' signed in
+        * redirects user to sign up page
+      * if user 'is' signed in
+        * allow the controller to receive :current_user and to return the user
+        * if user is signed in but not owner of news_article
+          * redirect to root_path & alert with flash
+        * if user is signed in and owner of news_article
+          * renders :edit template and creates an instance variable of news_article
+    * #update
+      * if user is 'not' signed in
+        * redirects user to sign up page
+      * if user 'is' signed in
+        * allow the controller to receive :current_user and to return the user
+        * if user is signed in but not owner of news_article
+          * redirect to root_path & alert with flash
+        * if user is signed in and owner of news_article with valid params
+          * updates news_article and redirects to show page
+        * if user is signed in and owner of news_article with invalid params
+          * does not update news_article and renders edit template
+* $ rspec ./spec/requests/news_articles_spec.rb
+  * tests will fail due to improper setup or missing associations
+* ./app/models/ability.rb
+  * add: cancan for :edit, :update NewsArticles
+* ./app/controllers/news_articles_controller.rb
+  * add: 
+    * :edit, :update to require_login
+    * cancan checks for edit and update action methods
+      * edit:
+        * if not can? flash and redirect_to root_path
+        * else can? render :edit
+      * update:
+        * if not can? flash and redirect_to root_path
+        * else can?
+          * if update, redirect_to @news_article show
+          * else message, and render :edit and
+* $ rspec ./spec/requests/news_articles_spec.rb
+  * tests should all pass
+##### User Authentication Tests
+* $ rails generate rspec:controller users
+* ./spec/requests/news_articles_spec.rb
+  * previously trying to generate a news_articles controller the command by default created a /requests/ not /controllers/ so need to change all tests to work with http requests. this is unrelated to this lab.
+* ./spec/models/user_spec.rb
+  * add tests for:
+    * #first_name
+      * should be present
+    * #last_name
+      * should be present
+    * #email
+      * should be unique
+    * #full_name
+      * should return first_name and last_name concatenated & titleized
+* $ rspec ./spec/models/user_spec.rb
+  * all tests should fail as the validations and method are not yet implemented
+* ./app/models/user.rb
+  * implement the validations
+* $ rspec ./spec/models/user_spec.rb
+  * all tests should now pass
+* ./spec/requests/users_spec.rb
+  * add tests for:
+    * #new
+      * should render the new template
+      * should set an instance variable of User type
+    * #create
+      * with valid parameters:
+        * should create a user in the DB
+        * should redirect to home page
+        * should sign the user in
+      * with invalid parameters:
+        * should render the new template
+        * should not create a user in the database
+* $ rspec ./spec/requests/users_spec.rb
+  * all tests should fail as the controller actions are not yet implemented
+* ./app/controllers/users_controller.rb
+  * make sure if user saves, it redirects to home_path
+* $ rspec ./spec/requests/users_spec.rb
+  * all tests should now pass
 ## ********************** End *********************
 
 ## ********************* Labs *********************
@@ -767,3 +892,61 @@ Refactor your controller as follows:
 2. Test drive the edit and update actions.
 
 
+### [Lab] Amazon: Test Drive New and Create with Users
+
+Add the following tests for NewsArticleController new and create actions:
+
+new
+  1. If a user is not signed in, redirect the user to the sign up page.
+  2. If a user is signed in, all current tests should be able to pass.
+
+create
+  1. If a user is not signed in, redirect the user to the sign up page.
+  2. If a user is signed in, ...
+    a. all current tests should be able to pass.
+    b. associates the news article with the signed in user
+
+You will need to implement several features (e.g. user authentication, user model, user associates, etc) to make these tests pass.
+
+
+### [Lab] Amazon: Test Drive Edit and Update with Users
+
+Add the following tests for NewsArticleController edit and update actions:
+edit:
+  1. If a user is not signed in, redirect the user to the sign up or sign in page.
+  2. If a user is signed in but is not an owner of the news article being edited, ...
+    a. redirect the user to the root_page
+    b. alerts the user with a flash
+  3. If a user is signed in and is the owner of the news article being edited, ...
+    a. all current tests should be able to pass (if there are any)
+    b. renders the edit template
+    c. assigns an instance variable to the campaign being edited
+
+update:
+  1. If a user is not signed in, redirect the user to the sign up page.
+  2. If a user is signed in but is not an owner of the news article being updated, ...
+    a. redirect the user to the root_page
+    b. alerts the user with a flash
+  3. If a user is signed in, is the owner of the news article being updated and parameters are valid, ...
+    a. saves changes to the news article
+    b. redirects to the campaign show page
+  4. If a user is signed in, is the owner of the news article being updated and parameters are invalid, ...
+    a. renders the edit template
+
+
+### [Lab] Amazon: User Authentication Tests
+
+Write tests for the following:
+User Model:
+  1. first_name must be present
+  2. last_name must be present
+  3. email must be unique
+  4. full_name method must return first_name and last_name concatenated & titleized
+
+Users Controller:
+  1. new action
+    a. renders the new template
+    b. sets an instance variable of User type
+  2. create action:
+    a. with valid parameters: created a user in the DB, redirects to home page and signs the user in
+    b. with invalid parameters: renders the new template and doesn't create a user in the database

@@ -17,7 +17,7 @@ User.create(
   first_name: "Admin",
   last_name: "User",
   email: "admin@user.ca",
-  password_digest: BCrypt::Password.create('password'),
+  password: 'password',
   admin: true
 )
 
@@ -27,7 +27,7 @@ User.create(
     first_name: Faker::Name.first_name,
     last_name: Faker::Name.last_name,
     email: Faker::Internet.email(domain: "example"),
-    password_digest: BCrypt::Password.create('password'),
+    password: 'password',
     admin: false
   )
 end
@@ -56,12 +56,14 @@ Product.all.each do |product|
 end
 
 # create 10 news articles
-10.times do
-  NewsArticle.create(
-    title: Faker::Lorem.sentence(word_count: 5),
-    description: Faker::Lorem.paragraph_by_chars(number: 256, supplemental: false),
-    published_at: Faker::Time.between(from: 30.days.ago, to: Time.now)
-  )
+User.all.drop(1).each do |user|
+  5.times do
+    news_article = user.news_articles.create(
+      title: Faker::Lorem.sentence(word_count: 5),
+      description: Faker::Lorem.paragraph_by_chars(number: 256, supplemental: false),
+      published_at: Faker::Time.between(from: 30.days.ago, to: Time.now)
+    )
+  end
 end
 
 # Print the number of users created
