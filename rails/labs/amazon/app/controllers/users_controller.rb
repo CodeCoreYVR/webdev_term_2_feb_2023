@@ -15,7 +15,7 @@ class UsersController < ApplicationController
     if @user.save
       # This is how we set a session variable
       session[:user_id] = @user.id
-      redirect_to root_path
+      redirect_to home_path
     else
       render 'new'
     end

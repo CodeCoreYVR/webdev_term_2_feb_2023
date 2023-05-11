@@ -1,12 +1,30 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
+  describe 'validations' do
+    let(:user) { build(:user) }
 
-  describe '#full_name' do
-    let(:user) { build(:user, first_name: 'John', last_name: 'Doe') }
+    it 'requires a first_name' do
+      user.first_name = nil
+      expect(user).to_not be_valid
+    end
 
-    it 'returns the full name' do
-      expect(user.full_name).to eq('John Doe')
+    it 'requires a last_name' do
+      user.last_name = nil
+      expect(user).to_not be_valid
+    end
+
+    it 'requires a unique email' do
+      existing_user = create(:user)
+      user.email = existing_user.email
+      expect(user).to_not be_valid
+    end
+
+      it 'returns the full name' do
+        user.first_name = 'John'
+        user.last_name = 'Doe'
+        expect(user.full_name).to eq('John Doe')
+      end
     end
   end
 

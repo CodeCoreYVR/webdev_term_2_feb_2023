@@ -638,6 +638,45 @@ $ rails db:migrate
           * else message, and render :edit and
 * $ rspec ./spec/requests/news_articles_spec.rb
   * tests should all pass
+##### User Authentication Tests
+* $ rails generate rspec:controller users
+* ./spec/requests/news_articles_spec.rb
+  * previously trying to generate a news_articles controller the command by default created a /requests/ not /controllers/ so need to change all tests to work with http requests. this is unrelated to this lab.
+* ./spec/models/user_spec.rb
+  * add tests for:
+    * #first_name
+      * should be present
+    * #last_name
+      * should be present
+    * #email
+      * should be unique
+    * #full_name
+      * should return first_name and last_name concatenated & titleized
+* $ rspec ./spec/models/user_spec.rb
+  * all tests should fail as the validations and method are not yet implemented
+* ./app/models/user.rb
+  * implement the validations
+* $ rspec ./spec/models/user_spec.rb
+  * all tests should now pass
+* ./spec/requests/users_spec.rb
+  * add tests for:
+    * #new
+      * should render the new template
+      * should set an instance variable of User type
+    * #create
+      * with valid parameters:
+        * should create a user in the DB
+        * should redirect to home page
+        * should sign the user in
+      * with invalid parameters:
+        * should render the new template
+        * should not create a user in the database
+* $ rspec ./spec/requests/users_spec.rb
+  * all tests should fail as the controller actions are not yet implemented
+* ./app/controllers/users_controller.rb
+  * make sure if user saves, it redirects to home_path
+* $ rspec ./spec/requests/users_spec.rb
+  * all tests should now pass
 ## ********************** End *********************
 
 ## ********************* Labs *********************
@@ -895,3 +934,19 @@ update:
     a. renders the edit template
 
 
+### [Lab] Amazon: User Authentication Tests
+
+Write tests for the following:
+User Model:
+  1. first_name must be present
+  2. last_name must be present
+  3. email must be unique
+  4. full_name method must return first_name and last_name concatenated & titleized
+
+Users Controller:
+  1. new action
+    a. renders the new template
+    b. sets an instance variable of User type
+  2. create action:
+    a. with valid parameters: created a user in the DB, redirects to home page and signs the user in
+    b. with invalid parameters: renders the new template and doesn't create a user in the database

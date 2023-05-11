@@ -17,7 +17,7 @@ User.create(
   first_name: "Admin",
   last_name: "User",
   email: "admin@user.ca",
-  password_digest: BCrypt::Password.create('password'),
+  password: 'password',
   admin: true
 )
 
@@ -27,7 +27,7 @@ User.create(
     first_name: Faker::Name.first_name,
     last_name: Faker::Name.last_name,
     email: Faker::Internet.email(domain: "example"),
-    password_digest: BCrypt::Password.create('password'),
+    password: 'password',
     admin: false
   )
 end
