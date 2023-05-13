@@ -68,6 +68,7 @@
               <li class="list-group-item hidden-review">
                 <div><%= review.rating %> <strong>~ <%= review.user.full_name %> ~</strong></div>
                 <div><%= review.body %></div> 
+                <div><%= review.likes.count %> <%= 'Like'.pluralize(review.likes.count) %></div>
                 <div>
                   <% if can? :delete, review %>
                     <%= link_to "Delete", product_review_path(@product, review), method: :delete, data: { confirm: "Are you sure?" } %>
@@ -80,6 +81,18 @@
             <li class="list-group-item">
               <div><%= review.rating %> <strong>~ <%= review.user.full_name %> ~</strong></div>
               <div><%= review.body %></div> 
+              <%= review.likers.count %> <%= 'Like'.pluralize(review.likers.count) %>
+              <% unless current_user == review.user %>
+                <% if current_user.present? %>
+                  <% if (like = user_liked_review(review)) %>
+                    <%= link_to '👎', product_review_like_path(@product, review, like), method: :delete, class: 'no-underline' %>
+                  <% else %>
+                    <%= link_to '👍', product_review_likes_path(@product, review), method: :post, class: 'no-underline' %>
+                  <% end %>
+                <% else %>
+                  <%= link_to '👍', new_user_session_path, alert: 'Please sign in to like a review.' %>
+                <% end %>
+              <% end %>
               <div>
                 <% if can? :delete, review %>
                   <%= link_to "Delete", product_review_path(@product, review), method: :delete, data: { confirm: "Are you sure?" } %>

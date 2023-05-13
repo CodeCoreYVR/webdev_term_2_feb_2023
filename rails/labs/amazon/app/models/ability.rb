@@ -44,6 +44,10 @@ class Ability
       # bellow two lines are the same as the above line
       # can [:update, :delete], Product, user_id: user.id
       # can [:update, :delete], Review, user_id: user.id
+      
+      can :like, Review do |review|
+        user.present? && review.user != user
+      end
 
       can [:edit, :update], NewsArticle, user_id: user.id
 

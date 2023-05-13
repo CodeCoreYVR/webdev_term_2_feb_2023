@@ -647,7 +647,7 @@ $ rails db:migrate
     * #first_name
       * should be present
     * #last_name
-      * should be present
+      * shouldReview Likes be present
     * #email
       * should be unique
     * #full_name
@@ -677,6 +677,50 @@ $ rails db:migrate
   * make sure if user saves, it redirects to home_path
 * $ rspec ./spec/requests/users_spec.rb
   * all tests should now pass
+### Many to Many
+##### Review Likes
+* ./config/routes.rb
+  * Nest the likes resource within reviews: resources :likes, only: [:create, :destroy]
+* $ rails g controller Likes
+* $ rails g migration CreateLikes user:references review:references
+* $ rails db:migrate
+* ./app/models/like.rb
+  * Add associations:
+    * belongs_to :user
+    * belongs_to :review
+* ./app/models/user.rb
+  * Add associations:
+    * has_many :likes, dependent: :destroy
+    * has_many :liked_reviews, through: :likes, source: :review
+* ./app/models/review.rb
+  * Add associations:
+    * has_many :likes, dependent: :destroy
+    * has_many :likers, through: :likes, source: :user
+* ./app/models/ability.rb
+  * Add like auth for if user isn't owner of review
+* ./app/controllers/likes_controller.rb
+  * Add:
+    * find_product custom method
+    * find_review custom method
+    * before_actions for: 
+      * :require_login
+      * :find_product
+      * :find_review
+    * create action method:
+      * Create a new like associated with current_user
+      * Save the like and handle the response
+      * cancan auth for likes
+    * destroy action method:
+      * Find the like associated with current_user
+      * Destroy the like and handle the response
+      * cancan auth for likes
+* ./app/views/products/show.html.erb
+  * Use review.likers.count to display the count of likes
+  * Add: conditional rendering of "like" or "unlike" link based on if current user has liked the review
+* ./app/assets/stylesheets/custom.scss
+  * Add: .no-underline class to remove underline from links
+* ./app/controllers/application_controller.rb
+  * Add: user_liked_review? helper method to check if the current user has liked a review
 ## ********************** End *********************
 
 ## ********************* Labs *********************
@@ -950,3 +994,13 @@ Users Controller:
   2. create action:
     a. with valid parameters: created a user in the DB, redirects to home page and signs the user in
     b. with invalid parameters: renders the new template and doesn't create a user in the database
+
+
+### [Lab] Amazon: Review Likes
+
+Implement the ability to like and un-like reviews.
+  1. Add a count for the likes on each review next to the review's "like" link.
+  2. A user should not be able to like his reviews.
+  3. A user should only be able to like reviews if they're logged in.
+
+
