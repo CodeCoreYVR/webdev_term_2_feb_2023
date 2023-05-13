@@ -647,7 +647,7 @@ $ rails db:migrate
     * #first_name
       * should be present
     * #last_name
-      * should be present
+      * shouldReview Likes be present
     * #email
       * should be unique
     * #full_name
@@ -677,6 +677,94 @@ $ rails db:migrate
   * make sure if user saves, it redirects to home_path
 * $ rspec ./spec/requests/users_spec.rb
   * all tests should now pass
+### Many to Many
+##### Review Likes
+* ./config/routes.rb
+  * Nest the likes resource within reviews: resources :likes, only: [:create, :destroy]
+* $ rails g controller Likes
+* $ rails g migration CreateLikes user:references review:references
+* $ rails db:migrate
+* ./app/models/like.rb
+  * Add associations:
+    * belongs_to :user
+    * belongs_to :review
+* ./app/models/user.rb
+  * Add associations:
+    * has_many :likes, dependent: :destroy
+    * has_many :liked_reviews, through: :likes, source: :review
+* ./app/models/review.rb
+  * Add associations:
+    * has_many :likes, dependent: :destroy
+    * has_many :likers, through: :likes, source: :user
+* ./app/models/ability.rb
+  * Add like auth for if user isn't owner of review
+* ./app/controllers/likes_controller.rb
+  * Add:
+    * find_product custom method
+    * find_review custom method
+    * before_actions for: 
+      * :require_login
+      * :find_product
+      * :find_review
+    * create action method:
+      * Create a new like associated with current_user
+      * Save the like and handle the response
+      * cancan auth for likes
+    * destroy action method:
+      * Find the like associated with current_user
+      * Destroy the like and handle the response
+      * cancan auth for likes
+* ./app/views/products/show.html.erb
+  * Use review.likers.count to display the count of likes
+  * Add: conditional rendering of "like" or "unlike" link based on if current user has liked the review
+* ./app/assets/stylesheets/custom.scss
+  * Add: .no-underline class to remove underline from links
+* ./app/controllers/application_controller.rb
+  * Add: user_liked_review helper method to check if the current user has liked a review
+##### Favourites
+* $ rails g model Favorite product:references user:references
+* ./db/migrations/......_create_favorites.rb
+  * add: add_index :favorites, [:user_id, :product_id], unique: true
+* $ rails db:migrate
+* ./app/models/favorite.rb
+  * add: belongs_to :user and :product
+* ./app/models/user.rb
+  * add: has_many favorites and favorited_products
+* ./app/models/product.rb
+  * add: has_many favorites and favoritors
+* ./config/routes.rb
+  * add: resources :favorites, only: [:create, :destroy] within product's resources
+* ./app/models/ability.rb
+  * add: favorite auth for if user isn't owner of product
+* $ rails g controller Favorite
+* ./app/controllers/favorites_controller.rb
+  * add:
+    * find_product custom method
+    * before_actions for: 
+      * :require_login
+      * :find_product
+    * create action method:
+      * Create a new favorite associated with current_user
+      * Save the favorite and handle the response
+      * cancan auth for favorites
+    * destroy action method:
+      * Find the favorite associated with current_user
+      * Destroy the favorite and handle the response
+      * cancan auth for favorite
+* ./app/views/products/show.html.erb
+  * Add: conditional rendering of "favorite" or "unfovorite" link based on if current user has favorited the product
+* ./app/controllers/application_controller.rb
+  * Add: user_favorited_product helper method to check if the current user has favorited a product
+* ./config/routes.rb
+  * add: GET favorites to user resources
+* ./app/controllers/users_controller.rb
+  * add: 
+    * favorites action method
+    * make and array out of favorited_products
+* $ code ./app/views/users/favorited.html.erb
+  * add: loop through favorited_products and list each product with a link to product show page
+* ./app/views/layouts/application.html.erb
+  * add link to navbar for favorites_user_path(current_user)
 ## ********************** End *********************
 
 ## ********************* Labs *********************
@@ -950,3 +1038,25 @@ Users Controller:
   2. create action:
     a. with valid parameters: created a user in the DB, redirects to home page and signs the user in
     b. with invalid parameters: renders the new template and doesn't create a user in the database
+
+
+### [Lab] Amazon: Review Likes
+
+Implement the ability to like and un-like reviews.
+  1. Add a count for the likes on each review next to the review's "like" link.
+  2. A user should not be able to like his reviews.
+  3. A user should only be able to like reviews if they're logged in.
+
+
+### [Lab] Amazon: Favourites
+
+Implement the ability for users to favourite and un-favourite products on the Amazon application.
+  1. Only allow logged in users to use this feature.
+
+Stretch
+  1. Use different icons for the un-favourite and favourite link.
+  2. Have a page for logged in users to list all the products they favourited.
+
+
+
+

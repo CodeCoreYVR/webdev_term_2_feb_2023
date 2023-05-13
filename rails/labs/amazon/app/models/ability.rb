@@ -44,8 +44,16 @@ class Ability
       # bellow two lines are the same as the above line
       # can [:update, :delete], Product, user_id: user.id
       # can [:update, :delete], Review, user_id: user.id
+      
+      can :like, Review do |review|
+        user.present? && review.user != user
+      end
 
-      can [:edit, :update], NewsArticle, user_id: user.id
+      can :favorite, Product do |product|
+        user.present? && product.user != user
+      end
+
+      can [:edit, :update, :delete], NewsArticle, user_id: user.id
 
       # This allows the owner of the product to hide and unhide reviews on their product
       can [:hide, :unhide], Review do |review|

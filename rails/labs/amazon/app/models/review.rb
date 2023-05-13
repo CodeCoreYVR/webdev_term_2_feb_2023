@@ -1,4 +1,8 @@
 class Review < ApplicationRecord
+  has_many :likes, dependent: :destroy
+  # likers is an alias for all the users that have liked a review
+  has_many :likers, through: :likes, source: :user
+  
   belongs_to :product
   belongs_to :user
 
