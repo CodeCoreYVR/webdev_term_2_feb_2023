@@ -720,7 +720,51 @@ $ rails db:migrate
 * ./app/assets/stylesheets/custom.scss
   * Add: .no-underline class to remove underline from links
 * ./app/controllers/application_controller.rb
-  * Add: user_liked_review? helper method to check if the current user has liked a review
+  * Add: user_liked_review helper method to check if the current user has liked a review
+##### Favourites
+* $ rails g model Favorite product:references user:references
+* ./db/migrations/......_create_favorites.rb
+  * add: add_index :favorites, [:user_id, :product_id], unique: true
+* $ rails db:migrate
+* ./app/models/favorite.rb
+  * add: belongs_to :user and :product
+* ./app/models/user.rb
+  * add: has_many favorites and favorited_products
+* ./app/models/product.rb
+  * add: has_many favorites and favoritors
+* ./config/routes.rb
+  * add: resources :favorites, only: [:create, :destroy] within product's resources
+* ./app/models/ability.rb
+  * add: favorite auth for if user isn't owner of product
+* $ rails g controller Favorite
+* ./app/controllers/favorites_controller.rb
+  * add:
+    * find_product custom method
+    * before_actions for: 
+      * :require_login
+      * :find_product
+    * create action method:
+      * Create a new favorite associated with current_user
+      * Save the favorite and handle the response
+      * cancan auth for favorites
+    * destroy action method:
+      * Find the favorite associated with current_user
+      * Destroy the favorite and handle the response
+      * cancan auth for favorite
+* ./app/views/products/show.html.erb
+  * Add: conditional rendering of "favorite" or "unfovorite" link based on if current user has favorited the product
+* ./app/controllers/application_controller.rb
+  * Add: user_favorited_product helper method to check if the current user has favorited a product
+* ./config/routes.rb
+  * add: GET favorites to user resources
+* ./app/controllers/users_controller.rb
+  * add: 
+    * favorites action method
+    * make and array out of favorited_products
+* $ code ./app/views/users/favorited.html.erb
+  * add: loop through favorited_products and list each product with a link to product show page
+* ./app/views/layouts/application.html.erb
+  * add link to navbar for favorites_user_path(current_user)
 ## ********************** End *********************
 
 ## ********************* Labs *********************
@@ -1002,5 +1046,17 @@ Implement the ability to like and un-like reviews.
   1. Add a count for the likes on each review next to the review's "like" link.
   2. A user should not be able to like his reviews.
   3. A user should only be able to like reviews if they're logged in.
+
+
+### [Lab] Amazon: Favourites
+
+Implement the ability for users to favourite and un-favourite products on the Amazon application.
+  1. Only allow logged in users to use this feature.
+
+Stretch
+  1. Use different icons for the un-favourite and favourite link.
+  2. Have a page for logged in users to list all the products they favourited.
+
+
 
 

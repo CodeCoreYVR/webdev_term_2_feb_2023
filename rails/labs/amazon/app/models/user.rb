@@ -2,9 +2,14 @@ class User < ApplicationRecord
   has_many :products, dependent: :destroy
   has_many :reviews, dependent: :destroy
   has_many :news_articles, dependent: :destroy
+
   has_many :likes, dependent: :destroy
   # liked_reviews is an alias for all the reviews that a user has liked
   has_many :liked_reviews, through: :likes, source: :review
+
+  has_many :favorites, dependent: :destroy
+  # favorited_products is an alias for all the products that a user has favorited
+  has_many :favorited_products, through: :favorites, source: :product
 
   has_secure_password
 

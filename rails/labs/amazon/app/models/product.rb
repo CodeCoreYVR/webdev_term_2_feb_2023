@@ -1,6 +1,9 @@
 class Product < ApplicationRecord
   # Associations
   has_many :reviews, dependent: :destroy
+  has_many :favorites, dependent: :destroy
+  # favoritors is an alias for all the users that have favorited a product
+  has_many :favoritors, through: :favorites, source: :user
   belongs_to :user
 
   # Callbacks

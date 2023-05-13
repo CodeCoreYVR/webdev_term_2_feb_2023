@@ -1,6 +1,13 @@
 body {
   background-color: black;
   color: white;
+  // height: 100%;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  min-height: 100vh;
 }
 
 nav {
@@ -40,4 +47,20 @@ nav {
 .no-underline {
   text-decoration: none;
   color: black;
+}
+
+.grey-footer-text {
+  color: #868585;
+}
+
+.card-footer {
+  background-color: transparent !important;
+}
+
+.footer {
+  border-top: 2px solid #868585;
+  margin-top: 8vh;
+  background-color: #343a40;
+  color: #fff;
+  padding: 1rem;
 }

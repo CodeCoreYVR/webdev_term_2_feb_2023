@@ -35,6 +35,11 @@ class UsersController < ApplicationController
     end
   end
 
+  def favorites
+    @favorited_products = current_user.favorited_products.order
+  end
+  
+
   private
 
   def user_params
