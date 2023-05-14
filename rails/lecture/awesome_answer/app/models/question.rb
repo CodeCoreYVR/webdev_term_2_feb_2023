@@ -17,6 +17,12 @@ class Question < ApplicationRecord
     # The user liking the question:
     has_many :likers, through: :likes, source: :user
 
+    # We will need to mention the source if we give a different name for user source (i.e 'likers')
+    #has_many :users, through: :likes
+
+    has_many :taggings, dependent: :destroy
+    has_many :tags, through: :taggings
+
     validates :title, presence: true #, uniqueness: {message: "needs to be unique!"}
     validates :body, length: {minimum: 5} 
 

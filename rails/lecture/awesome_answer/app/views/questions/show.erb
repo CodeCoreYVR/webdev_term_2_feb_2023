@@ -1,9 +1,20 @@
 <h2><%= @question.title %></h2>
 <p><%= @question.body %></p>
-<% if @question.user %>
-    <small><%= @question.user.full_name %> asked about <%= time_ago_in_words(@question.created_at) %> ago</small>
+<% if @question.tags.length %>
+    <div>
+        <% @question.tags.each do |tag| %>
+            <%= link_to(tag.name,tag_path(tag), class: "badge text-white bg-dark text-decoration-none") %>
+        <% end %>
+    </div>
 <% end %>
-<small> Liked by <%= @question.likes.count %> users </small>
+<div>
+    <% if @question.user %>
+        <small><%= @question.user.full_name %> asked about <%= time_ago_in_words(@question.created_at) %> ago</small>
+    <% end %>
+</div>
+<div>
+    <small> Liked by <%= @question.likes.count %> users </small>
+</div>
 <% if can?(:edit, @question) %>
     <%= button_to "Edit", edit_question_path(@question), :method => :get %>
     <%= button_to "Delete", @question, :method => :delete %>
@@ -26,7 +37,7 @@
             <%= answer.user.full_name %>
         </small>      
     <% end %>
-    <small>answered <%= time_ago_in_words(answer.created_at) %> </small>
+    <small>answered <%= time_ago_in_words(answer.created_at) %> ago</small>
     <% if can?(:delete, answer) %>
         <%= button_to "Delete", [@question, answer], :method => :delete %>
     <% end %>
