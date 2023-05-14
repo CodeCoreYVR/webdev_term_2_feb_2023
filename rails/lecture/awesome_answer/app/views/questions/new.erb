@@ -15,5 +15,13 @@
         <%= f.label :body %>
         <%= f.text_area :body %>
     </div>
+    <% @tags.each do |tag| %>
+        <div>
+            <input id="<%= "tag_" + tag.id.to_s %>" name="tags[id][]" type="checkbox" value="<%=tag.id%>" />
+            <label for="<%= "tag_" + tag.id.to_s %>">
+                <%= tag.name %>
+            </label>
+        </div>
+    <% end %>
     <%= f.submit %>
 <% end %>

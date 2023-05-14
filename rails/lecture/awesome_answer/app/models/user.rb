@@ -18,7 +18,8 @@ class User < ApplicationRecord
     # The user liking the question:
     has_many :liked_questions, through: :likes, source: :question
 
-    validates :email, presence: true, uniqueness: {message: "needs to be unique!"}
+    # case_sensitive: false indicates that 'TEST@TEST.COM' or, 'test@test.com' or, 'Test@test.com' won't be considered as unique.
+    validates :email, presence: true, uniqueness: {message: "needs to be unique!", case_sensitive: false}
     validates :first_name, presence: true
     validates :last_name, presence: true
 

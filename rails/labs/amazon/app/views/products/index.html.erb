@@ -6,7 +6,7 @@
     <div class="card-body">
       <ol class="list-group list-group-flush">
         <% @products.each_with_index do |product, index| %>
-          <li class="list-group-item"><%= index + 1 %>. <%= link_to product.title, product_path(product) %></li>
+          <li class="list-group-item"><%= index + 1 %>. <%= link_to product.title, product_path(product), class: 'no-underline' %></li>
         <% end %>
       </ol>
     </div>
