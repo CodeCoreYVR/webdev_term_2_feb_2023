@@ -7,7 +7,8 @@ class AnswersController < ApplicationController
         @answer.question = @question
         @answer.user = current_user
 
-        if @answer.save 
+        if @answer.save
+            AnswersMailer.notify_questioner(@answer).deliver_later 
             redirect_to question_path(@question)
         else
             render '/question/show'

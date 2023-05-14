@@ -25,4 +25,5 @@ node_modules
 # Ignore master key for decrypting credentials and more.
 /**/config/master.key
 
-
+# Ignore credentials for rails application
+/**/config/initializers/app_keys.rb
