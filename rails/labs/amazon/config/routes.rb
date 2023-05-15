@@ -40,6 +40,9 @@ Rails.application.routes.draw do
   # Routes for news articles
   resources :news_articles
 
+  # Routes for tags
+  resources :tags, only: [:index, :show]
+
   # Routes for products and reviews
   # Defines the "reviews" routes i.e. "/products/:id
   resources :products do
@@ -51,6 +54,7 @@ Rails.application.routes.draw do
       end
 
       resources :likes, only: [:create, :destroy]
+      resources :votes, only: [:create, :update, :destroy]
     end
     resources :favorites, only: [:create, :destroy]
   end

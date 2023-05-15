@@ -752,7 +752,7 @@ $ rails db:migrate
       * Destroy the favorite and handle the response
       * cancan auth for favorite
 * ./app/views/products/show.html.erb
-  * Add: conditional rendering of "favorite" or "unfovorite" link based on if current user has favorited the product
+  * Add: conditional rendering of "favorite" or "unfavorite" link based on if current user has favorited the product
 * ./app/controllers/application_controller.rb
   * Add: user_favorited_product helper method to check if the current user has favorited a product
 * ./config/routes.rb
@@ -765,6 +765,96 @@ $ rails db:migrate
   * add: loop through favorited_products and list each product with a link to product show page
 * ./app/views/layouts/application.html.erb
   * add link to navbar for favorites_user_path(current_user)
+### More on Many to Many
+##### Add Tags to Products
+* $ rails g model Tag name:string:uniq && rails g model Tagging product:references tag:references
+* ./db/migrate/..._create_taggings.rb
+  * add: add_index :taggings, [:product_id, :tag_id], unique: true
+* $ rails db:migrate
+* ./app/models/tag.rb
+  * add: 
+    * has_many :taggings, dependent: :destroy
+    * has_many :products, through: :taggings
+    * validates :name, uniqueness: true
+* ./app/models/tagging.rb
+  * add: 
+    * belongs_to :product
+    * belongs_to :tag
+    * validates :tag_id, uniqueness: { scope: :product_id }
+* ./app/models/product.rb
+  * add: 
+    * has_many :taggings, dependent: :destroy
+    * has_many :tags, through: :taggings
+* ./app/views/products/new.html.erb and edit.html.erb
+  * add: text_field to add tags
+* ./app/controllers/products_controller.rb
+  * add: 
+    * handle_tags method
+    * handle_tags in create and update actions
+* ./app/models/product.rb
+  * add: tag_names getter and setter methods
+* ./app/models/tag.rb
+  * add: 
+    * before_save :titleize_name callback
+    * private method titleize_name
+* ./db/seeds.rb
+  * add: 
+    * destroy existing tags before seeding
+    * create tags for each product in the database
+    * clear Faker unique word list after each product to ensure uniqueness
+##### List Products by Tag
+* $ rails g controller Tags
+* ./app/controllers/tags_controller.rb
+  * add:
+    * index action method to list all tags
+    * show action method to show a specific tag and its associated products
+* ./config/routes.rb
+  * add: resources :tags, only: [:index, :show]
+* $ mkdir app/views/tags
+  * create a new directory for the views associated with the TagsController.
+* $ code ./app/views/tags/index.html.erb
+  * add: Loop through each tag and display its name with a link to its show page.
+* $ code ./app/views/tags/show.html.erb
+  * add: Display the tag's name and loop through each of its associated products, displaying the product's name with a link to its show page.
+* ./app/views/products/show.html.erb
+  * modify: Change the display of tags to use link_to so each tag links to its show page.
+##### Voting on reviews
+* $ rails g model Vote review:references user:references vote_type:boolean
+  * the vote_type is a boolean where true might represent an upvote and false a downvote.
+* ./db/migrations/......_create_votes.rb
+  * add: add_index :votes, [:user_id, :review_id], unique: true
+* $ rails db:migrate
+* ./app/models/vote.rb
+  * add: belongs_to :user and belongs_to :review
+* ./app/models/user.rb
+  * add: has_many :votes, dependant: :destroy
+* ./app/models/review.rb
+  * add: has_many :votes, dependant: :destroy
+* ./config/routes.rb
+  * add: resources :votes, only: [:create, :update, :destroy] within review's resources
+* ./app/models/ability.rb
+  * add: cancan rules for create, update destroy
+* $ rails g controller Votes
+* ./app/controllers/votes_controller.rb
+  * add:
+    * create action method:
+      * create a new vote associated with current_user and the specified review
+      * save the vote and handle the response
+      * cancan auth for votes
+    * update action method:
+      * find the vote associated with current_user and the specified review
+      * update the vote type and handle the response
+      * cancan auth for vote
+    * destroy action method:
+      * find the vote associated with current_user and the specified review
+      * destroy the vote and handle the response
+      * cancan auth for vote
+* ./app/views/reviews/_review.html.erb
+  * add: conditional rendering of "upvote" or "downvote" link based on if current user has voted on the review, and whether it was an upvote or downvote
+* ./app/views/reviews/index.html.erb
+  * add: Display the total number of upvotes and downvotes for each review
+* ./app/controllers/reviews_controller.rb
+  * add: sorting of reviews by the most voted ones in the index action.
 ## ********************** End *********************
 
 ## ********************* Labs *********************
@@ -1058,5 +1148,28 @@ Stretch
   2. Have a page for logged in users to list all the products they favourited.
 
 
+### [Lab] Amazon Add Tags to Products
+
+Add ability to tag products (one or more tags per product). Build this from scratch and don't use a gem.
+
+
+### [Lab] Amazon List Products by Tag
+
+Add the ability to explore products by tags:
+  1. Add a Tag Controller with an index and use it to show a list of tags.
+  2. Each tag in the index should link to a show page for that tag that also displays all associated products.
+  3. Tags in the the Product show should link to the Tag's show page
+
+
+### [Lab] Voting on reviews
+
+Add the possibility for users to vote up or down on reviews as follows:
+
+  1. Signed in users can vote up or down on any review they did not write
+  2. Users can edit / remove their voting after
+  3. Owners of products can vote on reviews of their products
+
+[Stretch] 
+  1. Sort the listed reviews by the most voted ones
 
 

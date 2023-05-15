@@ -6,6 +6,7 @@ class ProductsController < ApplicationController
   # This will call the authenticate_user! method before the specified actions
   before_action :require_login, only: [:new, :create]
 
+
   def index
     # Get all the products from the database and order them by the created_at column in descending order
     @products = Product.all.order(created_at: :desc)
@@ -16,7 +17,8 @@ class ProductsController < ApplicationController
     # @product = Product.find(params[:id]) # @product is already declaired by the before_action :find_product
     
     @review = Review.new
-    @reviews = @product.reviews.order(created_at: :desc) || []
+    # Get all the reviews for the product in descending order then sort by vote_total in descending order
+    @reviews = @product.reviews.order(created_at: :desc).sort_by(&:vote_total).reverse || []
   end
 
   def new
@@ -29,6 +31,9 @@ class ProductsController < ApplicationController
     @product = @user.products.build(product_params)
     # If the product is successfully saved to the database
     if @product.save
+      # Create a new tagging for each tag that was checked
+      handle_tags(@product)
+
       # Redirect to the products index page
       redirect_to @product # This is equivalent to product_path(@product) or product_path @product
     else
@@ -73,6 +78,9 @@ class ProductsController < ApplicationController
 
     # Update the product with the given params
     if @product.update(product_params)
+      # Create a new tagging for each tag that was entered and delete the taggings for each tag that was removed from text field
+      handle_tags(@product)
+
       redirect_to @product
     else
       render 'edit'
@@ -83,7 +91,7 @@ class ProductsController < ApplicationController
   
   def product_params
     # Returns a sanitized hash of the params with nothing extra
-    params.require(:product).permit(:title, :description, :price)
+    params.require(:product).permit(:title, :description, :price, :tag_names)
   end
 
   # Method to find the product with the given id. This is used as a before_action to avoid repeating code.
@@ -98,4 +106,13 @@ class ProductsController < ApplicationController
       @user = User.find(current_user.id)
     end
   end
+
+  # Method to create a new tagging for each tag that was entered and delete the taggings for each tag that was removed from text field
+  def handle_tags(product)
+    tag_names = params[:product][:tag_names].split(",").map(&:strip)
+    tags = tag_names.map { |name| Tag.find_or_create_by(name: name.titleize) }
+  
+    @product.tags = tags
+  end
+  
 end

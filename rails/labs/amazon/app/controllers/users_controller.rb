@@ -36,7 +36,7 @@ class UsersController < ApplicationController
   end
 
   def favorites
-    @favorited_products = current_user.favorited_products.order
+    @favorited_products = current_user.favorited_products.order(created_at: :desc)
   end
   
 

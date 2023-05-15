@@ -1,10 +1,18 @@
 class Product < ApplicationRecord
   # Associations
   has_many :reviews, dependent: :destroy
+
   has_many :favorites, dependent: :destroy
   # favoritors is an alias for all the users that have favorited a product
   has_many :favoritors, through: :favorites, source: :user
+  
+  has_many :taggings, dependent: :destroy
+  has_many :tags, through: :taggings
+  
   belongs_to :user
+
+  # Virtual attributes
+  attr_accessor :tag_names
 
   # Callbacks
   before_validation :set_default_price
@@ -16,6 +24,33 @@ class Product < ApplicationRecord
   validates :price, numericality: { greater_than: 0 }
   validates :description, presence: true, length: { minimum: 10 }
 
+  # Accepts comma-separated tag names, ensures tags exist, and assigns them to the product. Handles potential duplicate creation.
+  def tag_names=(names)
+    self.tags = names.split(",").map do |n|
+      name = n.strip
+      tag = Tag.find_by(name: name)
+      if tag.nil?
+        begin
+          tag = Tag.create!(name: name)
+        rescue ActiveRecord::RecordNotUnique
+          tag = Tag.find_by(name: name)
+        end
+      end
+      tag
+    end.compact
+  end
+  # # This is the original setter method for tag_names, only using the above due to seeding issues
+  # def tag_names=(names)
+  #   self.tags = names.split(",").map do |n|
+  #     Tag.where(name: n.strip).first_or_create!
+  #   end
+  # end
+
+
+  # Getter method to return a comma separated list of tag names
+  def tag_names
+    self.tags.map(&:name).join(', ')
+  end
 
   # Private methods
   private
