@@ -19,6 +19,11 @@
           <strong><%= f.label "price:" %></strong>
           <%= f.number_field :price, class: 'form-control' %>
         </div>
+        <hr>
+        <div class="form-group">
+          <strong><%= f.label :tag_names, "Tags (separated by commas)" %>:</strong>
+          <%= f.text_field :tag_names, class: 'form-control' %>
+        </div>
         <div class="card-footer text-center">
           <%= f.submit 'Send', class: 'btn btn-secondary' %>
         </div>

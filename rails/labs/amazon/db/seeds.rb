@@ -11,6 +11,9 @@ User.destroy_all
 Product.destroy_all
 Review.destroy_all
 NewsArticle.destroy_all
+Tag.destroy_all
+Favorite.destroy_all
+Like.destroy_all
 
 # Create an admin user
 User.create(
@@ -43,8 +46,22 @@ User.all.drop(1).each do |user|
   end
 end
 
-# create 5 reviews for each product (125 total)
+# create 5 tags for each product, however, existing tags won't be duplicated so the total number of tags will most likely be less than 125
 Product.all.each do |product|
+  5.times do
+    tag_name = Faker::Lorem.unique.word
+    # product.tag_names = product.tag_names ? "#{product.tag_names}, #{tag_name}" : tag_name
+    if product.tag_names.empty?
+      product.tag_names = tag_name
+    else
+      product.tag_names = "#{product.tag_names}, #{tag_name}"
+    end
+  end
+  Faker::Lorem.unique.clear
+end
+
+# create 5 reviews for each product (125 total)
+Product.all.each do |product| 
   5.times do
     product.reviews.create(
       rating: Faker::Number.between(from: 1, to: 5),
@@ -66,6 +83,20 @@ User.all.drop(1).each do |user|
   end
 end
 
+# Have each review liked by a random number of users
+Review.find_each do |review|
+  User.order("RANDOM()").limit(rand(User.count + 1)).each do |user|
+    review.likes.create(user: user)
+  end
+end
+
+# Have each product favorited by a random number of users
+Product.find_each do |product|
+  User.order("RANDOM()").limit(rand(User.count + 1)).each do |user|
+    product.favorites.create(user: user)
+  end
+end
+
 # Print the number of users created
 puts "Created #{User.count} users"
 # Print the number of products created
@@ -74,3 +105,5 @@ puts "Created #{Product.count} products"
 puts "Created #{Review.count} reviews"
 # Print the number of news articles created
 puts "Created #{NewsArticle.count} news articles"
+# Print the number of tags created
+puts "Created #{Tag.count} tags"

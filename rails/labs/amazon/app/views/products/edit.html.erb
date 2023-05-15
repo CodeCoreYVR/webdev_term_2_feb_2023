@@ -20,6 +20,11 @@
           <strong><%= f.label "price:" %></strong>
           <%= f.text_field :price, class: 'form-control' %>
         </div>
+        <hr>
+        <div class="form-group">
+          <strong><%= f.label :tag_names, "Tags (separated by commas)" %>:</strong>
+          <%= f.text_field :tag_names, value: @product.tags.map(&:name).join(', '), class: 'form-control' %>
+        </div>
         <div class="card-footer text-center">
           <%= f.submit 'Update', class: 'btn btn-secondary' %>
         </div>
