@@ -802,6 +802,22 @@ $ rails db:migrate
     * destroy existing tags before seeding
     * create tags for each product in the database
     * clear Faker unique word list after each product to ensure uniqueness
+##### List Products by Tag
+* $ rails g controller Tags
+* ./app/controllers/tags_controller.rb
+  * add:
+    * index action method to list all tags
+    * show action method to show a specific tag and its associated products
+* ./config/routes.rb
+  * add: resources :tags, only: [:index, :show]
+* $ mkdir app/views/tags
+  * create a new directory for the views associated with the TagsController.
+* $ code ./app/views/tags/index.html.erb
+  * add: Loop through each tag and display its name with a link to its show page.
+* $ code ./app/views/tags/show.html.erb
+  * add: Display the tag's name and loop through each of its associated products, displaying the product's name with a link to its show page.
+* ./app/views/products/show.html.erb
+  * modify: Change the display of tags to use link_to so each tag links to its show page.
 ## ********************** End *********************
 
 ## ********************* Labs *********************
@@ -1099,4 +1115,11 @@ Stretch
 
 Add ability to tag products (one or more tags per product). Build this from scratch and don't use a gem.
 
+
+### [Lab] Amazon List Products by Tag
+
+Add the ability to explore products by tags:
+  1. Add a Tag Controller with an index and use it to show a list of tags.
+  2. Each tag in the index should link to a show page for that tag that also displays all associated products.
+  3. Tags in the the Product show should link to the Tag's show page
 

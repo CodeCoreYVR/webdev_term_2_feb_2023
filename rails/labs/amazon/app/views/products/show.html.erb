@@ -22,7 +22,12 @@
       <hr>
       <div>
         <h3>Tags:</h3>
-        <p class="card-text"><%= @product.tags.map(&:name).join(', ') %></p>
+        <p class="card-text">
+          <% @product.tags.each_with_index do |tag, index| %>
+            <%= link_to tag.name, tag_path(tag), class: 'no-underline' %>
+            <%= ',' unless index == @product.tags.length - 1 %>
+          <% end %>
+        </p>
       </div>
       <div class="card-footer d-flex justify-content-around">
         <% if current_user.present? %>

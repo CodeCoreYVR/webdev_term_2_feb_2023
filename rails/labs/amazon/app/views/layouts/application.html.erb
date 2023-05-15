@@ -21,6 +21,7 @@
             <li class="nav-item"><%= link_to 'New Product', new_product_path, class: 'nav-link' %></li>
             <li class="nav-item"><%= link_to 'Articles', news_articles_path, class: 'nav-link' %></li>
             <li class="nav-item"><%= link_to 'New Article', new_news_article_path, class: 'nav-link' %></li>
+            <li class="nav-item"><%= link_to 'Tags', tags_path, class: 'nav-link' %></li>
             <% if current_user.present? %>
               <li class="nav-item"><%= link_to 'Favorites', favorites_user_path(current_user), class: 'nav-link' %></li>
               <% if current_user.admin %>
