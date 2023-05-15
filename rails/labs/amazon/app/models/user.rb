@@ -11,6 +11,8 @@ class User < ApplicationRecord
   # favorited_products is an alias for all the products that a user has favorited
   has_many :favorited_products, through: :favorites, source: :product
 
+  has_many :votes, dependent: :destroy
+
   has_secure_password
 
   # Validations

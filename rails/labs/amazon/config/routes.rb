@@ -54,6 +54,7 @@ Rails.application.routes.draw do
       end
 
       resources :likes, only: [:create, :destroy]
+      resources :votes, only: [:create, :update, :destroy]
     end
     resources :favorites, only: [:create, :destroy]
   end

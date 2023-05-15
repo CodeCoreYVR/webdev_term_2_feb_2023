@@ -88,7 +88,8 @@
               <li class="list-group-item hidden-review">
                 <div><%= review.rating %> <strong>~ <%= review.user.full_name %> ~</strong></div>
                 <div><%= review.body %></div> 
-                <div><%= review.likes.count %> <%= 'Like'.pluralize(review.likes.count) %></div>
+                <div><strong><%= 'Like'.pluralize(review.likers.count) %>: </strong><%= review.likers.count %></div>
+                <div><strong><%= 'Vote'.pluralize(review.vote_total) %>: </strong>(<%= review.vote_total %>)</div>
                 <div>
                   <% if can? :delete, review %>
                     <%= link_to "Delete", product_review_path(@product, review), method: :delete, data: { confirm: "Are you sure?" } %>
@@ -101,7 +102,7 @@
             <li class="list-group-item">
               <div><%= review.rating %> <strong>~ <%= review.user.full_name %> ~</strong></div>
               <div><%= review.body %></div> 
-              <%= review.likers.count %> <%= 'Like'.pluralize(review.likers.count) %>
+              <strong><%= 'Like'.pluralize(review.likers.count) %>: </strong><%= review.likers.count %>
               <% unless current_user == review.user %>
                 <% if current_user.present? %>
                   <% if (like = user_liked_review(review)) %>
@@ -109,9 +110,34 @@
                   <% else %>
                     <%= link_to '👍', product_review_likes_path(@product, review), method: :post, class: 'no-underline' %>
                   <% end %>
+        
+                  <div>
+                    <% (vote = review.votes.find_by(user: current_user)) %>
+                      <strong><%= 'Vote'.pluralize(review.vote_total) %>: </strong>
+                    <% if vote.nil? %>
+                      <%= link_to '👍', product_review_votes_path(@product, review, vote_type: true), method: :post, class: 'no-underline' %>
+                      (<%= review.vote_total %>)
+                      <%= link_to '👎', product_review_votes_path(@product, review, vote_type: false), method: :post, class: 'no-underline' %>
+                    <% elsif vote.vote_type? %>
+                      <%= link_to '👍', product_review_vote_path(@product, review, vote), method: :delete, class: 'no-underline' %>
+                      (<%= review.vote_total %>)
+                      <%= link_to '👎', product_review_vote_path(@product, review, vote, vote_type: false), method: :patch, class: 'no-underline' %>
+                    <% else %>
+                      <%= link_to '👍', product_review_vote_path(@product, review, vote, vote_type: true), method: :patch, class: 'no-underline' %>
+                      (<%= review.vote_total %>)
+                      <%= link_to '👎', product_review_vote_path(@product, review, vote), method: :delete, class: 'no-underline' %>
+                    <% end %>
+                  </div>
+
+
+
+
                 <% else %>
-                  <%= link_to '👍', new_user_session_path, alert: 'Please sign in to like a review.' %>
+                  <%= link_to '👍', new_session_path, alert: 'Please sign in to like a review.', class: "no-underline" %>
+                  <div><strong><%= 'Vote'.pluralize(review.vote_total) %>: </strong>(<%= review.vote_total %>)</div>
                 <% end %>
+              <% else %>
+                <div><strong><%= 'Vote'.pluralize(review.vote_total) %>: </strong>(<%= review.vote_total %>)</div>
               <% end %>
               <div>
                 <% if can? :delete, review %>

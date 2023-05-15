@@ -818,6 +818,43 @@ $ rails db:migrate
   * add: Display the tag's name and loop through each of its associated products, displaying the product's name with a link to its show page.
 * ./app/views/products/show.html.erb
   * modify: Change the display of tags to use link_to so each tag links to its show page.
+##### Voting on reviews
+* $ rails g model Vote review:references user:references vote_type:boolean
+  * the vote_type is a boolean where true might represent an upvote and false a downvote.
+* ./db/migrations/......_create_votes.rb
+  * add: add_index :votes, [:user_id, :review_id], unique: true
+* $ rails db:migrate
+* ./app/models/vote.rb
+  * add: belongs_to :user and belongs_to :review
+* ./app/models/user.rb
+  * add: has_many :votes, dependant: :destroy
+* ./app/models/review.rb
+  * add: has_many :votes, dependant: :destroy
+* ./config/routes.rb
+  * add: resources :votes, only: [:create, :update, :destroy] within review's resources
+* ./app/models/ability.rb
+  * add: cancan rules for create, update destroy
+* $ rails g controller Votes
+* ./app/controllers/votes_controller.rb
+  * add:
+    * create action method:
+      * create a new vote associated with current_user and the specified review
+      * save the vote and handle the response
+      * cancan auth for votes
+    * update action method:
+      * find the vote associated with current_user and the specified review
+      * update the vote type and handle the response
+      * cancan auth for vote
+    * destroy action method:
+      * find the vote associated with current_user and the specified review
+      * destroy the vote and handle the response
+      * cancan auth for vote
+* ./app/views/reviews/_review.html.erb
+  * add: conditional rendering of "upvote" or "downvote" link based on if current user has voted on the review, and whether it was an upvote or downvote
+* ./app/views/reviews/index.html.erb
+  * add: Display the total number of upvotes and downvotes for each review
+* ./app/controllers/reviews_controller.rb
+  * add: sorting of reviews by the most voted ones in the index action.
 ## ********************** End *********************
 
 ## ********************* Labs *********************
@@ -1122,4 +1159,17 @@ Add the ability to explore products by tags:
   1. Add a Tag Controller with an index and use it to show a list of tags.
   2. Each tag in the index should link to a show page for that tag that also displays all associated products.
   3. Tags in the the Product show should link to the Tag's show page
+
+
+### [Lab] Voting on reviews
+
+Add the possibility for users to vote up or down on reviews as follows:
+
+  1. Signed in users can vote up or down on any review they did not write
+  2. Users can edit / remove their voting after
+  3. Owners of products can vote on reviews of their products
+
+[Stretch] 
+  1. Sort the listed reviews by the most voted ones
+
 

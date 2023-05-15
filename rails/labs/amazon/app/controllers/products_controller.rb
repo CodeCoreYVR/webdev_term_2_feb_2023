@@ -17,7 +17,8 @@ class ProductsController < ApplicationController
     # @product = Product.find(params[:id]) # @product is already declaired by the before_action :find_product
     
     @review = Review.new
-    @reviews = @product.reviews.order(created_at: :desc) || []
+    # Get all the reviews for the product in descending order then sort by vote_total in descending order
+    @reviews = @product.reviews.order(created_at: :desc).sort_by(&:vote_total).reverse || []
   end
 
   def new
