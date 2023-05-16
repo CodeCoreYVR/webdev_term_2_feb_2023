@@ -855,6 +855,35 @@ $ rails db:migrate
   * add: Display the total number of upvotes and downvotes for each review
 * ./app/controllers/reviews_controller.rb
   * add: sorting of reviews by the most voted ones in the index action.
+## Background Jobs & Mailers
+##### Add Mailing
+* Gemfile
+  * add:
+    * gem 'delayed_job_active_record'
+    * gem 'delayed_job_web'
+    * gem 'letter_opener', group: :development
+* $ bundle i
+* $ rails generate delayed_job:active_record to create the necessary migration files for DelayedJob.
+* $ rails db:migrate to apply the migration.
+* ./config/application.rb
+  * add: config.active_job.queue_adapter = :delayed_job
+* ./config/environments/development.rb
+  * add:
+    * config.action_mailer.delivery_method = :letter_opener
+    * config.action_mailer.perform_deliveries = true
+    * config.action_mailer.perform_caching = true
+* ./config/initializers/setup_mail.rb
+  * create this file and add your SMTP settings for ActionMailer.
+* ./app/mailers/product_mailer.rb & app/mailers/review_mailer.rb
+  * create these mailer classes and define the methods for sending emails related to products and reviews respectively.
+* ./app/views/product_mailer/ & app/views/review_mailer/
+  * create views for the mailer methods in the above step.
+* ./app/controllers/products_controller.rb & app/controllers/reviews_controller.rb
+  * update the create actions to send emails after a product/review is created. Use the delay method provided by Delayed Job to send the emails in the background.
+* ./bin/delayed_job
+  * create this file and add the required lines to start the Delayed Job worker.
+* ./config/routes.rb
+  * add: a route to access the Delayed Job web dashboard.
 ## ********************** End *********************
 
 ## ********************* Labs *********************
@@ -1172,4 +1201,12 @@ Add the possibility for users to vote up or down on reviews as follows:
 [Stretch] 
   1. Sort the listed reviews by the most voted ones
 
+
+### [Lab] Amazon: Add mailing
+
+Setup mailing with your Rails Amazon app.
+  1. Add a mailer that emails the user that created a product with the title, body, price, and link to the product
+  
+[Stretch] 
+  1. Add a mailer that sends the product creator reviews when they're added. The mail should contain the review body, author and link to the review page.
 

@@ -34,6 +34,7 @@ class ProductsController < ApplicationController
       # Create a new tagging for each tag that was checked
       handle_tags(@product)
 
+      ProductMailer.delay(run_at: 1.minutes.from_now).notify_product_owner(@product)
       # Redirect to the products index page
       redirect_to @product # This is equivalent to product_path(@product) or product_path @product
     else

@@ -19,6 +19,8 @@ class ReviewsController < ApplicationController
 
     # If the review is successfully saved to the database
     if @review.save
+      ReviewMailer.notify_product_owner(@review).deliver
+
       redirect_to @product, notice: "Review created successfully"
     else
       # Otherwise, render the product show page again with the error messages
