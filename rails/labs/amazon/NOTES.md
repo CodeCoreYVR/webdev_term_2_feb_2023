@@ -8,6 +8,14 @@
 * $ rails db:create
 * $ rails db:migrate
 * $ rails db:seed
+* for mailer:
+  * $ bin/delayed_job start
+  * when you want to stop delayed_job
+    * $ bin/delayed_job stop
+      * you might not get an error, i did. ./tmp/pids/delayed_job.pid isn't being created for me, so i have to manually force kill the process.
+        * $ ps aux | grep delayed_job
+          * this lists all processes with delayed_job in the name and their pids
+        * $ kill -9 <pid> <pid> <pid>
 * $ rails s
   or
   * $ rails server
@@ -884,6 +892,13 @@ $ rails db:migrate
   * create this file and add the required lines to start the Delayed Job worker.
 * ./config/routes.rb
   * add: a route to access the Delayed Job web dashboard.
+* open two terminals
+  * $ bin/delayed_job start
+  * $ rails s
+* open browser to localhost:3000/products/new
+  * create a new product and check the log to see if the email was sent.
+* open browser to localhost:3000/products/1/reviews/new
+  * create a new review and check the log to see if the email was sent.
 ## ********************** End *********************
 
 ## ********************* Labs *********************
@@ -1206,7 +1221,7 @@ Add the possibility for users to vote up or down on reviews as follows:
 
 Setup mailing with your Rails Amazon app.
   1. Add a mailer that emails the user that created a product with the title, body, price, and link to the product
-  
+
 [Stretch] 
   1. Add a mailer that sends the product creator reviews when they're added. The mail should contain the review body, author and link to the review page.
 

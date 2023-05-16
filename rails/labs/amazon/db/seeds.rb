@@ -14,6 +14,7 @@ NewsArticle.destroy_all
 Tag.destroy_all
 Favorite.destroy_all
 Like.destroy_all
+Vote.destroy_all
 
 # Create an admin user
 User.create(
@@ -50,7 +51,7 @@ end
 Product.all.each do |product|
   5.times do
     tag_name = Faker::Lorem.unique.word
-    # product.tag_names = product.tag_names ? "#{product.tag_names}, #{tag_name}" : tag_name
+
     if product.tag_names.empty?
       product.tag_names = tag_name
     else
@@ -60,6 +61,8 @@ Product.all.each do |product|
   Faker::Lorem.unique.clear
 end
 
+# non_admin_users is an array of all users except the first user (admin)
+non_admin_users = User.where(admin: false)
 # create 5 reviews for each product (125 total)
 Product.all.each do |product| 
   5.times do
@@ -67,7 +70,7 @@ Product.all.each do |product|
       rating: Faker::Number.between(from: 1, to: 5),
       body: Faker::Lorem.paragraph_by_chars(number: 256, supplemental: false),
       hidden: false,
-      user_id: User.all.sample.id
+      user_id: non_admin_users.sample.id
     )
   end
 end
@@ -83,27 +86,43 @@ User.all.drop(1).each do |user|
   end
 end
 
-# Have each review liked by a random number of users
+# Have each review liked by a random number of users except for the first user (admin) and the user who created the review
 Review.find_each do |review|
   User.order("RANDOM()").limit(rand(User.count + 1)).each do |user|
-    review.likes.create(user: user)
+    review.likes.create(user: user) if user.id != 1 && user.id != review.user_id
   end
 end
 
-# Have each product favorited by a random number of users
+# Have each product favorited by a random number of users except for the first user (admin) and the user who created the product
 Product.find_each do |product|
   User.order("RANDOM()").limit(rand(User.count + 1)).each do |user|
-    product.favorites.create(user: user)
+    product.favorites.create(user: user) if user.id != 1 && user.id != product.user_id
+  end
+end
+
+# Have each review voted on by a random number of users with a random vote type except for the first user (admin) and the user who created the review
+Review.find_each do |review|
+  User.order("RANDOM()").limit(rand(User.count + 1)).each do |user|
+     review.votes.create(user: user, vote_type: [true, false].sample) if user.id != 1 && user.id != review.user_id
   end
 end
 
 # Print the number of users created
-puts "Created #{User.count} users"
+puts Cowsay.say("Created #{User.count} users", "kitty")
 # Print the number of products created
-puts "Created #{Product.count} products"
+puts Cowsay.say("Created #{Product.count} products", "cow")
 # Print the number of reviews created
-puts "Created #{Review.count} reviews"
+puts Cowsay.say("Created #{Review.count} reviews", "elephant")
 # Print the number of news articles created
-puts "Created #{NewsArticle.count} news articles"
+puts Cowsay.say("Created #{NewsArticle.count} news articles", "moose")
 # Print the number of tags created
-puts "Created #{Tag.count} tags"
+puts Cowsay.say("Created #{Tag.count} tags", "stegosaurus")
+# Print the number of favorites created
+puts Cowsay.say("Created #{Favorite.count} favorites", "dragon")
+# Print the number of likes created
+puts Cowsay.say("Created #{Like.count} likes", "ghostbusters")
+# Print the number of votes created
+puts Cowsay.say("Created #{Vote.count} votes", "beavis")
+
+
+

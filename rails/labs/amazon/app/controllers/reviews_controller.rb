@@ -19,7 +19,7 @@ class ReviewsController < ApplicationController
 
     # If the review is successfully saved to the database
     if @review.save
-      ReviewMailer.notify_product_owner(@review).deliver
+      ReviewMailer.delay(run_at: 15.seconds.from_now).notify_product_owner(@review)
 
       redirect_to @product, notice: "Review created successfully"
     else
