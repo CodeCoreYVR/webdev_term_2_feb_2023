@@ -43,6 +43,13 @@ Rails.application.routes.draw do
   # Routes for tags
   resources :tags, only: [:index, :show]
 
+  match(
+    "/delayed_job",
+    to: DelayedJobWeb,
+    anchor: false,
+    via: [:get, :post],
+  )
+
   # Routes for products and reviews
   # Defines the "reviews" routes i.e. "/products/:id
   resources :products do
@@ -66,4 +73,6 @@ Rails.application.routes.draw do
   # edit_product_path(id)               # returns the path to the edit action of the ProductsController for the product with the given id.
   # product_reviews_path(product_id)    # returns the path to the create action of the ReviewsController for the product with the given product_id. This path helper is nested, meaning that it requires a product_id parameter to be passed in order to generate the correct URL.
   # new_product_review_path(product_id) # returns the path to the new action of the ReviewsController for the product with the given product_id. This path helper is also nested and requires a product_id parameter to be passed in order to generate the correct URL. Note that since we specified only: [:create] in the resources :reviews line, this is the only path helper generated for the ReviewsController.
+
+  default_url_options :host => "http://localhost:3000"
 end
